@@ -7,27 +7,53 @@ import './App.css';
 
 class App extends React.Component {
 
-  
-  componentDidMount{
-    console.log("componentDidMount")
+  state ={
+    user: null
   }
 
+  
+  componentDidMount(){
+    console.log("componentDidMount", "this.state.user", this.state.user)
+  }
+
+
+  signUpHandler=()=>{
+    console.log("signup handler")
+    const userObj = {first_name:"sonya", last_name:"gould", username: "svg145", password:"test", account_type:"student"}
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({ user: userObj })
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem("token", data.jwt)
+      this.setState({ user: data.user }, () => {this.componentDidMount()})
+      
+    })
+    // this.props.history.push("/")
+  }
   
   
   logOutHandler=()=>{
     localStorage.removeItem("token")
-    this.props.history.push("/login") 
+    // this.props.history.push("/login") 
     this.setState({user:false})
+    console.log(localStorage)
   }
 
   logInHandler = () => { //ordinarily this function accepts userInfo as a parameter
+    const user = {username: "svg145", password:"test"}
     fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify({first_name:"sonya", last_name: "gould", username: "sonyavera", account_type: "student"})
+      body: JSON.stringify({user})
     })
       .then(res => res.json())
       .then(data => {
@@ -35,7 +61,7 @@ class App extends React.Component {
         localStorage.setItem("token", data.jwt)
         this.setState({ user: data.user }, () => {this.componentDidMount()})
       })
-      this.props.history.push("/")
+      // this.props.history.push("/")
   }
   render(){
     return (
@@ -56,6 +82,7 @@ class App extends React.Component {
         </header>
         <Button onClick={this.logInHandler}>Log In</Button>
         <Button onClick={this.logOutHandler}>Log Out</Button>
+        <Button onClick={this.signUpHandler}>Sign Up</Button>
       </div>
     )
   }
