@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Button } from 'reactstrap';
 import ReactDOM from 'react-dom';
 import './App.css';
@@ -10,11 +9,11 @@ import {
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import CreateClass from './components/CreateClass'
-import Navbar from './components/Navbar'
+import NavigationBar from './components/NavigationBar'
 import Home from './containers/Home'
 import TeacherUI from './containers/TeacherUI'
 import StudentUI from './containers/StudentUI'
-
+import JumboImage from './components/JumboImage'
 
 
 
@@ -26,7 +25,9 @@ class App extends React.Component {
 
   
   componentDidMount(){
-    console.log("componentDidMount", "this.state.user", this.state.user)
+    fetch("http://localhost:3000/dance_classes")
+    .then(resp => resp.json())
+    .then(console.log)
   }
 
 
@@ -47,19 +48,20 @@ class App extends React.Component {
       this.setState({ user: data.user }, () => {this.componentDidMount()})
       
     })
-    // this.props.history.push("/")
+    this.props.history.push("/")
   }
   
   
   logOutHandler=()=>{
     localStorage.removeItem("token")
-    // this.props.history.push("/login") 
     this.setState({user:false})
     console.log(localStorage)
+    this.props.history.push("/login") 
   }
 
-  logInHandler = () => { //ordinarily this function accepts userInfo as a parameter
-    const user = {username: "svg145", password:"test"}
+  logInHandler = (loginInfo) => { //ordinarily this function accepts userInfo as a parameter
+    console.log("logging in")
+    const user = loginInfo
     fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
@@ -72,16 +74,20 @@ class App extends React.Component {
       .then(data => {
         console.log("response from backend after login", data)
         localStorage.setItem("token", data.jwt)
-        this.setState({ user: data.user }, () => {this.componentDidMount()})
+        this.setState({ user: data.user }, () => {
+            if(this.state.user.account_type === "student"){
+              console.log('true')
+              this.props.history.push("/home/student")
+            } else{this.props.history.push("/home/teacher")}
+        })
       })
-      // this.props.history.push("/")
   }
+
   render(){
     return (
       <>
-      <Button onClick={this.logInHandler}>Log In</Button>
-        <Button onClick={this.logOutHandler}>Log Out</Button>
-        <Button onClick={this.signUpHandler}>Sign Up</Button>
+
+
         
 
 
@@ -91,67 +97,78 @@ class App extends React.Component {
 
           <Route path="/login" render={() => 
                                             <div>
-                                              <Login user={this.state} logInHandler={this.logInHandler} />
+                                              <NavigationBar 
+                                                signUp={this.signUpHandler}
+                                                logIn={this.logInHandler} 
+                                                logOut={this.logOutHandler} 
+                                                user={this.state.user} />
+                                              <JumboImage/>
+                                              <Login 
+                                                user={this.state} 
+                                                logIn={this.logInHandler} />
                                             </div>} />
 
           <Route path="/signup" render={() => 
                                             <div>
-                                              <SignUp signUpHandler={this.signupHandler}/>
+                                              <NavigationBar 
+                                                signUp={this.signUpHandler}
+                                                logIn={this.logInHandler} 
+                                                logOut={this.logOutHandler} 
+                                                user={this.state.user} />
+                                              <JumboImage/>
+                                              <SignUp 
+                                                signUpHandler={this.signupHandler}/>
                                             </div>} />
 
           <Route path="/createclass" render={() => 
-                                                    <div>
-                                                    <Navbar user={this.state.user} />
-                                                    <CreateClass 
-                                                    user={this.state.user} 
-                                                    />
-                                                    </div>}/>
-
-
-
-          {/* I think because it's all one container it may not be trigger correct refreshing of the page. Tested and verified  */}
-          {/* <Route path='/classes/:id' render={() => 
                                                 <div>
-                                                <Navbar user={this.state.user} />
-                                                <ClassShowPage 
-                                                  data={this.state.events}
+                                                <NavigationBar 
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
+                                                <JumboImage/>
+                                                <CreateClass 
                                                   user={this.state.user} 
-                                                  joinEvent={this.newUserEvent}
-                                                  joinedEvents={this.state.joinedEvents}
-                                                  deleteUserEvent={this.deleteUserEvent}
                                                 />
-                                                
-                                                </div>}  /> */}
+                                                </div>}/>
+
 
       <Route path="/home/teacher" render={() => 
-                              <div>
-                                <Navbar user={this.state.user} />
-                                <TeacherUI/>
-                
-                
-                                </div> }
-          /> 
+                                            <div>
+                                              <NavigationBar 
+                                                signUp={this.signUpHandler}
+                                                logIn={this.logInHandler} 
+                                                logOut={this.logOutHandler} 
+                                                user={this.state.user} />
+                                            <JumboImage/>
+                                              <TeacherUI/>
+                                              </div> }/> 
 
       
         <Route path="/home/student" render={() => 
-                              <div>
-                                <Navbar user={this.state.user} />
-                                <StudentUI/>
-                
-                
-                                </div> }
-          /> 
+                                            <div>
+                                              <NavigationBar 
+                                                signUp={this.signUpHandler}
+                                                logIn={this.logInHandler} 
+                                                logOut={this.logOutHandler} 
+                                                user={this.state.user} />
+                                            <JumboImage/>
+                                              <StudentUI/>
+                                              </div> }/> 
       
           
 
           <Route path="/" render={() => 
-                                    <div>
-                                      <Navbar user={this.state.user} />
-                                      <Home/>
-                                      
-                                      
-                                    </div> }
-          /> 
+                                        <div>
+                                          <NavigationBar 
+                                            signUp={this.signUpHandler}
+                                            logIn={this.logInHandler} 
+                                            logOut={this.logOutHandler} 
+                                            user={this.state.user} />
+                                        <JumboImage/>
+                                          <Home/>
+                                            </div> } /> 
 
 
 

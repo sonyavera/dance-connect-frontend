@@ -36,3 +36,26 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-button{
+  margin-left:10px;
+}
+
+#form-div{
+  width:500px;
+  margin-right: auto;
+  margin-left: auto;
+  border-width: thick;
+  border-style: groove;
+  border-color:#2d53cf;
+}
+
+#signup-form{
+  padding: 15px;
+}
+
+.jumbotron{
+    background: no-repeat center center;
+    background-size: cover;
+    min-height: 425px;
+}

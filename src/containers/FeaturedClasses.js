@@ -4,17 +4,17 @@ import ReactDOM from 'react-dom';
 import '../App.css';
 
 
-class Navbar extends React.Component {
+class FeaturedClasses extends React.Component {
 
     render(){
 
 
         return(
-            <h1> Navbar</h1>
+            <h1>Featured Classes</h1>
         )
     }
 
 
 }
 
-export default Navbar;
+export default FeaturedClasses;
