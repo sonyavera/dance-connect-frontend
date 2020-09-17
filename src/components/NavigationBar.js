@@ -29,10 +29,10 @@ const NavigationBar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/http://localhost:3001/my/classes">My Classes</NavLink>
+              <NavLink href="/my/classes">My Classes</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="http://localhost:3001/profile">My Profile</NavLink>
+              <NavLink href="/profile">My Profile</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
@@ -63,7 +63,7 @@ const NavigationBar = (props) => {
                 </NavItem>
              
                 <NavItem className="nav-button">
-                    <Button  id="userbutton" onClick={props.logIn}>Log In</Button>
+                    <Button  id="userbutton" href="/login">Log In</Button>
                 </NavItem>
                 </>
             }

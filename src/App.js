@@ -14,33 +14,38 @@ import Home from './containers/Home'
 import TeacherUI from './containers/TeacherUI'
 import StudentUI from './containers/StudentUI'
 import JumboImage from './components/JumboImage'
+import MyClasses from './containers/MyClasses'
+import FeaturedClasses from './containers/FeaturedClasses'
+import Recommendations from './containers/Recommendations'
 
 
 
 class App extends React.Component {
 
   state ={
-    user: null
+    user: null,
+    classes: null
   }
 
   
   componentDidMount(){
     fetch("http://localhost:3000/dance_classes")
     .then(resp => resp.json())
-    .then(console.log)
+    // .then(resp => console.log(resp.classes))
+    .then(resp => this.setState({classes: resp.classes}, ()=> console.log(this.state.classes) ))
   }
 
 
-  signUpHandler=()=>{
+  signUpHandler=(userObj)=>{
     console.log("signup handler")
-    const userObj = {first_name:"sonya", last_name:"gould", username: "svg145", password:"test", account_type:"student"}
+    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:"student"}
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify({ user: userObj })
+      body: JSON.stringify({ user: userObject })
     })
     .then(res => res.json())
     .then(data => {
@@ -59,9 +64,8 @@ class App extends React.Component {
     this.props.history.push("/login") 
   }
 
-  logInHandler = (loginInfo) => { //ordinarily this function accepts userInfo as a parameter
+  logInHandler = (user) => { //ordinarily this function accepts userInfo as a parameter
     console.log("logging in")
-    const user = loginInfo
     fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
@@ -117,7 +121,7 @@ class App extends React.Component {
                                                 user={this.state.user} />
                                               <JumboImage/>
                                               <SignUp 
-                                                signUpHandler={this.signupHandler}/>
+                                                signUp={this.signUpHandler}/>
                                             </div>} />
 
           <Route path="/createclass" render={() => 
@@ -156,6 +160,20 @@ class App extends React.Component {
                                             <JumboImage/>
                                               <StudentUI/>
                                               </div> }/> 
+
+        
+        <Route path="/my/classes" render={() => 
+                                        <div>
+                                          <NavigationBar 
+                                            signUp={this.signUpHandler}
+                                            logIn={this.logInHandler} 
+                                            logOut={this.logOutHandler} 
+                                            user={this.state.user} />
+                                        <JumboImage/>
+                                          <MyClasses classes={this.state.classes}/>
+                                          <FeaturedClasses/>
+                                          <Recommendations/>
+                                          </div> }/> 
       
           
 
