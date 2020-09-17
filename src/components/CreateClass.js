@@ -4,17 +4,17 @@ import ReactDOM from 'react-dom';
 import '../App.css';
 
 
-class Login extends React.Component {
+class CreateClass extends React.Component {
 
     render(){
 
 
         return(
-            <h1> Login</h1>
+            <h1> Create Class</h1>
         )
     }
 
 
 }
 
-export default Login;
+export default CreateClass;
