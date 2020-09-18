@@ -15,7 +15,7 @@ import {
   NavbarText
 } from 'reactstrap';
 import '../App.css';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 const NavigationBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,10 +42,10 @@ const NavigationBar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/me/classes">My Purchases</NavLink>
+              <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/me">My Profile</NavLink>
+              <NavLink tag={Link} to="/me">My Profile</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>

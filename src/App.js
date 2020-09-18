@@ -18,6 +18,7 @@ import ClassesContainer from './containers/ClassesContainer'
 import FeaturedClasses from './containers/FeaturedClasses'
 import Recommendations from './containers/Recommendations'
 import Profile from './components/Profile'
+import PurchasesContainer from './containers/PurchasesContainer'
 
 
 
@@ -146,35 +147,66 @@ class App extends React.Component {
                                                 />
                                                 </div>}/>
 
+            <Route path="/me/purchases" render={(data) => 
+                                                    <div>
+                                                      <NavigationBar 
+                                                        changeHandler={this.navBarHandler}
+                                                        signUp={this.signUpHandler}
+                                                        logIn={this.logInHandler} 
+                                                        logOut={this.logOutHandler} 
+                                                        user={this.state.user} />
+                                                    <JumboImage/>
+                                                      <PurchasesContainer 
+                                                          classes={this.state.classes} 
+                                                          />
+                                                      <FeaturedClasses/>
+                                                      <Recommendations/>
+                                                      </div> }/> 
 
-        <Route path="/me" render={() => 
-                                        <div>
-                                        <NavigationBar 
-                                          changeHandler={this.navBarHandler}
-                                          signUp={this.signUpHandler}
-                                          logIn={this.logInHandler} 
-                                          logOut={this.logOutHandler} 
-                                          user={this.state.user} />
-                                        <JumboImage/>
-                                        <Profile 
-                                          user={this.state.user} 
-                                        />
-                                        </div>}/>
 
-      <Route path="/home/teacher" render={() => 
+            <Route path="/me" render={() => 
                                             <div>
-                                              <NavigationBar 
-                                                changeHandler={this.navBarHandler}
-                                                signUp={this.signUpHandler}
-                                                logIn={this.logInHandler} 
-                                                logOut={this.logOutHandler} 
-                                                user={this.state.user} />
+                                            <NavigationBar 
+                                              changeHandler={this.navBarHandler}
+                                              signUp={this.signUpHandler}
+                                              logIn={this.logInHandler} 
+                                              logOut={this.logOutHandler} 
+                                              user={this.state.user} />
                                             <JumboImage/>
-                                              <TeacherUI/>
-                                              </div> }/> 
+                                            <Profile 
+                                              user={this.state.user} 
+                                            />
+                                            </div>}/>
+
+            <Route path="/home/teacher" render={() => 
+                                                  <div>
+                                                    <NavigationBar 
+                                                      changeHandler={this.navBarHandler}
+                                                      signUp={this.signUpHandler}
+                                                      logIn={this.logInHandler} 
+                                                      logOut={this.logOutHandler} 
+                                                      user={this.state.user} />
+                                                  <JumboImage/>
+                                                    <TeacherUI/>
+                                                    </div> }/> 
 
       
-        <Route path="/home/student" render={() => 
+              <Route path="/home/student" render={() => 
+                                                  <div>
+                                                    <NavigationBar 
+                                                      changeHandler={this.navBarHandler}
+                                                      signUp={this.signUpHandler}
+                                                      logIn={this.logInHandler} 
+                                                      logOut={this.logOutHandler} 
+                                                      user={this.state.user} />
+                                                  <JumboImage/>
+                                                    <StudentUI/>
+                                                    </div> }/> 
+
+        
+
+
+              <Route path="/classes/:dance_style" render={(data) => 
                                             <div>
                                               <NavigationBar 
                                                 changeHandler={this.navBarHandler}
@@ -183,52 +215,25 @@ class App extends React.Component {
                                                 logOut={this.logOutHandler} 
                                                 user={this.state.user} />
                                             <JumboImage/>
-                                              <StudentUI/>
+                                              <ClassesContainer 
+                                                    danceStyle={data.match.params.dance_style} 
+                                                    classes={this.state.classes}/>
                                               </div> }/> 
-
-        
-        <Route path="/me/classes" render={() => 
-                                        <div>
-                                          <NavigationBar 
-                                            changeHandler={this.navBarHandler}
-                                            signUp={this.signUpHandler}
-                                            logIn={this.logInHandler} 
-                                            logOut={this.logOutHandler} 
-                                            user={this.state.user} />
-                                        <JumboImage/>
-                                          <ClassesContainer classes={this.state.classes}/>
-                                          <FeaturedClasses/>
-                                          <Recommendations/>
-                                          </div> }/> 
-
-        <Route path="/classes/:dance_style" render={(data) => 
-                                      <div>
-                                        <NavigationBar 
-                                          changeHandler={this.navBarHandler}
-                                          signUp={this.signUpHandler}
-                                          logIn={this.logInHandler} 
-                                          logOut={this.logOutHandler} 
-                                          user={this.state.user} />
-                                      <JumboImage/>
-                                        <ClassesContainer 
-                                              danceStyle={data.match.params.dance_style} 
-                                              classes={this.state.classes}/>
-                                        </div> }/> 
 
                     
           
 
-          <Route path="/" render={() => 
-                                        <div>
-                                          <NavigationBar 
-                                            changeHandler={this.navBarHandler}
-                                            signUp={this.signUpHandler}
-                                            logIn={this.logInHandler} 
-                                            logOut={this.logOutHandler} 
-                                            user={this.state.user} />
-                                        <JumboImage/>
-                                          <Home/>
-                                            </div> } /> 
+              <Route path="/" render={() => 
+                                            <div>
+                                              <NavigationBar 
+                                                changeHandler={this.navBarHandler}
+                                                signUp={this.signUpHandler}
+                                                logIn={this.logInHandler} 
+                                                logOut={this.logOutHandler} 
+                                                user={this.state.user} />
+                                            <JumboImage/>
+                                              <Home/>
+                                                </div> } /> 
 
 
 

@@ -20,6 +20,7 @@ class ClassesContainer extends React.Component {
 
     render(){
         console.log("in classes container", this.props.danceStyle)
+        console.log("params", this.props.page)
         if(this.props.classes){
             console.log("first dance class style", this.props.classes[8].style)
             console.log(this.renderClasses())
