@@ -25,7 +25,8 @@ class App extends React.Component {
 
   state ={
     user: null,
-    classes: null
+    classes: null,
+    danceStyle: "Salsa"
   }
 
   
@@ -88,6 +89,10 @@ class App extends React.Component {
       })
   }
 
+  navBarHandler=(style)=>{
+    this.setState({danceStyle: style }, ()=>console.log("state dance style", this.state.danceStyle))
+  }
+
   render(){
     return (
       <>
@@ -103,6 +108,7 @@ class App extends React.Component {
           <Route path="/login" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
                                                 logOut={this.logOutHandler} 
@@ -116,6 +122,7 @@ class App extends React.Component {
           <Route path="/signup" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
                                                 logOut={this.logOutHandler} 
@@ -128,6 +135,7 @@ class App extends React.Component {
           <Route path="/createclass" render={() => 
                                                 <div>
                                                 <NavigationBar 
+                                                  changeHandler={this.navBarHandler}
                                                   signUp={this.signUpHandler}
                                                   logIn={this.logInHandler} 
                                                   logOut={this.logOutHandler} 
@@ -142,6 +150,7 @@ class App extends React.Component {
         <Route path="/me" render={() => 
                                         <div>
                                         <NavigationBar 
+                                          changeHandler={this.navBarHandler}
                                           signUp={this.signUpHandler}
                                           logIn={this.logInHandler} 
                                           logOut={this.logOutHandler} 
@@ -155,6 +164,7 @@ class App extends React.Component {
       <Route path="/home/teacher" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
                                                 logOut={this.logOutHandler} 
@@ -167,6 +177,7 @@ class App extends React.Component {
         <Route path="/home/student" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
                                                 logOut={this.logOutHandler} 
@@ -179,6 +190,7 @@ class App extends React.Component {
         <Route path="/me/classes" render={() => 
                                         <div>
                                           <NavigationBar 
+                                            changeHandler={this.navBarHandler}
                                             signUp={this.signUpHandler}
                                             logIn={this.logInHandler} 
                                             logOut={this.logOutHandler} 
@@ -189,16 +201,17 @@ class App extends React.Component {
                                           <Recommendations/>
                                           </div> }/> 
 
-        <Route path="/classes/salsa" render={() => 
+        <Route path="/classes/:dance_style" render={(data) => 
                                       <div>
                                         <NavigationBar 
+                                          changeHandler={this.navBarHandler}
                                           signUp={this.signUpHandler}
                                           logIn={this.logInHandler} 
                                           logOut={this.logOutHandler} 
                                           user={this.state.user} />
                                       <JumboImage/>
                                         <ClassesContainer 
-                                              style="Cuban Salsa" 
+                                              danceStyle={data.match.params.dance_style} 
                                               classes={this.state.classes}/>
                                         </div> }/> 
 
@@ -208,6 +221,7 @@ class App extends React.Component {
           <Route path="/" render={() => 
                                         <div>
                                           <NavigationBar 
+                                            changeHandler={this.navBarHandler}
                                             signUp={this.signUpHandler}
                                             logIn={this.logInHandler} 
                                             logOut={this.logOutHandler} 

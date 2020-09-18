@@ -15,17 +15,30 @@ import {
   NavbarText
 } from 'reactstrap';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 const NavigationBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const [danceStyle, setDanceStyle] = useState(null)
+
+  // const handleSelect=(e)=>{
+  //   const classStyle = e.target.innerText
+  //   props.changeHandler(classStyle)
+  //   setDanceStyle(classStyle)
+  // }
+
+  // React.useEffect( ()=> {
+  //   console.log("react.useEffect is working")
+  // })
+
   return (
     <div>
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/">Student Home</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+        <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
@@ -39,13 +52,13 @@ const NavigationBar = (props) => {
                 All Classes
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem href="/classes/salsa">
-                  Salsa
+                <DropdownItem tag={Link} to={"/classes/cubansalsa"}>
+                  Cuban Salsa
                 </DropdownItem>
-                <DropdownItem href="/classes/bachata">
+                <DropdownItem tag={Link} to={"/classes/bachata"}>
                   Bachata
                 </DropdownItem>
-                <DropdownItem href="/classes/folklore">
+                <DropdownItem tag={Link} to={"/classes/afrocubanfolklore"}>
                   Afro Cuban Folklore
                 </DropdownItem>
               </DropdownMenu>

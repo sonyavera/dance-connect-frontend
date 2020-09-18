@@ -10,7 +10,7 @@ class ClassesContainer extends React.Component {
    
     
     renderClasses=()=>{    
-        return this.props.classes.filter(danceClass => danceClass.style === this.props.style).map(danceClass => {
+        return this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle).map(danceClass => {
             return <ClassCard key={danceClass.id} danceClass={danceClass}/>
         })
     }
@@ -19,13 +19,17 @@ class ClassesContainer extends React.Component {
     }
 
     render(){
-        console.log(this.props.style)
+        console.log("in classes container", this.props.danceStyle)
+        if(this.props.classes){
+            console.log("first dance class style", this.props.classes[8].style)
+            console.log(this.renderClasses())
+        }
 
         return(
             <>
-            {this.props.classes && this.props.style ? 
-            this.renderClasses()
-            :
+             {this.props.classes && this.props.danceStyle ? 
+                this.renderClasses()
+             :
             <h1>loading</h1>
             }
             </>
@@ -36,3 +40,4 @@ class ClassesContainer extends React.Component {
 }
 
 export default ClassesContainer;
+
