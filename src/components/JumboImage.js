@@ -1,6 +1,7 @@
 import React from 'react';
 import { Jumbotron, Container } from 'reactstrap';
 import bgimage from './Malecon.jpg'
+import '../App.css';
 
 const JumboImage = (props) => {
   return (

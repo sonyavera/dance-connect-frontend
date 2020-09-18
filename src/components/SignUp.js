@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input, NavLink } from 'reactstrap';
+import '../App.css';
 
 class SignUp extends React.Component {
 

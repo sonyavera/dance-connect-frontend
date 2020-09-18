@@ -19,6 +19,7 @@ import FeaturedClasses from './containers/FeaturedClasses'
 import Recommendations from './containers/Recommendations'
 import Profile from './components/Profile'
 import PurchasesContainer from './containers/PurchasesContainer'
+import ClassShowPage from './containers/ClassShowPage'
 
 
 
@@ -204,6 +205,20 @@ class App extends React.Component {
                                                     </div> }/> 
 
         
+                <Route path="/classes/:dance_style/:id" render={(data) => 
+                                                      <div>
+                                                        <NavigationBar 
+                                                          changeHandler={this.navBarHandler}
+                                                          signUp={this.signUpHandler}
+                                                          logIn={this.logInHandler} 
+                                                          logOut={this.logOutHandler} 
+                                                          user={this.state.user} />
+                                                      <JumboImage/>
+                                                        <ClassShowPage
+                                                              danceStyle={data.match.params.dance_style}
+                                                              classId={data.match.params.id} 
+                                                              classes={this.state.classes}/>
+                                                        </div> }/> 
 
 
               <Route path="/classes/:dance_style" render={(data) => 
@@ -219,6 +234,7 @@ class App extends React.Component {
                                                     danceStyle={data.match.params.dance_style} 
                                                     classes={this.state.classes}/>
                                               </div> }/> 
+
 
                     
           

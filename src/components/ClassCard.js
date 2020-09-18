@@ -1,12 +1,24 @@
 import React from 'react'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button, NavLink
   } from 'reactstrap';
+import {Link} from 'react-router-dom'
 import Karelia from './Karelia.png'
+import '../App.css';
 
 
 class ClassCard extends React.Component{
+
+  renderClassStyle=()=>{
+    if(this.props.danceClass.style === "afrocubanfolklore"){
+      return "Afro Cuban Folklore"
+    }else if(this.props.danceClass.style == "cubansalsa"){
+      return "Cuban Salsa"
+    }else{return "Bachata"}
+  }
+
+
 
     render(){
 
@@ -14,12 +26,11 @@ class ClassCard extends React.Component{
         return(
             <div>
             <Card>
-              <CardImg top width="100%" src='./Karelia/318x180.png' alt="Card image cap" />
+              <CardImg class="card-img-bottom" top width="100%" src={Karelia} alt="Card image cap" />
               <CardBody>
-                <CardTitle>{this.props.danceClass.style} with User_id:{this.props.danceClass.user_id}</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                <Button>Button</Button>
+                <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
+                <CardText>{this.props.danceClass.description}</CardText>
+                <Button block tag={Link} to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Take Class</Button>
               </CardBody>
             </Card>
           </div>

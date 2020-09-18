@@ -59,3 +59,12 @@
     background-size: cover;
     min-height: 425px;
 }
+
+.card-title{
+  font-weight: 700;
+  font-size: large;
+}
+
+.back-button{
+  margin-left: 0.5rem;
+}
