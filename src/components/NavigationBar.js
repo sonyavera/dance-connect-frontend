@@ -29,27 +29,30 @@ const NavigationBar = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink href="/my/classes">My Classes</NavLink>
+              <NavLink href="/me/classes">My Purchases</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/profile">My Profile</NavLink>
+              <NavLink href="/me">My Profile</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Dance Style
+                All Classes
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
+                <DropdownItem href="/classes/salsa">
                   Salsa
                 </DropdownItem>
-                <DropdownItem>
+                <DropdownItem href="/classes/bachata">
                   Bachata
                 </DropdownItem>
-                <DropdownItem>
+                <DropdownItem href="/classes/folklore">
                   Afro Cuban Folklore
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            </Nav>
+
+            <Nav className="ml-auto" navbar>
 
             {localStorage.length > 0 ? 
                 <NavItem>
@@ -63,16 +66,17 @@ const NavigationBar = (props) => {
                 </NavItem>
              
                 <NavItem className="nav-button">
-                    <Button  id="userbutton" href="/login">Log In</Button>
+                    <Button id="userbutton" href="/login">Log In</Button>
                 </NavItem>
                 </>
             }
+            </Nav>
 
 
 
 
 
-          </Nav>
+          
         </Collapse>
       </Navbar>
     </div>

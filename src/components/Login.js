@@ -48,7 +48,7 @@ class Login extends React.Component {
    
       
    
-         <Button block color="primary" onClick={this.formHandler}>LogIn</Button> &nbsp;
+         <Button block color="primary" onClick={this.formHandler}>Log In</Button> &nbsp;
          <div align="center">Don't have an account? <a href="/signup">Sign Up</a></div>
        </Form>
        </div>

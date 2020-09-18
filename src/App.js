@@ -14,9 +14,10 @@ import Home from './containers/Home'
 import TeacherUI from './containers/TeacherUI'
 import StudentUI from './containers/StudentUI'
 import JumboImage from './components/JumboImage'
-import MyClasses from './containers/MyClasses'
+import ClassesContainer from './containers/ClassesContainer'
 import FeaturedClasses from './containers/FeaturedClasses'
 import Recommendations from './containers/Recommendations'
+import Profile from './components/Profile'
 
 
 
@@ -138,6 +139,19 @@ class App extends React.Component {
                                                 </div>}/>
 
 
+        <Route path="/me" render={() => 
+                                        <div>
+                                        <NavigationBar 
+                                          signUp={this.signUpHandler}
+                                          logIn={this.logInHandler} 
+                                          logOut={this.logOutHandler} 
+                                          user={this.state.user} />
+                                        <JumboImage/>
+                                        <Profile 
+                                          user={this.state.user} 
+                                        />
+                                        </div>}/>
+
       <Route path="/home/teacher" render={() => 
                                             <div>
                                               <NavigationBar 
@@ -162,7 +176,7 @@ class App extends React.Component {
                                               </div> }/> 
 
         
-        <Route path="/my/classes" render={() => 
+        <Route path="/me/classes" render={() => 
                                         <div>
                                           <NavigationBar 
                                             signUp={this.signUpHandler}
@@ -170,11 +184,25 @@ class App extends React.Component {
                                             logOut={this.logOutHandler} 
                                             user={this.state.user} />
                                         <JumboImage/>
-                                          <MyClasses classes={this.state.classes}/>
+                                          <ClassesContainer classes={this.state.classes}/>
                                           <FeaturedClasses/>
                                           <Recommendations/>
                                           </div> }/> 
-      
+
+        <Route path="/classes/salsa" render={() => 
+                                      <div>
+                                        <NavigationBar 
+                                          signUp={this.signUpHandler}
+                                          logIn={this.logInHandler} 
+                                          logOut={this.logOutHandler} 
+                                          user={this.state.user} />
+                                      <JumboImage/>
+                                        <ClassesContainer 
+                                              style="Cuban Salsa" 
+                                              classes={this.state.classes}/>
+                                        </div> }/> 
+
+                    
           
 
           <Route path="/" render={() => 
