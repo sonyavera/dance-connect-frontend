@@ -10,7 +10,8 @@ class SignUp extends React.Component {
         accountType: null,
         username: null,
         password: null,
-        confirmedPw: null
+        confirmedPw: null,
+        selectedOption: null,
     }
 
 
@@ -23,10 +24,17 @@ class SignUp extends React.Component {
         console.log("this.state",this.state)
     }
 
+    handleOptionChange=(changeEvent)=>{
+      this.setState({
+        selectedOption: changeEvent.target.value
+      });
+    }
+
 
 
 
     render(){
+      console.log('selected option', this.state.selectedOption)
         return (
             <div id="form-div">
                <Form id="signup-form">
@@ -66,6 +74,34 @@ class SignUp extends React.Component {
                   <Input onChange={this.changeHandler} value={this.state.confirmedPw} type="text" name="confirmedPw" placeholder="confirm password" />
                 </FormGroup>
               </Col>
+            </Row>
+
+            <Row form>
+                <FormGroup tag="fieldset">
+                  Account Type: 
+                  <FormGroup check>
+                    <Label check>
+                      <Input type="radio" 
+                             value="student" 
+                             checked={this.state.selectedOption === 'student'} 
+                             onChange={this.handleOptionChange}
+                             />{' '}
+                      Student
+                    </Label>
+                  </FormGroup>
+                  <FormGroup check>
+                    <Label check>
+                      <Input type="radio" 
+                             value="teacher" 
+                             checked={this.state.selectedOption === 'teacher'} 
+                             onChange={this.handleOptionChange}
+                            />{' '}
+                      Teacher
+                    </Label>
+                  </FormGroup>
+                  </FormGroup>
+    
+
             </Row>
       
       

@@ -8,7 +8,6 @@ class TeacherUI extends React.Component {
 
     render(){
 
-
         return(
             <h1> Teacher UI</h1>
         )

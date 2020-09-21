@@ -13,17 +13,12 @@ class ClassesContainer extends React.Component {
     
     renderClasses=()=>{    
         return this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle).map(danceClass => {
-            return <ClassCard key={danceClass.id} danceClass={danceClass}/>
+            return <ClassCard key={danceClass.id} danceClass={danceClass} purchaseHandler={this.props.purchaseHandler}/>
         })
     }
 
 
     render(){
-        if(this.props.classes){
-            console.log("length of renderclasses", this.renderClasses().length)
-            console.log("length of props classes", this.props.classes.length)
-        }
-        console.log("")
         return(
             <>
 

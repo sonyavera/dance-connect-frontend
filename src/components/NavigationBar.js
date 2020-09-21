@@ -37,7 +37,7 @@ const NavigationBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Student Home</NavbarBrand>
+        <NavbarBrand href="/home/student">Student Home</NavbarBrand>
         <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -49,7 +49,7 @@ const NavigationBar = (props) => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                All Classes
+                Classes
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem tag={Link} to={"/classes/cubansalsa"}>

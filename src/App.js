@@ -28,21 +28,55 @@ class App extends React.Component {
   state ={
     user: null,
     classes: null,
-    danceStyle: "Salsa"
+    danceStyle: "Salsa",
+    purchasedClasses: [],
+    createdClasses: []
   }
 
   
   componentDidMount(){
+
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch("http://localhost:3000/api/v1/profile", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`},
+      })
+      .then(resp => resp.json())
+      .then(data => this.setState({ user: data.user }))
+      .catch((error) => {console.log(error)})
+    }  else {
+      this.props.history.push("/login")
+    }
+
+
+    this.getDanceClasses()
+
+    this.getPurchasesAndCreatedClasses()
+    
+  }
+
+  getPurchasesAndCreatedClasses=()=>{
+    const token = localStorage.getItem("token")
+    fetch('http://localhost:3000/me/dance_classes', {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}`},
+    })
+    .then(resp => resp.json())
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes}))
+    .catch((error) => {console.log(error)})
+  }
+
+  getDanceClasses=()=>{
     fetch("http://localhost:3000/dance_classes")
     .then(resp => resp.json())
-    // .then(resp => console.log(resp.classes))
-    .then(resp => this.setState({classes: resp.classes}, ()=> console.log(this.state.classes) ))
+    .then(resp => this.setState({classes: resp.classes}))
   }
 
 
   signUpHandler=(userObj)=>{
     console.log("signup handler")
-    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:"student"}
+    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:userObj.selectedOption}
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -92,16 +126,31 @@ class App extends React.Component {
   }
 
   navBarHandler=(style)=>{
-    this.setState({danceStyle: style }, ()=>console.log("state dance style", this.state.danceStyle))
+    this.setState({danceStyle: style })
   }
+
+
+  purchaseDanceClass=(danceClassId)=>{
+    console.log("hit purchase handler")
+    const userClassObj = {dance_class_id: danceClassId}
+    const token = localStorage.getItem("token")
+      fetch("http://localhost:3000/user_classes/", { 
+        method: 'POST',
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(userClassObj)
+      })
+        .then(res => res.json())
+        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, () => console.log("purchased classes", this.state.purchasedClasses))})
+        .then(console.log('joined event'))
+    }
 
   render(){
     return (
       <>
-
-
-        
-
 
        
         <Switch>
@@ -158,10 +207,8 @@ class App extends React.Component {
                                                         user={this.state.user} />
                                                     <JumboImage/>
                                                       <PurchasesContainer 
-                                                          classes={this.state.classes} 
+                                                          classes={this.state.purchasedClasses} 
                                                           />
-                                                      <FeaturedClasses/>
-                                                      <Recommendations/>
                                                       </div> }/> 
 
 
@@ -201,7 +248,10 @@ class App extends React.Component {
                                                       logOut={this.logOutHandler} 
                                                       user={this.state.user} />
                                                   <JumboImage/>
-                                                    <StudentUI/>
+                                                    <StudentUI 
+                                                        classes={this.state.classes}
+                                                        purchaseHandler={this.purchaseDanceClass}
+                                                    />
                                                     </div> }/> 
 
         
@@ -231,6 +281,7 @@ class App extends React.Component {
                                                 user={this.state.user} />
                                             <JumboImage/>
                                               <ClassesContainer 
+                                                    purchaseHandler={this.purchaseDanceClass}
                                                     danceStyle={data.match.params.dance_style} 
                                                     classes={this.state.classes}/>
                                               </div> }/> 

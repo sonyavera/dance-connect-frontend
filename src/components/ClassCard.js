@@ -18,11 +18,12 @@ class ClassCard extends React.Component{
     }else{return "Bachata"}
   }
 
+  handlePurchase=()=>{
+    this.props.purchaseHandler(this.props.danceClass.id)
+  }
 
 
     render(){
-
-
         return(
             <div>
             <Card>
@@ -30,7 +31,9 @@ class ClassCard extends React.Component{
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>
-                <Button block tag={Link} to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Take Class</Button>
+                <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+                &nbsp;
+                <Button block tag={Link} to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Learn More</Button>
               </CardBody>
             </Card>
           </div>
