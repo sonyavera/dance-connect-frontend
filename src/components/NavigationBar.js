@@ -20,39 +20,27 @@ import {Logo} from './Logo.png'
 import {Karelia} from './Karelia.png'
 import {Malecon} from './Malecon.jpg'
 
-const NavigationBar = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
+class NavigationBar extends React.Component {
+  
+  
+  
+  
+  state={
+    isOpen: false
+  }
 
-  const toggle = () => setIsOpen(!isOpen);
+  
+  toggle=()=>{
+    this.setState({isOpen: !this.state.isOpen})
+  }
 
-
-
-
-
-
-  // console.log("state in navbar", accountType)
-
-  // useEffect( ()=> {
-  //   setAccountType(props.user.account_type)
-  // })
-
-
+  render(){
 
 
-  // const handleSelect=(e)=>{
-  //   const classStyle = e.target.innerText
-  //   props.changeHandler(classStyle)
-  //   setDanceStyle(classStyle)
-  // }
-
-  // React.useEffect( ()=> {
-  //   console.log("react.useEffect is working")
-  // })
-
-  return (
-    <div>
+    return(
+      <div>
       <Navbar color="light" light expand="md">
-      {props.user && props.user.account_type === "teacher" ?
+      {this.props.user && this.props.user.account_type === "teacher" ?
       <a className="navbar-brand" href="/home/teacher">
           <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
       :
@@ -60,10 +48,10 @@ const NavigationBar = (props) => {
           <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
       }
         
-        <NavbarToggler onClick={toggle}/>
-        <Collapse isOpen={isOpen} navbar>
+        <NavbarToggler onClick={this.toggle}/>
+        <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="mr-auto" navbar>
-          {props.user && props.user.account_type === "student" ?
+          {this.props.user && this.props.user.account_type === "student" ?
             <NavItem>
               <NavLink tag={Link} to="/home/student">For You</NavLink>
             </NavItem>
@@ -73,7 +61,7 @@ const NavigationBar = (props) => {
               <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
             </NavItem>
           }
-          {props.user && props.user.account_type === "student" ?
+          {this.props.user && this.props.user.account_type === "student" ?
           <NavItem>
               <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
             </NavItem>
@@ -107,7 +95,7 @@ const NavigationBar = (props) => {
 
             {localStorage.length > 0 ? 
                 <NavItem>
-                    <Button onClick={props.logOut}>Log Out</Button>
+                    <Button onClick={this.props.logOut}>Log Out</Button>
                 </NavItem>
 
             :
@@ -131,7 +119,33 @@ const NavigationBar = (props) => {
         </Collapse>
       </Navbar>
     </div>
-  );
+    )
+  }
+
+
+
+
+
+
+  // console.log("state in navbar", accountType)
+
+  // useEffect( ()=> {
+  //   setAccountType(props.user.account_type)
+  // })
+
+
+
+
+  // const handleSelect=(e)=>{
+  //   const classStyle = e.target.innerText
+  //   props.changeHandler(classStyle)
+  //   setDanceStyle(classStyle)
+  // }
+
+  // React.useEffect( ()=> {
+  //   console.log("react.useEffect is working")
+  // })
+
 }
 
 export default NavigationBar;
