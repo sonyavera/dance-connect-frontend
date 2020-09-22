@@ -14,7 +14,7 @@ class ClassShowPage extends React.Component{
 componentDidMount(){
     fetch("http://localhost:3000/dance_classes/" + this.props.classId)
     .then(resp=> resp.json())
-    .then(resp => this.setState({danceClass: resp}, ()=> console.log(this.state.danceClass)))
+    .then(resp => this.setState({danceClass: resp}, ()=> console.log("state after fetch", this.state.danceClass.dance_class[0].style) ))
 }
 
 renderClassStyle=()=>{
@@ -40,7 +40,7 @@ renderClassStyle=()=>{
             }
 
             <h1>Class Show page</h1>
-            </>
+             </>
         )
     }
 

@@ -38,7 +38,6 @@ class NavigationBar extends React.Component {
   }
 
   render(){
-    console.log("isTeacher in nav bar", this.props.isTeacher===true)
 
     return(
       <div>
@@ -49,10 +48,10 @@ class NavigationBar extends React.Component {
       <Navbar color="light" light expand="md">
       {this.props.user.account_type === "teacher" ?
       <a className="navbar-brand" href="/home/teacher">
-      <img src={require("./Logo.png")} width="30" height="30" alt="hi"></img></a>
+      <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a>
       :
       <a className="navbar-brand" href="/home/student">
-          <img src={require("./Logo.png")} width="30" height="30" alt="hi"></img></a>
+          <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a>
       }
         
         

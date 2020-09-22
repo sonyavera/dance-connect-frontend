@@ -244,6 +244,7 @@ class App extends React.Component {
                                                         user={this.state.user} />
                                                     <JumboImage/>
                                                       <PurchasesContainer 
+                                                          user={this.state.user}
                                                           classes={this.state.purchasedClasses} 
                                                           />
                                                       </div> }/> 

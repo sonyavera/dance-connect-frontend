@@ -36,8 +36,7 @@ class ClassCard extends React.Component{
 
     render(){
         return(
-            <div>
-            <Card>
+            <Card className="card-div">
               <CardImg class="card-img-bottom" top width="100%" src={Karelia} alt="Card image cap" />
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
@@ -66,7 +65,6 @@ class ClassCard extends React.Component{
                 }
               </CardBody>
             </Card>
-          </div>
         )
     }
 

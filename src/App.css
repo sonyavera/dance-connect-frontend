@@ -91,3 +91,12 @@
 h1 {
   margin-left: 10px;
 }
+
+.card-div{
+  width: 300px;
+}
+
+.logo{
+  height: 100px;
+  width: 100px;
+}

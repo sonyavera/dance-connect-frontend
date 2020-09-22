@@ -15,7 +15,7 @@ const MenuItem = ({danceClassObj, purchaseHandlerFunction, purchases, selected})
 export const Menu = (list, purchaseHandlerFunction, purchasesArray, selected) =>
   list.map(el => {
     // const {name} = el;
- 
+    
     return <MenuItem key={el.id} danceClassObj={el} purchases={purchasesArray} purchaseHandlerFunction={purchaseHandlerFunction}  selected={selected} />;
   });
  
@@ -56,13 +56,14 @@ class ScrollDiv extends Component {
     const menu = this.menuItems;
  
     return (
-      <div className="App">
+      <div className="App"> 
         <ScrollMenu
           data={menu}
           arrowLeft={ArrowLeft}
           arrowRight={ArrowRight}
           selected={selected}
           onSelect={this.onSelect}
+          wheel={false}
         />
       </div>
     );
