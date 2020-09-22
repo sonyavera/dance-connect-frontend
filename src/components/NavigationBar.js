@@ -32,34 +32,52 @@ class NavigationBar extends React.Component {
     this.setState({isOpen: !this.state.isOpen})
   }
 
-  render(){
 
+  manageIsTeacher=()=>{
+    this.props.manageIsTeacher()
+  }
+
+  render(){
+    console.log("isTeacher in nav bar", this.props.isTeacher===true)
 
     return(
       <div>
+
+
+      {this.props.user ? 
+      
       <Navbar color="light" light expand="md">
-      {this.props.user && this.props.user.account_type === "teacher" ?
+      {this.props.user.account_type === "teacher" ?
       <a className="navbar-brand" href="/home/teacher">
-          <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
+      <img src={require("./Logo.png")} width="30" height="30" alt="hi"></img></a>
       :
       <a className="navbar-brand" href="/home/student">
-          <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
+          <img src={require("./Logo.png")} width="30" height="30" alt="hi"></img></a>
       }
+        
         
         <NavbarToggler onClick={this.toggle}/>
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="mr-auto" navbar>
-          {this.props.user && this.props.user.account_type === "student" ?
+            {this.props.isTeacher === false ?
             <NavItem>
               <NavLink tag={Link} to="/home/student">For You</NavLink>
             </NavItem>
+            :
+            null}
 
-          :
-          <NavItem>
+            {this.props.isTeacher === true ?
+            
+            <NavItem>
               <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
             </NavItem>
-          }
-          {this.props.user && this.props.user.account_type === "student" ?
+            :
+            null
+            
+            }
+      
+          
+          {this.props.isTeacher === false ?
           <NavItem>
               <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
             </NavItem>
@@ -87,7 +105,17 @@ class NavigationBar extends React.Component {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            {this.props.isTeacher === false ?
+            <NavItem>
+              <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/teacher">Teacher Mode</NavLink>
+            </NavItem>
+            :
+            <NavItem>
+              <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/student">Student Mode</NavLink>
+            </NavItem>
+            } 
             </Nav>
+
 
             <Nav className="ml-auto" navbar>
 
@@ -116,7 +144,18 @@ class NavigationBar extends React.Component {
           
         </Collapse>
       </Navbar>
-    </div>
+   
+    
+      
+      
+      :
+
+      <h1>Loading...</h1>
+      
+      }
+
+      </div>
+      
     )
   }
 

@@ -38,7 +38,6 @@ class ScrollDiv extends Component {
   constructor(props) {
     super(props);
     // call it again if items count changes
-    console.log("this.props.featured", this.props)
     this.menuItems = Menu(this.props.danceClasses, this.props.purchaseHandler, this.props.purchases, selected);
   }
  
@@ -52,7 +51,6 @@ class ScrollDiv extends Component {
  
  
   render() {
-    console.log('props in scrolldiv', this.props)
     const { selected } = this.state;
     // Create menu from items
     const menu = this.menuItems;

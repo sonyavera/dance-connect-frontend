@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import {Redirect} from 'react-router-dom'
 import ClassCard from '../components/ClassCard'
 
 
@@ -15,7 +16,7 @@ class ClassesContainer extends React.Component {
 
 
     render(){
-        console.log("purchases in classes container", this.props.purchases)
+        console.log("purchases in classes container", this.props.purchases, "user", this.props.user)
         return(
             <>
 
@@ -24,7 +25,7 @@ class ClassesContainer extends React.Component {
              {this.props.classes && this.props.danceStyle && this.props.purchases ? 
                 this.renderClasses()
              :
-            <h1>loading</h1>
+             <Redirect to="/login"/>
             }
             
             </div>

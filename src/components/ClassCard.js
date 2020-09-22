@@ -26,7 +26,9 @@ class ClassCard extends React.Component{
   renderPurchaseButton=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
     if(!idsOfPurchasedClasses.includes(this.props.danceClass.id)){
-      return <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+      if(localStorage.length > 0){
+        return <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+      }else{return <Button block tag={Link} to="/login">Purchase Class</Button> }
     }
   }
 
@@ -40,13 +42,28 @@ class ClassCard extends React.Component{
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>
+                
                 {this.props.purchases ?
                 this.renderPurchaseButton()
                 :
                 null
                 }
+
                 &nbsp;
-                <Button block tag={Link} to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Learn More</Button>
+                {localStorage.length > 0 ? 
+                
+                <Button 
+                    block tag={Link} 
+                    to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Learn More
+                </Button>
+                
+                :
+                <Button 
+                    block tag={Link} 
+                    to="/login">Learn More
+                </Button>
+                
+                }
               </CardBody>
             </Card>
           </div>

@@ -37,7 +37,6 @@ class App extends React.Component {
 
 
   componentDidMount(){
-    console.log("component did mount")
     const token = localStorage.getItem("token")
     if (token) {
       fetch("http://localhost:3000/api/v1/profile", {
@@ -45,10 +44,10 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      .then(data => this.setState({ user: data.user }, this.setAccountType ))
+      .then(data => this.setState({ user: data.user}, this.setAccountType ))
       .catch((error) => {console.log(error)})
     }  else {
-      this.props.history.push("/login")
+      console.log("not logged in")
     }
 
     this.getDanceClasses()
@@ -56,15 +55,35 @@ class App extends React.Component {
   }
 
   setAccountType=()=>{
-    console.log("set account type")
     if(this.state.user.account_type === "teacher"){
-      this.setState({isTeacher: true}, ()=>console.log('state in set account type', this.state.isTeacher) )
+      this.setState({isTeacher: true}, ()=>console.log('this.state.isTeacher?', this.state.isTeacher) )
+      this.props.history.push("/home/teacher")
     }else{
       this.setState({isTeacher: false}, ()=>console.log('state in set account type', this.state.isTeacher) )
+      this.props.history.push("/home/student")
     }
   }
 
+  patchUser=(userObj)=>{
+    const newUserObj = {
+      first_name: userObj.firstName, 
+      last_name: userObj.lastName,
+      password: userObj.password,
+      account_type: userObj.accountType
+    }
+    console.log("user id from state", this.state.user.id)
+    const token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${token}`},
+      body: JSON.stringify({ user: newUserObj })
+    })
+    .then(resp => resp.json())
+    // .then(resp => this.setState({user: user.data}))
+    .catch((error) => {console.log(error)})
+  }
 
+  
 
   getPurchasesAndCreatedClasses=()=>{
     const token = localStorage.getItem("token")
@@ -73,19 +92,18 @@ class App extends React.Component {
       headers: { Authorization: `Bearer ${token}`},
     })
     .then(resp => resp.json())
-    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes}))
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes}, this.setAccountType() ))
     .catch((error) => {console.log(error)})
   }
 
   getDanceClasses=()=>{
     fetch("http://localhost:3000/dance_classes")
     .then(resp => resp.json())
-    .then(resp => this.setState({classes: resp.classes}))
+    .then(resp => this.setState({classes: resp.classes}, this.getPurchasesAndCreatedClasses() ))
   }
 
 
   signUpHandler=(userObj)=>{
-    console.log("signup handler")
     const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:userObj.selectedOption}
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
@@ -98,22 +116,20 @@ class App extends React.Component {
     .then(res => res.json())
     .then(data => {
       localStorage.setItem("token", data.jwt)
-      this.setState({ user: data.user }, () => {this.componentDidMount()})
-      
+      this.setState({ user: data.user }, () => this.getDanceClasses() )
     })
-    this.props.history.push("/")
-  }
+      
+    }
   
   
   logOutHandler=()=>{
     localStorage.removeItem("token")
     this.setState({user:false})
     console.log(localStorage)
-    this.props.history.push("/login") 
+    this.props.history.push("/") 
   }
 
   logInHandler = (user) => { //ordinarily this function accepts userInfo as a parameter
-    console.log("logging in")
     fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
@@ -124,13 +140,13 @@ class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log("response from backend after login", data)
         localStorage.setItem("token", data.jwt)
         this.setState({ user: data.user }, () => {
+
             if(this.state.user.account_type === "student"){
-              console.log('true')
               this.props.history.push("/home/student")
             } else{this.props.history.push("/home/teacher")}
+
         })
       })
   }
@@ -139,9 +155,14 @@ class App extends React.Component {
     this.setState({danceStyle: style })
   }
 
+  manageIsTeacher=()=>{
+    this.setState({isTeacher: !this.state.isTeacher}, 
+      ()=> console.log("isTeacher in app", this.state.isTeacher)
+      )
+  }
+
 
   purchaseDanceClass=(danceClassId)=>{
-    console.log("hit purchase handler")
     const userClassObj = {dance_class_id: danceClassId}
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
@@ -154,8 +175,7 @@ class App extends React.Component {
         body: JSON.stringify(userClassObj)
       })
         .then(res => res.json())
-        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, () => console.log("purchased classes", this.state.purchasedClasses))})
-        .then(console.log('joined event'))
+        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]})})
     }
 
   render(){
@@ -168,7 +188,8 @@ class App extends React.Component {
 
           <Route path="/login" render={() => 
                                             <div>
-                                              <NavigationBar 
+                                              <NavigationBar
+                                                manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
@@ -183,6 +204,7 @@ class App extends React.Component {
           <Route path="/signup" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
                                                 logIn={this.logInHandler} 
@@ -196,6 +218,7 @@ class App extends React.Component {
           <Route path="/classes/new" render={() => 
                                                 <div>
                                                 <NavigationBar 
+                                                  manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
                                                   signUp={this.signUpHandler}
@@ -212,6 +235,7 @@ class App extends React.Component {
             <Route path="/me/purchases" render={(data) => 
                                                     <div>
                                                       <NavigationBar 
+                                                        manageIsTeacher={this.manageIsTeacher} 
                                                         isTeacher={this.state.isTeacher}
                                                         changeHandler={this.navBarHandler}
                                                         signUp={this.signUpHandler}
@@ -228,6 +252,7 @@ class App extends React.Component {
             <Route path="/me" render={() => 
                                             <div>
                                             <NavigationBar 
+                                              manageIsTeacher={this.manageIsTeacher} 
                                               isTeacher={this.state.isTeacher}
                                               changeHandler={this.navBarHandler}
                                               signUp={this.signUpHandler}
@@ -237,12 +262,14 @@ class App extends React.Component {
                                             <JumboImage/>
                                             <Profile 
                                               user={this.state.user} 
+                                              editProfile={this.patchUser}
                                             />
                                             </div>}/>
 
             <Route path="/home/teacher" render={() => 
                                                   <div>
                                                     <NavigationBar 
+                                                      manageIsTeacher={this.manageIsTeacher} 
                                                       isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
                                                       signUp={this.signUpHandler}
@@ -257,6 +284,7 @@ class App extends React.Component {
               <Route path="/home/student" render={() => 
                                                   <div>
                                                     <NavigationBar 
+                                                      manageIsTeacher={this.manageIsTeacher} 
                                                       isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
                                                       signUp={this.signUpHandler}
@@ -275,6 +303,7 @@ class App extends React.Component {
                 <Route path="/classes/:dance_style/:id" render={(data) => 
                                                       <div>
                                                         <NavigationBar 
+                                                          manageIsTeacher={this.manageIsTeacher} 
                                                           isTeacher={this.state.isTeacher}
                                                           changeHandler={this.navBarHandler}
                                                           signUp={this.signUpHandler}
@@ -292,6 +321,7 @@ class App extends React.Component {
               <Route path="/classes/:dance_style" render={(data) => 
                                             <div>
                                               <NavigationBar 
+                                                manageIsTeacher={this.manageIsTeacher} 
                                                 isTeacher={this.state.isTeacher}
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
@@ -314,6 +344,7 @@ class App extends React.Component {
               <Route path="/" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                manageIsTeacher={this.manageIsTeacher} 
                                                 isTeacher={this.state.isTeacher}
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}

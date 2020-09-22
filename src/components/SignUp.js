@@ -21,7 +21,6 @@ class SignUp extends React.Component {
 
     changeHandler=(e)=>{
         this.setState({ [e.target.name]: e.target.value})
-        console.log("this.state",this.state)
     }
 
     handleOptionChange=(changeEvent)=>{
@@ -34,7 +33,6 @@ class SignUp extends React.Component {
 
 
     render(){
-      console.log('selected option', this.state.selectedOption)
         return (
             <div id="form-div">
                <Form id="signup-form">

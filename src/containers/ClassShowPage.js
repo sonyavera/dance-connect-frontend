@@ -26,20 +26,17 @@ renderClassStyle=()=>{
   }
 
     render(){
-        console.log(this.props.classId)
-        if(this.state.danceClass){
-            console.log('this.state.danceClass', this.state.danceClass.dance_class[0])
-        }
-
-
         return(
             <>
             {this.state.danceClass ?
             <div className="back-button">
-            <Button tag={Link} to={"/classes/" + this.state.danceClass.dance_class[0].style}> ← back to all {this.renderClassStyle()} classes</Button>
+            <Button 
+                tag={Link} 
+                to={"/classes/" + this.state.danceClass.dance_class[0].style}> ← back to all {this.renderClassStyle()} classes
+            </Button>
             </div>
             :
-            <h1>loading</h1>
+            <h1>Loading</h1>
             }
 
             <h1>Class Show page</h1>

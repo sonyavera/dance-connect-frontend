@@ -1,6 +1,7 @@
 import React from 'react'
 import '../App.css';
 import ClassCard from'../components/ClassCard'
+import {Redirect} from 'react-router-dom'
 
 
 class PurchasesContainer extends React.Component{
@@ -28,10 +29,10 @@ class PurchasesContainer extends React.Component{
             <h1>Your Purchased Classes</h1>
              <div className="container-fluid" className="m-5" cl-md-xx>
             <div className="card-columns" >
-            {this.props.classes ?
+            {this.props.classes && this.props.user ? 
             this.renderClasses()
             :
-            console.log('not working sry')
+            <Redirect to="/login"/>
             }
             </div>
             </div>

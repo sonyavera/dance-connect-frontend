@@ -15,7 +15,6 @@ class StudentUI extends React.Component {
 
 
     render(){
-        console.log("props in student ui", this.props)
         return(
             <>
             <h1> Student UI</h1>
