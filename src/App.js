@@ -30,12 +30,14 @@ class App extends React.Component {
     classes: null,
     danceStyle: "Salsa",
     purchasedClasses: [],
-    createdClasses: []
+    createdClasses: [],
+    isTeacher: null
   }
 
-  
-  componentDidMount(){
 
+
+  componentDidMount(){
+    console.log("component did mount")
     const token = localStorage.getItem("token")
     if (token) {
       fetch("http://localhost:3000/api/v1/profile", {
@@ -43,18 +45,26 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      .then(data => this.setState({ user: data.user }))
+      .then(data => this.setState({ user: data.user }, this.setAccountType ))
       .catch((error) => {console.log(error)})
     }  else {
       this.props.history.push("/login")
     }
 
-
     this.getDanceClasses()
-
-    this.getPurchasesAndCreatedClasses()
-    
+    this.getPurchasesAndCreatedClasses()  
   }
+
+  setAccountType=()=>{
+    console.log("set account type")
+    if(this.state.user.account_type === "teacher"){
+      this.setState({isTeacher: true}, ()=>console.log('state in set account type', this.state.isTeacher) )
+    }else{
+      this.setState({isTeacher: false}, ()=>console.log('state in set account type', this.state.isTeacher) )
+    }
+  }
+
+
 
   getPurchasesAndCreatedClasses=()=>{
     const token = localStorage.getItem("token")
@@ -303,7 +313,7 @@ class App extends React.Component {
                                                 logOut={this.logOutHandler} 
                                                 user={this.state.user} />
                                             <JumboImage/>
-                                              <Home/>
+                                              <TeacherUI/>
                                                 </div> } /> 
 
 

@@ -22,9 +22,7 @@ import {Malecon} from './Malecon.jpg'
 
 class NavigationBar extends React.Component {
   
-  
-  
-  
+
   state={
     isOpen: false
   }
