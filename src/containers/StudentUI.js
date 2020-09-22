@@ -23,6 +23,7 @@ class StudentUI extends React.Component {
             <h3>Featured Classes</h3>
             {this.props.classes ?
             <ScrollDiv 
+                purchases={this.props.purchases}
                 danceClasses={this.props.classes.slice(1,10)} 
                 purchaseHandler={this.props.purchaseHandler}/>
             :
@@ -33,6 +34,7 @@ class StudentUI extends React.Component {
             &nbsp;
             {this.props.classes ?
             <ScrollDiv 
+                purchases={this.props.purchases}
                 danceClasses={this.props.classes.slice(11,20)} 
                 purchaseHandler={this.props.purchaseHandler}/>
             :

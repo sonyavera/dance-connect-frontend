@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Collapse,
   Button,
@@ -16,13 +16,28 @@ import {
 } from 'reactstrap';
 import '../App.css';
 import { Link} from 'react-router-dom';
+import {Logo} from './Logo.png'
+import {Karelia} from './Karelia.png'
+import {Malecon} from './Malecon.jpg'
 
 const NavigationBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const [danceStyle, setDanceStyle] = useState(null)
+
+
+
+
+
+  // console.log("state in navbar", accountType)
+
+  // useEffect( ()=> {
+  //   setAccountType(props.user.account_type)
+  // })
+
+
+
 
   // const handleSelect=(e)=>{
   //   const classStyle = e.target.innerText
@@ -37,13 +52,36 @@ const NavigationBar = (props) => {
   return (
     <div>
       <Navbar color="light" light expand="md">
-        <NavbarBrand href="/home/student">Student Home</NavbarBrand>
+      {props.user && props.user.account_type === "teacher" ?
+      <a className="navbar-brand" href="/home/teacher">
+          <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
+      :
+      <a className="navbar-brand" href="/home/student">
+          <img src="https://www.gstatic.com/tv/thumb/persons/221587/221587_v9_bc.jpg" width="30" height="30" alt="hi"></img></a>
+      }
+        
         <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
+          {props.user && props.user.account_type === "student" ?
             <NavItem>
+              <NavLink tag={Link} to="/home/student">For You</NavLink>
+            </NavItem>
+
+          :
+          <NavItem>
+              <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
+            </NavItem>
+          }
+          {props.user && props.user.account_type === "student" ?
+          <NavItem>
               <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
             </NavItem>
+          :
+          null
+          }
+
+
             <NavItem>
               <NavLink tag={Link} to="/me">My Profile</NavLink>
             </NavItem>

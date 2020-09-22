@@ -22,6 +22,15 @@ class ClassCard extends React.Component{
     this.props.purchaseHandler(this.props.danceClass.id)
   }
 
+  
+  renderPurchaseButton=()=>{
+    const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
+    if(!idsOfPurchasedClasses.includes(this.props.danceClass.id)){
+      return <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+    }
+  }
+
+
 
     render(){
         return(
@@ -31,7 +40,11 @@ class ClassCard extends React.Component{
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>
-                <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+                {this.props.purchases ?
+                this.renderPurchaseButton()
+                :
+                null
+                }
                 &nbsp;
                 <Button block tag={Link} to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Learn More</Button>
               </CardBody>

@@ -6,17 +6,17 @@ import ClassCard from './ClassCard'
  
 // One item component
 // selected prop will be passed
-const MenuItem = ({danceClassObj, purchaseHandlerFunction, selected}) => {
-  return <ClassCard key={danceClassObj.id} danceClass={danceClassObj} purchaseHandler={purchaseHandlerFunction}/>;
+const MenuItem = ({danceClassObj, purchaseHandlerFunction, purchases, selected}) => {
+  return <ClassCard key={danceClassObj.id} danceClass={danceClassObj} purchases={purchases} purchaseHandler={purchaseHandlerFunction}/>;
 };
  
 // All items component
 // Important! add unique key
-export const Menu = (list, selected) =>
+export const Menu = (list, purchaseHandlerFunction, purchasesArray, selected) =>
   list.map(el => {
     // const {name} = el;
  
-    return <MenuItem key={el.id} danceClassObj={el}  selected={selected} />;
+    return <MenuItem key={el.id} danceClassObj={el} purchases={purchasesArray} purchaseHandlerFunction={purchaseHandlerFunction}  selected={selected} />;
   });
  
  
@@ -39,7 +39,7 @@ class ScrollDiv extends Component {
     super(props);
     // call it again if items count changes
     console.log("this.props.featured", this.props)
-    this.menuItems = Menu(this.props.danceClasses, this.props.purchaseHandler, selected);
+    this.menuItems = Menu(this.props.danceClasses, this.props.purchaseHandler, this.props.purchases, selected);
   }
  
   state = {
@@ -52,7 +52,7 @@ class ScrollDiv extends Component {
  
  
   render() {
-    console.log('this.props.purchsaeHandler in scrolldiv', this.props.purchaseHandler)
+    console.log('props in scrolldiv', this.props)
     const { selected } = this.state;
     // Create menu from items
     const menu = this.menuItems;

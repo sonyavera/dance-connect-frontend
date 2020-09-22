@@ -183,7 +183,7 @@ class App extends React.Component {
                                                 signUp={this.signUpHandler}/>
                                             </div>} />
 
-          <Route path="/createclass" render={() => 
+          <Route path="/classes/new" render={() => 
                                                 <div>
                                                 <NavigationBar 
                                                   changeHandler={this.navBarHandler}
@@ -192,6 +192,7 @@ class App extends React.Component {
                                                   logOut={this.logOutHandler} 
                                                   user={this.state.user} />
                                                 <JumboImage/>
+                                                create class
                                                 <CreateClass 
                                                   user={this.state.user} 
                                                 />
@@ -248,7 +249,8 @@ class App extends React.Component {
                                                       logOut={this.logOutHandler} 
                                                       user={this.state.user} />
                                                   <JumboImage/>
-                                                    <StudentUI 
+                                                    <StudentUI
+                                                        purchases={this.state.purchasedClasses} 
                                                         classes={this.state.classes}
                                                         purchaseHandler={this.purchaseDanceClass}
                                                     />
@@ -283,7 +285,9 @@ class App extends React.Component {
                                               <ClassesContainer 
                                                     purchaseHandler={this.purchaseDanceClass}
                                                     danceStyle={data.match.params.dance_style} 
-                                                    classes={this.state.classes}/>
+                                                    classes={this.state.classes}
+                                                    purchases={this.state.purchasedClasses}
+                                                    />
                                               </div> }/> 
 
 
