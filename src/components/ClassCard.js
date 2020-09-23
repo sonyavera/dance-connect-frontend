@@ -41,28 +41,24 @@ class ClassCard extends React.Component{
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>
-                
+                <div id="button-div">
                 {this.props.purchases ?
                 this.renderPurchaseButton()
                 :
                 null
                 }
-
-                &nbsp;
                 {localStorage.length > 0 ? 
-                
                 <Button 
                     block tag={Link} 
                     to={this.props.danceClass.style + "/" + this.props.danceClass.id}>Learn More
                 </Button>
-                
                 :
                 <Button 
                     block tag={Link} 
                     to="/login">Learn More
                 </Button>
-                
                 }
+                </div>
               </CardBody>
             </Card>
         )

@@ -20,6 +20,7 @@ import Recommendations from './containers/Recommendations'
 import Profile from './components/Profile'
 import PurchasesContainer from './containers/PurchasesContainer'
 import ClassShowPage from './containers/ClassShowPage'
+import ManageClasses from './containers/ManageClasses'
 
 
 
@@ -161,6 +162,22 @@ class App extends React.Component {
       )
   }
 
+  createClass=(classObj)=>{
+    console.log("create class in app", classObj)
+    const token = localStorage.getItem("token")
+    fetch("http://localhost:3000/dance_classes", {
+      method: 'POST',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({dance_class: classObj})
+    })
+    .then(res => res.json())
+    .then(console.log)
+  }
+
 
   purchaseDanceClass=(danceClassId)=>{
     const userClassObj = {dance_class_id: danceClassId}
@@ -226,11 +243,27 @@ class App extends React.Component {
                                                   logOut={this.logOutHandler} 
                                                   user={this.state.user} />
                                                 <JumboImage/>
-                                                create class
-                                                <CreateClass 
+                                                
+                                                <CreateClass
+                                                  createClass={this.createClass} 
                                                   user={this.state.user} 
                                                 />
                                                 </div>}/>
+
+
+            <Route path="/me/created_classes" render={() =>
+                                                  <>
+                                                  <NavigationBar 
+                                                  manageIsTeacher={this.manageIsTeacher} 
+                                                  isTeacher={this.state.isTeacher}
+                                                  changeHandler={this.navBarHandler}
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
+                                                <JumboImage/>
+                                                <ManageClasses/>
+                                                 </>}/>
 
             <Route path="/me/purchases" render={(data) => 
                                                     <div>

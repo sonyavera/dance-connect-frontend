@@ -57,7 +57,7 @@ class NavigationBar extends React.Component {
         
         <NavbarToggler onClick={this.toggle}/>
         <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+        <Nav className="mr-auto" navbar>
             {this.props.isTeacher === false ?
             <NavItem>
               <NavLink tag={Link} to="/home/student">For You</NavLink>
@@ -66,10 +66,14 @@ class NavigationBar extends React.Component {
             null}
 
             {this.props.isTeacher === true ?
-            
+            <>
             <NavItem>
               <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={Link} to="/me/created_classes">Manage Your Classes</NavLink>
+            </NavItem>
+            </>
             :
             null
             
@@ -88,6 +92,7 @@ class NavigationBar extends React.Component {
             <NavItem>
               <NavLink tag={Link} to="/me">My Profile</NavLink>
             </NavItem>
+
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Classes
@@ -135,21 +140,31 @@ class NavigationBar extends React.Component {
                 </>
             }
             </Nav>
+        
+             </Collapse>
+              </Navbar>
+            :
 
 
 
+            <Navbar color="light" light expand="md">
+            <a className="navbar-brand" href="/">
+            <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a> 
 
 
-          
-        </Collapse>
-      </Navbar>
-   
-    
-      
-      
-      :
+                    
 
-      <h1>Loading...</h1>
+            <Nav className="ml-auto" navbar>
+                <NavItem className="justify-content-end">
+                    <Button  href="/signup" id="signup" >Sign Up</Button>
+                </NavItem>
+             
+                <NavItem className="nav-button">
+                    <Button id="userbutton" href="/login">Log In</Button>
+                </NavItem>
+
+            </Nav>
+            </Navbar>  
       
       }
 

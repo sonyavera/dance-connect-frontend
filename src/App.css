@@ -41,7 +41,7 @@
   margin-left:10px;
 }
 
-#form-div{
+.form-div{
   width:500px;
   margin-right: auto;
   margin-left: auto;
@@ -50,8 +50,8 @@
   border-color:#2d53cf;
 }
 
-#signup-form{
-  padding: 15px;
+.inner-form{
+  padding: 30px;
 }
 
 .jumbotron{
@@ -94,6 +94,15 @@ h1 {
 
 .card-div{
   width: 300px;
+  height: 600px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+
+.button-div{
+  position: absolute;
+  bottom: 100px;
 }
 
 .logo{
