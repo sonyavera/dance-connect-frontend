@@ -17,8 +17,6 @@ class StudentUI extends React.Component {
     render(){
         return(
             <>
-            <h1> Student UI</h1>
-            &nbsp;
             <h3>Featured Classes</h3>
             {this.props.classes ?
             <ScrollDiv 

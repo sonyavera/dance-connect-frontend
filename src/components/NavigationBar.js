@@ -93,7 +93,9 @@ class NavigationBar extends React.Component {
               <NavLink tag={Link} to="/me">My Profile</NavLink>
             </NavItem>
 
-            <UncontrolledDropdown nav inNavbar>
+            {this.props.isTeacher === false ? 
+            
+              <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 Classes
               </DropdownToggle>
@@ -109,6 +111,13 @@ class NavigationBar extends React.Component {
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
+            :
+            
+            null
+            }
+
+
+
             {this.props.isTeacher === false ?
             <NavItem>
               <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/teacher">Teacher Mode</NavLink>

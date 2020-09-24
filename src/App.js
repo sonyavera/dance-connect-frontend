@@ -130,7 +130,7 @@ class App extends React.Component {
     this.props.history.push("/") 
   }
 
-  logInHandler = (user) => { //ordinarily this function accepts userInfo as a parameter
+  logInHandler = (user) => {
     fetch("http://localhost:3000/api/v1/login", {
       method: "POST",
       headers: {
@@ -180,6 +180,7 @@ class App extends React.Component {
 
 
   purchaseDanceClass=(danceClassId)=>{
+    console.log("purchasing class")
     const userClassObj = {dance_class_id: danceClassId}
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
@@ -192,7 +193,7 @@ class App extends React.Component {
         body: JSON.stringify(userClassObj)
       })
         .then(res => res.json())
-        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]})})
+        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, ()=> this.componentDidMount()  )} )
     }
 
   render(){
@@ -278,7 +279,8 @@ class App extends React.Component {
                                                     <JumboImage/>
                                                       <PurchasesContainer 
                                                           user={this.state.user}
-                                                          classes={this.state.purchasedClasses} 
+                                                          purchasedClasses={this.state.purchasedClasses} 
+                                                          classes={this.state.classes}
                                                           />
                                                       </div> }/> 
 
@@ -299,6 +301,24 @@ class App extends React.Component {
                                               editProfile={this.patchUser}
                                             />
                                             </div>}/>
+
+            <Route path="/home/:dance_style/:id" render={(data) => 
+                                              <div>
+                                                <NavigationBar 
+                                                  manageIsTeacher={this.manageIsTeacher} 
+                                                  isTeacher={this.state.isTeacher}
+                                                  changeHandler={this.navBarHandler}
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
+                                              <JumboImage/>
+                                                <ClassShowPage
+                                                      danceStyle={data.match.params.dance_style}
+                                                      danceClassId={data.match.params.id} 
+                                                      purchaseHandler={this.purchaseDanceClass}
+                                                      classes={this.state.classes}/>
+                                                </div> }/> 
 
             <Route path="/home/teacher" render={() => 
                                                   <div>
@@ -346,9 +366,11 @@ class App extends React.Component {
                                                           user={this.state.user} />
                                                       <JumboImage/>
                                                         <ClassShowPage
+                                                              purchaseHandler={this.purchaseDanceClass}
                                                               danceStyle={data.match.params.dance_style}
-                                                              classId={data.match.params.id} 
+                                                              danceClassId={data.match.params.id} 
                                                               classes={this.state.classes}/>
+
                                                         </div> }/> 
 
 

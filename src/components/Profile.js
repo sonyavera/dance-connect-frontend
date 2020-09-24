@@ -39,8 +39,10 @@ class Profile extends React.Component{
             <>
             {this.props.user ?
 
-                <div id="form-div">
-               <Form id="signup-form">
+              <div className="form-div">
+               <Form className="inner-form">
+               <center>Edit Your Profile</center>
+               &nbsp;
               <Row form>
               <Col md={6}>
                 <FormGroup>

@@ -6,21 +6,14 @@ import {Redirect} from 'react-router-dom'
 
 class PurchasesContainer extends React.Component{
 
-
-    // renderClasses=()=>{    
-    //     return this.props.classes.filter(danceClass => danceClass.user_id === this.props.userId).map(danceClass => {
-    //         return <ClassCard key={danceClass.id} danceClass={danceClass}/>
-    //     })
-    // }
-
     renderClasses=()=>{
-        return this.props.classes.map(danceClass => {
-            return <ClassCard key={danceClass.id} danceClass={danceClass} purchases={this.props.classes}/>
+        return this.props.purchasedClasses.map(danceClass => {
+            return <ClassCard key={danceClass.id} danceClass={danceClass} purchases={this.props.purchasedClasses}/>
         })
     }
 
     render(){
-        if(this.props.classes){
+        if(this.props.purchaseClasses){
             console.log('this.props from purchases container', this.props)
         }
 

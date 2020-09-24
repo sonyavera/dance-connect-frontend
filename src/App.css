@@ -58,7 +58,21 @@
     background: no-repeat center center;
     background-size: cover;
     min-height: 425px;
+   
 }
+
+.jumbotron-img {
+  filter: opacity(0.5);
+  position: relative;
+}
+
+.jumbotron-text{
+  color: white;
+  position: absolute; 
+  bottom:0;
+  float: right;
+}
+
 
 .card-title{
   font-weight: 700;
@@ -90,6 +104,7 @@
 
 h1 {
   margin-left: 10px;
+
 }
 
 .card-div{
@@ -108,4 +123,9 @@ h1 {
 .logo{
   height: 100px;
   width: 100px;
+}
+
+#instructor-img{
+  height: 300px;
+  width: 300px;
 }

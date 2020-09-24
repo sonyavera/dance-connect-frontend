@@ -6,10 +6,10 @@ import '../App.css';
 const JumboImage = (props) => {
   return (
     <div>
-      <Jumbotron style={{ backgroundImage: `url(${bgimage})`, backgroundSize: 'cover' }} fluid>
-        <Container fluid>
-          <h1 className="display-3">Fluid jumbotron</h1>
-          <p className="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+      <Jumbotron className="jumbotron-img" style={{ backgroundImage: `url(${bgimage})`, backgroundSize: 'cover',  }} fluid>
+        <Container className="jumbotron-text" fluid>
+          <h1 className="display-3">conexión danza</h1>
+          <p className="lead">Connect with and learn from dance instructors around the world from your own home.</p>
         </Container>
       </Jumbotron>
     </div>

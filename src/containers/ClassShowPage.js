@@ -1,7 +1,7 @@
 import React from 'react'
 import { isCompositeComponent } from 'react-dom/test-utils';
 import '../App.css';
-import {Button} from 'reactstrap'
+import {Button, Container} from 'reactstrap'
 import { Link } from 'react-router-dom'
 
 class ClassShowPage extends React.Component{
@@ -12,9 +12,13 @@ class ClassShowPage extends React.Component{
 
 
 componentDidMount(){
-    fetch("http://localhost:3000/dance_classes/" + this.props.classId)
+    fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId)
     .then(resp=> resp.json())
     .then(resp => this.setState({danceClass: resp}, ()=> console.log("state after fetch", this.state.danceClass.dance_class[0].style) ))
+}
+
+handlePurchase=()=>{
+    this.props.purchaseHandler(this.props.danceClassId)
 }
 
 renderClassStyle=()=>{
@@ -26,6 +30,7 @@ renderClassStyle=()=>{
   }
 
     render(){
+        console.log("all attributes", this.state.danceClass)
         return(
             <>
             {this.state.danceClass ?
@@ -34,12 +39,22 @@ renderClassStyle=()=>{
                 tag={Link} 
                 to={"/classes/" + this.state.danceClass.dance_class[0].style}> ← back to all {this.renderClassStyle()} classes
             </Button>
+            <Container>
+            <h1>{this.renderClassStyle()} with {this.state.danceClass.dance_class[0].instructor_name}</h1>
+            <img id="instructor-img" src={this.state.danceClass.dance_class[0].instructor_avatar} alt=""/>
+            {this.state.danceClass.dance_class[0].style}
+            {this.state.danceClass.dance_class[0].description}
+            
+            </Container>
+            <Container width="100px">
+            <Button onClick={this.handlePurchase} block color="primary">Purchase Class</Button>
+
+            </Container>
             </div>
             :
             <h1>Loading</h1>
-            }
+            } 
 
-            <h1>Class Show page</h1>
              </>
         )
     }

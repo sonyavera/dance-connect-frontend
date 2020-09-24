@@ -9,14 +9,15 @@ class ClassesContainer extends React.Component {
    
     
     renderClasses=()=>{    
-        return this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle).map(danceClass => {
+        const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
+        return classesByStyle.map(danceClass => {
             return <ClassCard key={danceClass.id} danceClass={danceClass} purchaseHandler={this.props.purchaseHandler} purchases={this.props.purchases}/>
         })
     }
 
 
     render(){
-        console.log("purchases in classes container", this.props.purchases, "user", this.props.user)
+        console.log("Classes in classes container", this.props.classes, "purchases in classes container", this.props.purchases, "user", this.props.user)
         return(
             <>
 
