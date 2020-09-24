@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
 
 class CreateClass extends React.Component {
 
@@ -69,7 +69,7 @@ class CreateClass extends React.Component {
               <Input onChange={this.changeHandler} value={this.state.url} type="text" name="url" id="exampleEmail" placeholder="add the link to a private YouTube video with your class" />
             </FormGroup>
       
-            <Button onClick={this.submitHandler}>Create Class</Button>
+            <Button block color="primary" onClick={this.submitHandler}>Create Class</Button>
           </Form>
           </div>
         );

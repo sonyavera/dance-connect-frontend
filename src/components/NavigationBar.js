@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'
 import {
   Collapse,
   Button,
@@ -16,9 +16,6 @@ import {
 } from 'reactstrap';
 import '../App.css';
 import { Link} from 'react-router-dom';
-import {Logo} from './Logo.png'
-import {Karelia} from './Karelia.png'
-import {Malecon} from './Malecon.jpg'
 
 class NavigationBar extends React.Component {
   
@@ -48,10 +45,10 @@ class NavigationBar extends React.Component {
       <Navbar color="light" light expand="md">
       {this.props.user.account_type === "teacher" ?
       <a className="navbar-brand" href="/home/teacher">
-      <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a>
+      <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
       :
       <a className="navbar-brand" href="/home/student">
-          <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a>
+          <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
       }
         
         

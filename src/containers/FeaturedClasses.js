@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import ReactDOM from 'react-dom';
 import '../App.css';
 
 

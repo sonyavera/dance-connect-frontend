@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import ReactDOM from 'react-dom';
 import './App.css';
 import {  
   Switch,
@@ -15,8 +13,6 @@ import TeacherUI from './containers/TeacherUI'
 import StudentUI from './containers/StudentUI'
 import JumboImage from './components/JumboImage'
 import ClassesContainer from './containers/ClassesContainer'
-import FeaturedClasses from './containers/FeaturedClasses'
-import Recommendations from './containers/Recommendations'
 import Profile from './components/Profile'
 import PurchasesContainer from './containers/PurchasesContainer'
 import ClassShowPage from './containers/ClassShowPage'
@@ -55,15 +51,7 @@ class App extends React.Component {
     this.getPurchasesAndCreatedClasses()  
   }
 
-  setAccountType=()=>{
-    if(this.state.user.account_type === "teacher"){
-      this.setState({isTeacher: true}, ()=>console.log('this.state.isTeacher?', this.state.isTeacher) )
-      this.props.history.push("/home/teacher")
-    }else{
-      this.setState({isTeacher: false}, ()=>console.log('state in set account type', this.state.isTeacher) )
-      this.props.history.push("/home/student")
-    }
-  }
+
 
   patchUser=(userObj)=>{
     const newUserObj = {
@@ -93,19 +81,38 @@ class App extends React.Component {
       headers: { Authorization: `Bearer ${token}`},
     })
     .then(resp => resp.json())
-    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes}, this.setAccountType() ))
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes} ))
     .catch((error) => {console.log(error)})
   }
 
   getDanceClasses=()=>{
     fetch("http://localhost:3000/dance_classes")
     .then(resp => resp.json())
-    .then(resp => this.setState({classes: resp.classes}, this.getPurchasesAndCreatedClasses() ))
+    .then(resp => this.setState({classes: resp.classes}))
+
+        const token = localStorage.getItem("token")
+    fetch('http://localhost:3000/me/dance_classes', {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}`},
+    })
+    .then(resp => resp.json())
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes} ))
+    .catch((error) => {console.log(error)})
+  }
+
+  setAccountType=()=>{
+    if(this.state.user.account_type === "teacher"){
+      this.setState({isTeacher: true} )
+      // this.props.history.push("/home/teacher")
+    }else{
+      this.setState({isTeacher: false} )
+      // this.props.history.push("/home/student")
+    }
   }
 
 
   signUpHandler=(userObj)=>{
-    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:userObj.selectedOption}
+    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:userObj.selectedOption, avatar:userObj.avatar}
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -142,13 +149,15 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         localStorage.setItem("token", data.jwt)
-        this.setState({ user: data.user }, () => {
+        this.setState({ user: data.user }
+          , () => {
 
             if(this.state.user.account_type === "student"){
               this.props.history.push("/home/student")
             } else{this.props.history.push("/home/teacher")}
 
-        })
+        }
+        )
       })
   }
 
@@ -193,8 +202,19 @@ class App extends React.Component {
         body: JSON.stringify(userClassObj)
       })
         .then(res => res.json())
-        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, ()=> this.componentDidMount()  )} )
+        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, ()=> console.log('purchased classes', this.state.purchasedClasses) )} )
+        .then(()=> this.getPurchasesAndCreatedClasses())
+        // .then(()=> this.getDanceClasses())
     }
+
+  //   componentDidUpdate=(prevProps, prevState)=>{
+  //     if(this.state.purchasedClasses !== prevState.purchasedClasses){
+  //         this.getPurchasesAndCreatedClasses()       
+  //     }
+  // }
+
+
+
 
   render(){
     return (
@@ -317,6 +337,7 @@ class App extends React.Component {
                                                       danceStyle={data.match.params.dance_style}
                                                       danceClassId={data.match.params.id} 
                                                       purchaseHandler={this.purchaseDanceClass}
+                                                      purchases={this.state.purchasedClasses}
                                                       classes={this.state.classes}/>
                                                 </div> }/> 
 
@@ -368,7 +389,8 @@ class App extends React.Component {
                                                         <ClassShowPage
                                                               purchaseHandler={this.purchaseDanceClass}
                                                               danceStyle={data.match.params.dance_style}
-                                                              danceClassId={data.match.params.id} 
+                                                              danceClassId={data.match.params.id}
+                                                              purchases={this.state.purchasedClasses} 
                                                               classes={this.state.classes}/>
 
                                                         </div> }/> 
@@ -408,7 +430,7 @@ class App extends React.Component {
                                                 logOut={this.logOutHandler} 
                                                 user={this.state.user} />
                                             <JumboImage/>
-                                              <TeacherUI/>
+                                              <Home/>
                                                 </div> } /> 
 
 

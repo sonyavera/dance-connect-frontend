@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, NavLink
+    CardTitle, Button
   } from 'reactstrap';
 import {Link} from 'react-router-dom'
 import Karelia from './Karelia.png'
@@ -10,31 +10,33 @@ import '../App.css';
 
 class ClassCard extends React.Component{
 
+  
   renderClassStyle=()=>{
     if(this.props.danceClass.style === "afrocubanfolklore"){
       return "Afro Cuban Folklore"
-    }else if(this.props.danceClass.style == "cubansalsa"){
+    }else if(this.props.danceClass.style === "cubansalsa"){
       return "Cuban Salsa"
     }else{return "Bachata"}
   }
 
   handlePurchase=()=>{
     this.props.purchaseHandler(this.props.danceClass.id)
+    // this.setState({isPurchased: true})
   }
 
   
   renderCtaButton=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
-    console.log("ids of purchasec classes", idsOfPurchasedClasses, "class id", this.props.danceClass.id)
+
     if(localStorage.length > 0){  
       if(idsOfPurchasedClasses.includes(this.props.danceClass.id)){
         console.log("this class has been purchased")
-        return <Button block >Start Class</Button>
+        return <Button color="info" block >Start Class</Button>
       }  else{
-        return <Button block onClick={this.handlePurchase}>Purchase Class</Button>
+        return <Button color="primary" block onClick={this.handlePurchase}>Purchase Class</Button>
       }
     }else {
-      return <Button block tag={Link} to="/login">Purchase Class</Button> 
+      return <Button color="primary" block tag={Link} to="/login">Purchase Class</Button> 
     }
   }
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Col, Row, Button, Form, FormGroup, Label, Input, NavLink } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Input } from 'reactstrap';
 import '../App.css';
 
 

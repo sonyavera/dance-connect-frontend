@@ -1,8 +1,6 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import ReactDOM from 'react-dom';
 import '../App.css';
-import ScrollDiv from '../components/ScrollDiv'
+
 
 
 
@@ -20,7 +18,6 @@ class Home extends React.Component {
         return(
             <>
             <h1> Home</h1>
-            <ScrollDiv/>
             </>
         )
     }

@@ -15,7 +15,6 @@ class ClassesContainer extends React.Component {
         })
     }
 
-
     render(){
         console.log("Classes in classes container", this.props.classes, "purchases in classes container", this.props.purchases, "user", this.props.user)
         return(
@@ -26,7 +25,7 @@ class ClassesContainer extends React.Component {
              {this.props.classes && this.props.danceStyle && this.props.purchases ? 
                 this.renderClasses()
              :
-             <Redirect to="/login"/>
+             <h1>Loading</h1>
             }
             
             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Button, Form, FormGroup, Label, Input, NavLink } from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {Redirect} from 'react-router-dom'
 import '../App.css';
 
@@ -12,8 +12,10 @@ class Profile extends React.Component{
         accountType: null,
         username: null,
         password: null,
+        avatar: null,
         confirmedPw: null,
         selectedOption: null,
+        disableSubmitButton: true
     }
 
 
@@ -22,8 +24,20 @@ class Profile extends React.Component{
     }
 
     changeHandler=(e)=>{
-        this.setState({ [e.target.name]: e.target.value})
+        this.setState({ [e.target.name]: e.target.value}, ()=> this.buttonLogic() )
     }
+  
+
+
+    buttonLogic=()=>{
+      if(this.state.confirmedPw && this.state.password && this.state.password === this.state.confirmedPw){
+        this.setState({ disableSubmitButton: false})
+      }else {
+        this.setState({ disableSubmitButton: true})   
+        }
+    }
+      
+
 
     handleOptionChange=(changeEvent)=>{
       this.setState({
@@ -32,26 +46,50 @@ class Profile extends React.Component{
     }
 
     render(){
-        console.log('props in profile', this.props)
-
-
         return(
             <>
             {this.props.user ?
 
               <div className="form-div">
                <Form className="inner-form">
-               <center>Edit Your Profile</center>
-               &nbsp;
+               <center><strong>Edit Your Profile</strong></center>
+               <img id="prof-page-avatar" src={this.props.user.avatar} alt=''/>
               <Row form>
               <Col md={6}>
-                <FormGroup>
-                  <Input onChange={this.changeHandler} value={this.state.firstName} type="text" name="firstName" placeholder={this.props.user.first_name}/>
+                <FormGroup>             
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.firstName} 
+                    type="text" 
+                    name="firstName" 
+                    placeholder={this.props.user.first_name}/>
                 </FormGroup>
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Input onChange={this.changeHandler} value={this.state.lastName} type="text" name="lastName"  placeholder={this.props.user.last_name}/>
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.lastName} 
+                    type="text" 
+                    name="lastName"  
+                    placeholder={this.props.user.last_name}/>
+                </FormGroup>
+              </Col>
+            </Row>
+
+
+
+            <Row form>
+              <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
+                <FormGroup>
+                
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.avatar} 
+                    type="text" 
+                    name="avatar" 
+                    placeholder={"your new profile pic URL"} />
+                
                 </FormGroup>
               </Col>
             </Row>
@@ -60,7 +98,11 @@ class Profile extends React.Component{
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 <FormGroup>
-                  <Input onChange={this.changeHandler} value={this.state.username} type="text" name="username" placeholder={this.props.user.username} />
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.username} 
+                    type="text" name="username" 
+                    placeholder={this.props.user.username} />
                 </FormGroup>
               </Col>
             </Row>
@@ -68,7 +110,12 @@ class Profile extends React.Component{
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 <FormGroup>
-                  <Input onChange={this.changeHandler} value={this.state.password} type="text" name="password" id="exampleEmail" placeholder="new password" />
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.password} 
+                    type="password" 
+                    name="password" 
+                    placeholder="new password" />
                 </FormGroup>
               </Col>
             </Row>
@@ -76,7 +123,21 @@ class Profile extends React.Component{
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 <FormGroup>
-                  <Input onChange={this.changeHandler} value={this.state.confirmedPw} type="text" name="confirmedPw" placeholder="confirm new password" />
+                  <Input 
+                    onChange={this.changeHandler} 
+                    value={this.state.confirmedPw} 
+                    type="password" 
+                    name="confirmedPw" 
+                    placeholder="confirm new password" />
+                    {this.state.confirmedPw ?
+                      this.state.confirmedPw.length > 0 && this.state.disableSubmitButton === true ? 
+
+                      <h4 className="password-warning">Passwords must match</h4>
+                      :
+                      null
+                    :
+                    null
+                    }
                 </FormGroup>
               </Col>
             </Row>
@@ -110,7 +171,7 @@ class Profile extends React.Component{
             </Row>  
          
       
-            <Button block color="primary" onClick={this.formHandler}>Make Changes</Button> &nbsp;
+            <Button block color="primary" disabled={this.state.disableSubmitButton} onClick={this.formHandler}>Make Changes</Button>  &nbsp;
           </Form>
           </div>
 

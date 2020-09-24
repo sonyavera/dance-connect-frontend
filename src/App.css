@@ -45,6 +45,8 @@
   width:500px;
   margin-right: auto;
   margin-left: auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
   border-width: thick;
   border-style: groove;
   border-color:#2d53cf;
@@ -121,11 +123,29 @@ h1 {
 }
 
 .logo{
-  height: 100px;
-  width: 100px;
+  height: 10px;
+  width: 10px;
 }
 
 #instructor-img{
   height: 300px;
   width: 300px;
+}
+
+.password-warning{
+  color:red;
+  font-size: smaller;
+  margin-top: 2px;
+  text-align: center;
+}
+
+#prof-page-avatar{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
+  margin-top:10px;
+  margin-bottom:10px;
 }

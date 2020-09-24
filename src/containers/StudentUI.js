@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'reactstrap';
-import ReactDOM from 'react-dom';
 import '../App.css';
 import ScrollDiv from '../components/ScrollDiv'
 
@@ -17,7 +15,7 @@ class StudentUI extends React.Component {
     render(){
         return(
             <>
-            <h3>Featured Classes</h3>
+            <center><h3>Featured Classes</h3></center>
             {this.props.classes ?
             <ScrollDiv 
                 purchases={this.props.purchases}
@@ -27,7 +25,7 @@ class StudentUI extends React.Component {
             null
             }
             
-            <h3>Your Recommendations</h3>
+            <center><h3>Your Recommendations</h3></center>
             &nbsp;
             {this.props.classes ?
             <ScrollDiv 
