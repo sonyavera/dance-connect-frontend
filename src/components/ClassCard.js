@@ -11,7 +11,7 @@ import PurchaseClassModal from './PurchaseClassModal'
 
 class ClassCard extends React.Component{
 
-  
+
   renderClassStyle=()=>{
     if(this.props.danceClass.style === "afrocubanfolklore"){
       return "Afro Cuban Folklore"
@@ -61,6 +61,7 @@ class ClassCard extends React.Component{
   }
 
     render(){
+      console.log("local storage", localStorage.length)
         return(
             <Card className="card-div">
               <CardImg class="card-img-bottom" top width="100%" src={Karelia} alt="Card image cap" />
@@ -73,6 +74,7 @@ class ClassCard extends React.Component{
                 :
                   null
                 }
+                
                 {localStorage.length > 0 ? 
                     <>
                     

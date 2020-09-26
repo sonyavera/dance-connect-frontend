@@ -41,7 +41,7 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      .then(data => this.setState({ user: data.user}, this.setAccountType ))
+      .then(data => this.setState({ user: data.user}, ()=> this.setAccountType() ))
       .catch((error) => {console.log(error)})
     }  else {
       console.log("not logged in")
@@ -51,7 +51,50 @@ class App extends React.Component {
     this.getPurchasesAndCreatedClasses()  
   }
 
+  
 
+  getPurchasesAndCreatedClasses=()=>{
+    const token = localStorage.getItem("token")
+    fetch('http://localhost:3000/me/dance_classes', {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}`},
+    })
+    .then(resp => resp.json())
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, 
+                                  createdClasses: resp.created_dance_classes} ))
+    .catch((error) => {console.log(error)})
+  }
+
+  getDanceClasses=()=>{
+    fetch("http://localhost:3000/dance_classes")
+    .then(resp => resp.json())
+    .then(resp => this.setState({classes: resp.classes}))
+
+        const token = localStorage.getItem("token")
+    fetch('http://localhost:3000/me/dance_classes', {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}`},
+    })
+    .then(resp => resp.json())
+    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, 
+                                createdClasses: resp.created_dance_classes} ))
+    .catch((error) => {console.log(error)})
+  }
+
+  
+  toggleMode=()=>{
+    this.setState({isTeacher: !this.state.isTeacher})
+  }
+  
+  setAccountType=()=>{
+    if(this.state.user.account_type === "teacher"){
+      this.setState({isTeacher: true} )
+      // this.props.history.push("/home/teacher")
+    }else{
+      this.setState({isTeacher: false} )
+      // this.props.history.push("/home/student")
+    }
+  }
 
   patchUser=(userObj)=>{
     const newUserObj = {
@@ -70,49 +113,6 @@ class App extends React.Component {
     .then(resp => resp.json())
     // .then(resp => this.setState({user: user.data}))
     .catch((error) => {console.log(error)})
-  }
-
-  
-
-  getPurchasesAndCreatedClasses=()=>{
-    const token = localStorage.getItem("token")
-    fetch('http://localhost:3000/me/dance_classes', {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}`},
-    })
-    .then(resp => resp.json())
-    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes} ))
-    .catch((error) => {console.log(error)})
-  }
-
-  getDanceClasses=()=>{
-    fetch("http://localhost:3000/dance_classes")
-    .then(resp => resp.json())
-    .then(resp => this.setState({classes: resp.classes}))
-
-        const token = localStorage.getItem("token")
-    fetch('http://localhost:3000/me/dance_classes', {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}`},
-    })
-    .then(resp => resp.json())
-    .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, createdClasses: resp.created_dance_classes} ))
-    .catch((error) => {console.log(error)})
-  }
-
-  
-  toggleMode=()=>{
-    this.setState({isTeacher: !this.state.isTeacher})
-  }
-  
-  setAccountType=()=>{
-    if(this.state.user.account_type === "teacher"){
-      this.setState({isTeacher: true} )
-      // this.props.history.push("/home/teacher")
-    }else{
-      this.setState({isTeacher: false} )
-      // this.props.history.push("/home/student")
-    }
   }
 
 
@@ -140,15 +140,15 @@ class App extends React.Component {
       
 
 
-    redirectAfterSignup=()=>{
-      if(this.state.user.account_type === "teacher"){
-        console.log("is teacher")
-        this.props.history.push("/home/teacher")
-      }else{
-      console.log("is student")
-      this.props.history.push("/home/student")
-    }
-    }
+    // redirectAfterSignup=()=>{
+    //   if(this.state.user.account_type === "teacher"){
+    //     console.log("is teacher")
+    //     this.props.history.push("/home/teacher")
+    //   }else{
+    //   console.log("is student")
+    //   this.props.history.push("/home/student")
+    // }
+    // }
   
   
   logOutHandler=()=>{
@@ -173,13 +173,16 @@ class App extends React.Component {
         this.setState({ user: data.user }
           , () => {
 
-            if(this.state.user.account_type === "student"){
+            if(localStorage.token === "undefined"){
+              alert("Hello! I am an alert box!!")
+              // this.props.history.push("/login")
+            }else if(this.state.user.account_type === "student"){
               this.props.history.push("/home/student")
-            } else{this.props.history.push("/home/teacher")}
-
-        }
-        )
+            }else if(this.state.user.acount_type==="teacher"){
+              this.props.history.push("/home/teacher")
+        }  
       })
+    })
   }
 
   navBarHandler=(style)=>{
@@ -251,6 +254,7 @@ class App extends React.Component {
 
 
   render(){
+    console.log("state", this.state)
     return (
       <>
 
