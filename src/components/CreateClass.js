@@ -8,6 +8,7 @@ class CreateClass extends React.Component {
         level: null,
         description: null,
         date: null,
+        price: null,
         url: null
     }
 
@@ -20,6 +21,7 @@ class CreateClass extends React.Component {
     }
 
     render(){
+      console.log('state in form', this.state)
 
         return (
             <div className="form-div">
@@ -28,7 +30,11 @@ class CreateClass extends React.Component {
       
             <FormGroup >
               <Label for="exampleSelect">Class Style</Label>
-              <Input onChange={this.changeHandler} type="select" name="style" id="exampleSelect">
+              <Input 
+                onChange={this.changeHandler} 
+                type="select" 
+                name="style" 
+                id="exampleSelect">
                 <option>Cuban Salsa</option>
                 <option>New York Salsa</option>
                 <option>Bachata</option>
@@ -39,7 +45,11 @@ class CreateClass extends React.Component {
       
             <FormGroup>
               <Label for="exampleSelect">Level</Label>
-              <Input onChange={this.changeHandler} type="select" name="level" id="exampleSelect">
+              <Input 
+                onChange={this.changeHandler} 
+                type="select" 
+                name="level" 
+                id="exampleSelect">
                 <option>Beginner</option>
                 <option>Intermediate</option>
                 <option>Advanced</option>
@@ -50,7 +60,13 @@ class CreateClass extends React.Component {
       
             <FormGroup>
               <Label for="exampleText">Class Description</Label>
-              <Input onChange={this.changeHandler} value={this.state.description} type="textarea" name="description" id="exampleText" />
+              <Input 
+                onChange={this.changeHandler} 
+                value={this.state.description} 
+                type="textarea" 
+                name="description"
+                placeholder="Please write one or two short sentences telling students what they can expect from this class." 
+                id="exampleText" />
             </FormGroup>
       
             <FormGroup>
@@ -60,16 +76,34 @@ class CreateClass extends React.Component {
                 type="date"
                 name="date"
                 id="exampleDate"
-                placeholder="date placeholder"
+                value={this.props.date}
               />
             </FormGroup>
+
+            <FormGroup >
+              <Label for="example">Price in USD</Label>
+              <Input 
+                onChange={this.changeHandler} 
+                type="number" 
+                name="price" 
+                value={this.state.price}>
+              </Input>
+            </FormGroup>
+      
       
             <FormGroup>
               <Label for="exampleEmail">Class URL</Label>
-              <Input onChange={this.changeHandler} value={this.state.url} type="text" name="url" id="exampleEmail" placeholder="add the link to a private YouTube video with your class" />
+              <Input 
+                onChange={this.changeHandler} 
+                value={this.state.url} 
+                type="text" 
+                name="url" 
+                id="exampleEmail" 
+                placeholder="Paste the link to a private YouTube video of your class." />
             </FormGroup>
       
-            <Button block color="primary" onClick={this.submitHandler}>Create Class</Button>
+            <Button block color="primary" 
+              onClick={this.submitHandler}>Create Class</Button>
           </Form>
           </div>
         );

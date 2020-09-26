@@ -37,123 +37,128 @@ class NavigationBar extends React.Component {
   render(){
 
     return(
-      <div>
-
-
-      {this.props.user ? 
+      <>
+      {localStorage.length > 0 ? 
       
-      <Navbar color="light" light expand="md">
-      {this.props.user.account_type === "teacher" ?
-      <a className="navbar-brand" href="/home/teacher">
-      <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
-      :
-      <a className="navbar-brand" href="/home/student">
-          <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
-      }
-        
-        
-        <NavbarToggler onClick={this.toggle}/>
-        <Collapse isOpen={this.state.isOpen} navbar>
-        <Nav className="mr-auto" navbar>
-            {this.props.isTeacher === false ?
-            <NavItem>
-              <NavLink tag={Link} to="/home/student">For You</NavLink>
-            </NavItem>
-            :
-            null}
+              this.props.isTeacher === true ?
+                    
+                <Navbar color="light" light expand="md">
+                    <a className="navbar-brand" href="/home/teacher">
+                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
 
-            {this.props.isTeacher === true ?
-            <>
-            <NavItem>
-              <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink tag={Link} to="/me/created_classes">Manage Your Classes</NavLink>
-            </NavItem>
-            </>
-            :
-            null
-            
-            }
-      
-          
-          {this.props.isTeacher === false ?
-          <NavItem>
-              <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
-            </NavItem>
-          :
-          null
-          }
+                <NavbarToggler onClick={this.toggle}/>
+                <Collapse isOpen={this.state.isOpen} navbar>
+                
+                
+                <Nav className="mr-auto" navbar>
+
+                <NavItem>
+                   <NavLink tag={Link} to="/classes/new">Create a Class</NavLink>
+                </NavItem>
+                <NavItem>
+                   <NavLink tag={Link} to="/me/created_classes">Manage Your Classes</NavLink>
+                </NavItem>
+
+                <NavItem>
+                  <NavLink tag={Link} to="/me">My Profile</NavLink>
+                </NavItem>
+
+                <NavItem>
+                  <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/student">Student Mode</NavLink>
+                </NavItem>
+
+                </Nav>
 
 
-            <NavItem>
-              <NavLink tag={Link} to="/me">My Profile</NavLink>
-            </NavItem>
+                <Nav className="ml-auto" navbar>
 
-            {this.props.isTeacher === false ? 
-            
-              <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Classes
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem tag={Link} to={"/classes/cubansalsa"}>
-                  Cuban Salsa
-                </DropdownItem>
-                <DropdownItem tag={Link} to={"/classes/bachata"}>
-                  Bachata
-                </DropdownItem>
-                <DropdownItem tag={Link} to={"/classes/afrocubanfolklore"}>
-                  Afro Cuban Folklore
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-            :
-            
-            null
-            }
-
-
-
-            {this.props.isTeacher === false ?
-            <NavItem>
-              <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/teacher">Teacher Mode</NavLink>
-            </NavItem>
-            :
-            <NavItem>
-              <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/student">Student Mode</NavLink>
-            </NavItem>
-            } 
-            </Nav>
-
-
-            <Nav className="ml-auto" navbar>
-
-            {localStorage.length > 0 ? 
                 <NavItem>
                     <Button onClick={this.props.logOut}>Log Out</Button>
                 </NavItem>
 
-            :
-                <>
-                <NavItem className="justify-content-end">
-                    <Button  href="/signup" id="signup" >Sign Up</Button>
-                </NavItem>
-             
-                <NavItem className="nav-button">
-                    <Button id="userbutton" href="/login">Log In</Button>
-                </NavItem>
-                </>
-            }
-            </Nav>
+                </Nav>
         
-             </Collapse>
-              </Navbar>
-            :
+                </Collapse>
+                </Navbar>
+
+              :
 
 
 
-            <Navbar color="light" light expand="md">
+              <Navbar color="light" light expand="md">
+                    <a className="navbar-brand" href="/home/student">
+                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
+
+                <NavbarToggler onClick={this.toggle}/>
+                <Collapse isOpen={this.state.isOpen} navbar>
+                <Nav className="mr-auto" navbar>
+
+                <NavItem>
+                  <NavLink tag={Link} to="/home/student">For You</NavLink>
+               </NavItem>
+
+                <NavItem>
+                  <NavLink tag={Link} to="/me/purchases">My Purchases</NavLink>
+              </NavItem>
+                
+              <NavItem>
+                <NavLink tag={Link} to="/me">My Profile</NavLink>
+              </NavItem>
+
+
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Classes
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem tag={Link} to={"/classes/cubansalsa"}>
+                    Cuban Salsa
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to={"/classes/newyorksalsa"}>
+                    New York Salsa
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to={"/classes/bachata"}>
+                    Bachata
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to={"/classes/afrocubanfolklore"}>
+                    Afro Cuban Folklore
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to={"/classes/kizomba"}>
+                    Kizomba
+                  </DropdownItem>
+                  <DropdownItem tag={Link} to={"/classes/zouk"}>
+                    Zouk
+                  </DropdownItem>
+                </DropdownMenu>
+                </UncontrolledDropdown>
+
+             
+
+                
+                <NavItem>
+                  <NavLink onClick={this.manageIsTeacher} tag={Link} to="/home/teacher">Teacher Mode</NavLink>
+                </NavItem>
+
+                </Nav>
+
+
+                <Nav className="ml-auto" navbar>
+
+                <NavItem>
+                    <Button onClick={this.props.logOut}>Log Out</Button>
+                </NavItem>
+
+
+                </Nav>
+        
+                </Collapse>
+                </Navbar>
+      
+      
+      :
+
+      
+      <Navbar color="light" light expand="md">
             <a className="navbar-brand" href="/">
             <img src={require("./Logo.png")} width="60" height="60" alt="hi"></img></a> 
 
@@ -170,39 +175,12 @@ class NavigationBar extends React.Component {
                 </NavItem>
 
             </Nav>
-            </Navbar>  
+            </Navbar> 
       
-      }
-
-      </div>
       
-    )
-  }
 
-
-
-
-
-
-  // console.log("state in navbar", accountType)
-
-  // useEffect( ()=> {
-  //   setAccountType(props.user.account_type)
-  // })
-
-
-
-
-  // const handleSelect=(e)=>{
-  //   const classStyle = e.target.innerText
-  //   props.changeHandler(classStyle)
-  //   setDanceStyle(classStyle)
-  // }
-
-  // React.useEffect( ()=> {
-  //   console.log("react.useEffect is working")
-  // })
-
-}
+      }</>
+      )}
+ }
 
 export default NavigationBar;

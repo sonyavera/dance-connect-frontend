@@ -48,7 +48,7 @@ class Profile extends React.Component{
     render(){
         return(
             <>
-            {this.props.user ?
+            {localStorage.length > 0 ?
 
               <div className="form-div">
                <Form className="inner-form">
@@ -143,6 +143,7 @@ class Profile extends React.Component{
             </Row>
 
             <Row form>
+            <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 <FormGroup tag="fieldset">
                   Account Type: 
                   <FormGroup check>
@@ -155,6 +156,7 @@ class Profile extends React.Component{
                       Student
                     </Label>
                   </FormGroup>
+
                   <FormGroup check>
                     <Label check>
                       <Input type="radio" 
@@ -166,17 +168,22 @@ class Profile extends React.Component{
                     </Label>
                   </FormGroup>
                   </FormGroup>
+                  </Col>
     
 
             </Row>  
          
       
-            <Button block color="primary" disabled={this.state.disableSubmitButton} onClick={this.formHandler}>Make Changes</Button>  &nbsp;
+            <Button block color="primary" 
+              disabled={this.state.disableSubmitButton} 
+              onClick={this.formHandler}>
+              Make Changes
+            </Button>  &nbsp;
           </Form>
           </div>
 
-
             :
+            
             <Redirect to="/login"/>
             }
             </>

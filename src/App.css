@@ -111,15 +111,17 @@ h1 {
 
 .card-div{
   width: 300px;
-  height: 600px;
+  height: 450px;
   position: relative;
   margin-bottom: 10px;
 }
 
 
-.button-div{
+#button-div{
   position: absolute;
-  bottom: 100px;
+  bottom: 10px;
+  right: 20px;
+  left: 20px;
 }
 
 .logo{
@@ -148,4 +150,96 @@ h1 {
   height: 50%;
   margin-top:10px;
   margin-bottom:10px;
+}
+
+#purchase-class-button{
+  margin-bottom: 7px;
+}
+
+
+#react-player{
+  margin-right: auto;
+  margin-left: auto;
+  width: 50%;
+  padding:10px;
+}
+
+.show-page-content{
+  margin-right: auto;
+  margin-left: auto;
+  width: 50%;
+  padding:10px;
+}
+
+#top-left-button{
+  background: blue;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 250px;
+  top: 10px;
+  font-size: 40px;
+  padding: 40px 0;
+}
+
+#top-right-button{
+  background: green;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  right: 250px;
+  top: 10px;
+  font-size: 40px;
+  padding: 40px 0;
+}
+
+#bottom-left-button{
+  background: red;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: 10px;
+  left: 250px;
+  font-size: 40px;
+  padding: 40px 0;
+}
+
+#bottom-right-button{
+  background: orange;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: 10px;
+  right: 250px;
+  font-size: 40px;
+  padding: 40px 0;
+}
+
+.container-sm{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 200px;
+  height: 500px;
+  position: relative
+}
+
+#top-left-button:hover {
+  background-color: lightblue;
+}
+#top-right-button:hover {
+  background-color: lightgreen;
+}
+#bottom-left-button:hover {
+  background-color: pink;
+}
+#bottom-right-button:hover {
+  background-color: lightsalmon;
 }

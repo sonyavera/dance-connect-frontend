@@ -10,17 +10,29 @@ class TeacherUI extends React.Component {
 
         return(
             <>
-            <h1> What would you like to do?</h1>
+            <center><h1> What would you like to do?</h1></center>
             &nbsp;
             <div className="container-sm">
-            <Button tag={Link} to="/classes/new" color="info" size="lg" block>Create a Class</Button>
-            &nbsp;
-            <Button tag={Link} to="/me" color="primary" size="lg" block>Edit Your Profile</Button>
-            &nbsp;
-            <Button tag={Link} to="/stats" color="info" size="lg" block>View Your Stats</Button>
-            &nbsp;
-            <Button tag={Link} to="/home/student" color="primary" size="lg" block>Student Mode</Button>
+                <Button 
+                    tag={Link} 
+                    to="/classes/new" 
+                    id="top-left-button">
+                    Create a Class
+                    </Button>
+                <Button 
+                    tag={Link} 
+                    to="/me" 
+                    id="top-right-button">Edit Your Profile</Button>
+                <Button 
+                    tag={Link} 
+                    to="/stats" 
+                    id="bottom-left-button">View Your Stats</Button>
+                <Button 
+                    onClick={this.props.toggleMode} 
+                    tag={Link} to="/home/student" 
+                    id="bottom-right-button">Student Mode</Button>
             </div>
+            
             </>
         )
     }

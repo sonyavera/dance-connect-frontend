@@ -100,6 +100,11 @@ class App extends React.Component {
     .catch((error) => {console.log(error)})
   }
 
+  
+  toggleMode=()=>{
+    this.setState({isTeacher: !this.state.isTeacher})
+  }
+  
   setAccountType=()=>{
     if(this.state.user.account_type === "teacher"){
       this.setState({isTeacher: true} )
@@ -124,9 +129,25 @@ class App extends React.Component {
     .then(res => res.json())
     .then(data => {
       localStorage.setItem("token", data.jwt)
-      this.setState({ user: data.user }, () => this.getDanceClasses() )
+      this.setState({ user: data.user }, () => {
+          if(this.state.user.account_type === "student"){
+            this.props.history.push("/home/student")
+          } else{this.props.history.push("/home/teacher")}
+      }
+      )
     })
+  }
       
+
+
+    redirectAfterSignup=()=>{
+      if(this.state.user.account_type === "teacher"){
+        console.log("is teacher")
+        this.props.history.push("/home/teacher")
+      }else{
+      console.log("is student")
+      this.props.history.push("/home/student")
+    }
     }
   
   
@@ -172,6 +193,19 @@ class App extends React.Component {
   }
 
   createClass=(classObj)=>{
+    if(classObj.style === "Bachata"){
+      classObj.style = "bachata"
+    }else if(classObj.style === "Zouk"){
+      classObj.style = "zouk"
+    }else if(classObj.style === "Afro Cuban Folklore"){
+      classObj.style = "afrocubanfolklore"
+    }else if(classObj.style === "Cuban Salsa"){
+      classObj.style = "cubansalsa"
+    }else if(classObj.style === "New York Salsa"){
+      classObj.style = "newyorksalsa"
+    }else if(classObj.style === "Kizomba"){
+      classObj.style = "kizomba"
+    }
     console.log("create class in app", classObj)
     const token = localStorage.getItem("token")
     fetch("http://localhost:3000/dance_classes", {
@@ -188,9 +222,9 @@ class App extends React.Component {
   }
 
 
-  purchaseDanceClass=(danceClassId)=>{
+  purchaseDanceClass=(danceClassObj)=>{
     console.log("purchasing class")
-    const userClassObj = {dance_class_id: danceClassId}
+    const userClassObj = {dance_class_id: danceClassObj.id}
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
         method: 'POST',
@@ -352,7 +386,7 @@ class App extends React.Component {
                                                       logOut={this.logOutHandler} 
                                                       user={this.state.user} />
                                                   <JumboImage/>
-                                                    <TeacherUI/>
+                                                    <TeacherUI toggleMode={this.toggleMode}/>
                                                     </div> }/> 
 
       

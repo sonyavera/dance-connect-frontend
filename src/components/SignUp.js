@@ -51,6 +51,7 @@ class SignUp extends React.Component {
         return (
             <div className="form-div">
                <Form className="inner-form">
+               <strong><center>Sign Up</center></strong> &nbsp;
               <Row form>
               <Col md={6}>
                 <FormGroup>

@@ -16,21 +16,32 @@ class ClassesContainer extends React.Component {
     }
 
     render(){
-        console.log("Classes in classes container", this.props.classes, "purchases in classes container", this.props.purchases, "user", this.props.user)
+        if(this.props.classes){
+            const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
+            console.log("filtered classes", classesByStyle)
+            console.log("all classes", this.props.classes)
+        }
+
         return(
             <>
-
-             <div className="container-fluid" className="m-5" cl-md-xx>
-            <div className="card-columns" >
-             {this.props.classes && this.props.danceStyle && this.props.purchases ? 
-                this.renderClasses()
-             :
-             <h1>Loading</h1>
-            }
+            {localStorage.length > 0 ? 
             
-            </div>
-            </div>
+                        <div className="container-fluid" className="m-5" cl-md-xx>
+                        <div className="card-columns" >
+                        {this.props.classes && this.props.danceStyle && this.props.purchases ? 
+                            this.renderClasses()
+                        :
+                        <h1>Loading</h1>
+                        }
+                        </div>
+                        </div>
+            :
+                        
+            <Redirect to="/login"/>
+            
 
+            }
+ 
             </>
         )
     }
