@@ -18,7 +18,8 @@ componentDidMount(){
 }
 
 handlePurchase=()=>{
-    this.props.purchaseHandler(this.props.danceClassId)
+  // console.log("dance clas obj", this.state.danceClass.dance_class)
+    this.props.purchaseHandler(this.state.danceClass.dance_class[0])
 }
 
 renderClassStyle=()=>{
@@ -68,7 +69,6 @@ renderClassStyle=()=>{
 
 
     render(){
-        console.log("all attributes", this.props)
         return(
             <>
             {this.state.danceClass ?

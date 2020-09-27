@@ -226,8 +226,10 @@ class App extends React.Component {
 
 
   purchaseDanceClass=(danceClassObj)=>{
-    console.log("purchasing class")
+    console.log("dance class obj", danceClassObj)
     const userClassObj = {dance_class_id: danceClassObj.id}
+    console.log("user class obj", userClassObj)
+    // console.log("purchasing", "user class obj", userClassObj, "dance class obj", danceClassObj)
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
         method: 'POST',
@@ -236,7 +238,7 @@ class App extends React.Component {
           "Content-Type": "application/json",
           Accept: "application/json"
         },
-        body: JSON.stringify(userClassObj)
+        body: JSON.stringify({user_class: userClassObj})
       })
         .then(res => res.json())
         .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, ()=> console.log('purchased classes', this.state.purchasedClasses) )} )
@@ -254,7 +256,6 @@ class App extends React.Component {
 
 
   render(){
-    console.log("state", this.state)
     return (
       <>
 
