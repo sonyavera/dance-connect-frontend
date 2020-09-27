@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { Col, Row, Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
 import {Redirect} from 'react-router-dom'
 import '../App.css';
 
@@ -81,18 +81,20 @@ class Profile extends React.Component{
 
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
-                <FormGroup>
                 
-                  <Input 
-                    onChange={this.changeHandler} 
-                    value={this.state.avatar} 
-                    type="text" 
-                    name="avatar" 
-                    placeholder={"your new profile pic URL"} />
-                
-                </FormGroup>
+              <FormGroup>
+                <Label for="exampleFile">Avatar</Label>
+                    <Input onChange={this.changeHandler} type="file" name="avatar" id="exampleFile" value={this.state.avatar} />
+                    <FormText color="muted">
+                      Upload a picture to be used for your profile.
+              </FormText>
+              </FormGroup>
+      
               </Col>
             </Row>
+
+
+          
       
 
             <Row form>
