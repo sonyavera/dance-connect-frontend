@@ -117,7 +117,14 @@ class App extends React.Component {
 
 
   signUpHandler=(userObj)=>{
-    const userObject = {first_name: userObj.firstName, last_name: userObj.lastName, username: userObj.username, password:userObj.password, account_type:userObj.selectedOption, avatar:userObj.avatar}
+    const userObject = {
+                        first_name: userObj.firstName, 
+                        last_name: userObj.lastName, 
+                        username: userObj.username, 
+                        password:userObj.password, 
+                        account_type:userObj.selectedOption, 
+                        avatar:userObj.avatar
+    }
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       headers: {
@@ -132,7 +139,8 @@ class App extends React.Component {
       this.setState({ user: data.user }, () => {
           if(this.state.user.account_type === "student"){
             this.props.history.push("/home/student")
-          } else{this.props.history.push("/home/teacher")}
+          } else{this.props.history.push("/home/teacher")
+        }
       }
       )
     })
