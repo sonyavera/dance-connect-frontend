@@ -33,6 +33,12 @@ class SignUp extends React.Component {
         this.setState({ doPasswordsMatch: false})   
         }
     }
+
+    avatarChangeHandler=(e)=>{
+      console.log("e.target", e.target.files[0])
+      // if(e.target.files[0]){
+        this.setState({avatar: e.target.files[0]})
+    }
       
 
     handleOptionChange=(changeEvent)=>{
@@ -42,7 +48,7 @@ class SignUp extends React.Component {
     }
 
     render(){
-      
+      console.log("state in form", this.state)
         
       // for (const property in this.state){
       //   console.log(this.state[property] === null)
@@ -80,7 +86,7 @@ class SignUp extends React.Component {
                 
               <FormGroup>
                 <Label for="exampleFile">Avatar</Label>
-                    <Input onChange={this.changeHandler} type="file" name="avatar" id="exampleFile" value={this.state.avatar} />
+                    <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" />
                     <FormText color="muted">
                       Upload a picture to be used for your profile.
               </FormText>

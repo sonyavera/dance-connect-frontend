@@ -24,6 +24,7 @@ class App extends React.Component {
 
   state ={
     user: null,
+    avatar: null,
     classes: null,
     danceStyle: "Salsa",
     purchasedClasses: [],
@@ -41,14 +42,15 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      .then(data => this.setState({ user: data.user}, ()=> this.setAccountType() ))
+      .then(data => this.setState({ user: data.user, avatar: data.avatar}, ()=> this.setAccountType() ))
       .catch((error) => {console.log(error)})
     }  else {
       console.log("not logged in")
     }
 
     this.getDanceClasses()
-    this.getPurchasesAndCreatedClasses()  
+    this.getPurchasesAndCreatedClasses() 
+
   }
 
   
@@ -87,6 +89,9 @@ class App extends React.Component {
   }
   
   setAccountType=()=>{
+    if(this.state.user){
+      console.log('user', this.state.user.avatar) 
+    }
     if(this.state.user.account_type === "teacher"){
       this.setState({isTeacher: true} )
       // this.props.history.push("/home/teacher")
@@ -117,26 +122,38 @@ class App extends React.Component {
 
 
   signUpHandler=(userObj)=>{
-    const userObject = {
-                        first_name: userObj.firstName, 
-                        last_name: userObj.lastName, 
-                        username: userObj.username, 
-                        password:userObj.password, 
-                        account_type:userObj.selectedOption, 
-                        avatar:userObj.avatar
-    }
+    
+    const formData = new FormData()
+    formData.append('first_name', userObj.firstName)
+    formData.append('last_name', userObj.lastName)
+    formData.append('username', userObj.username)
+    formData.append('password', userObj.password)
+    formData.append('account_type', userObj.selectedOption)
+    formData.append('avatar', userObj.avatar)
+    console.log("form data", formData)
+    // const userObject = {
+    //                     first_name: userObj.firstName, 
+    //                     last_name: userObj.lastName, 
+    //                     username: userObj.username, 
+    //                     password:userObj.password, 
+    //                     account_type:userObj.selectedOption, 
+    //                     avatar: userObj.avatar
+    // }
+    console.log("user obj.avatar", userObj.avatar)
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({ user: userObject })
+      // headers: {
+      //   "Content-Type": "application/json",
+      //   Accept: "application/json"
+      // },
+      // body: JSON.stringify({ user: userObject })
+      body: formData 
     })
     .then(res => res.json())
     .then(data => {
       localStorage.setItem("token", data.jwt)
       this.setState({ user: data.user }, () => {
+          console.log('user', this.state.user)
           if(this.state.user.account_type === "student"){
             this.props.history.push("/home/student")
           } else{this.props.history.push("/home/teacher")
@@ -365,6 +382,7 @@ class App extends React.Component {
                                             <JumboImage/>
                                             <Profile 
                                               user={this.state.user} 
+                                              avatar={this.state.avatar}
                                               editProfile={this.patchUser}
                                             />
                                             </div>}/>

@@ -53,7 +53,7 @@ class Profile extends React.Component{
               <div className="form-div">
                <Form className="inner-form">
                <center><strong>Edit Your Profile</strong></center>
-               <img id="prof-page-avatar" src={this.props.user.avatar} alt=''/>
+               <img id="prof-page-avatar" src={this.props.avatar} alt=''/>
               <Row form>
               <Col md={6}>
                 <FormGroup>             
