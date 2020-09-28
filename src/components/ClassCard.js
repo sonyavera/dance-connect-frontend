@@ -60,11 +60,22 @@ class ClassCard extends React.Component{
     }
   }
 
+
+
+  renderAvatar=()=>{
+    if(this.props.danceClass.instructor_avatar === null){
+      return "http://localhost:3000/" + this.props.danceClass.uploaded_avatar.split("?")[0]
+    }else{
+      return this.props.danceClass.instructor_avatar
+    }
+  }
+
     render(){
-      console.log("local storage", localStorage.length)
+      console.log("danceclass", this.props.danceClass)
+      console.log("instructor avatar: null", this.props.danceClass.instructor_avatar === null)
         return(
             <Card className="card-div">
-              <CardImg class="card-img-bottom" top width="100%" src={Karelia} alt="Card image cap" />
+              <CardImg class="card-img-bottom" top width="100%" height="250px" src={this.renderAvatar()} alt="Card image cap" />
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>

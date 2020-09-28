@@ -42,6 +42,7 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
+      // .then(console.log)
       .then(data => this.setState({ user: data.user, avatar: data.avatar}, ()=> this.setAccountType() ))
       .catch((error) => {console.log(error)})
     }  else {
@@ -234,6 +235,8 @@ class App extends React.Component {
     }else if(classObj.style === "Kizomba"){
       classObj.style = "kizomba"
     }
+    classObj.instructor_avatar = this.state.avatar
+    console.log("class Obj", classObj)
     console.log("create class in app", classObj)
     const token = localStorage.getItem("token")
     fetch("http://localhost:3000/dance_classes", {

@@ -14,48 +14,52 @@ class ClassShowPage extends React.Component{
 componentDidMount(){
     fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId)
     .then(resp=> resp.json())
-    .then(resp => this.setState({danceClass: resp}))
+    .then(resp => this.setState({danceClass: resp.dance_class[0]}))
 }
 
 handlePurchase=()=>{
-  // console.log("dance clas obj", this.state.danceClass.dance_class)
-    this.props.purchaseHandler(this.state.danceClass.dance_class[0])
+    this.props.purchaseHandler(this.state.danceClass)
 }
 
 renderClassStyle=()=>{
-  if(this.state.danceClass.dance_class[0].style === "afrocubanfolklore"){
+  if(this.state.danceClass.style === "afrocubanfolklore"){
     return "Afro Cuban Folklore"
-  }else if(this.state.danceClass.dance_class[0].style === "cubansalsa"){
+  }else if(this.state.danceClass.style === "cubansalsa"){
     return "Cuban Salsa"
-  }else if(this.state.danceClass.dance_class[0].style === "newyorksalsa"){
+  }else if(this.state.danceClass.style === "newyorksalsa"){
     return "New York Salsa"
-  }else if(this.state.danceClass.dance_class[0].style === "kizomba"){
+  }else if(this.state.danceClass.style === "kizomba"){
     return "Kizomba"
-  }else if(this.state.danceClass.dance_class[0].style === "bachata"){
+  }else if(this.state.danceClass.style === "bachata"){
     return "Bachata"
   }else{return "Zouk"}
   }
 
 
-
- 
+  renderAvatar=()=>{
+    if(this.state.danceClass.instructor_avatar === null){
+      return "http://localhost:3000/" + this.state.danceClass.uploaded_avatar.split("?")[0]
+    }else{
+      return this.state.danceClass.instructor_avatar
+    }
+  }
 
   renderContent=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
     if(localStorage.length > 0){  
-      if(idsOfPurchasedClasses.includes(this.state.danceClass.dance_class[0].id)){
+      if(idsOfPurchasedClasses.includes(this.state.danceClass.id)){
         console.log("this class has been purchased")
         return (
           <>
-          <ReactPlayer id="react-player" url={this.state.danceClass.dance_class[0].url}/>
+          <ReactPlayer id="react-player" url={this.state.danceClass.url}/>
           </>
         )
       }  else{
         return (
           <>
-          <img id="instructor-img" src={this.state.danceClass.dance_class[0].instructor_avatar} alt=""/>
-          <h5>Price: {this.state.danceClass.dance_class[0].price}</h5> 
-          <h5>{this.state.danceClass.dance_class[0].description}</h5>
+          <img id="instructor-img" src={this.renderAvatar()} alt=""/>
+          <h5> Price: </h5> {this.state.danceClass.price} &nbsp;
+          <h5>Class Description:</h5>{this.state.danceClass.description} &nbsp;
           <span><Button color="primary" onClick={this.handlePurchase}>Purchase Class</Button></span>
           </>
           )
@@ -65,23 +69,20 @@ renderClassStyle=()=>{
     }
   }
 
-
-
-
     render(){
+      console.log("state", this.state)
         return(
             <>
             {this.state.danceClass ?
             <>
             <div className="back-button">
-            <Button 
-                tag={Link} 
-                to={"/classes/" + this.state.danceClass.dance_class[0].style}> ← back to all {this.renderClassStyle()} classes
+            <Button tag={Link} to={"/classes/" + this.state.danceClass.style}>
+                 ← back to all {this.renderClassStyle()} classes
             </Button>
             </div>
             
             <center><Container>
-            <h1>{this.renderClassStyle()} with {this.state.danceClass.dance_class[0].instructor_name}</h1>
+            <h1>{this.renderClassStyle()} with {this.state.danceClass.instructor_name}</h1>
             
             
             </Container></center>
@@ -90,7 +91,6 @@ renderClassStyle=()=>{
 
             <center><Container width="100px">
             {this.renderContent()} &nbsp;
-            {/* {this.state.danceClass.dance_class[0].description} &nbsp; */}
             </Container></center>
             &nbsp;
             </>

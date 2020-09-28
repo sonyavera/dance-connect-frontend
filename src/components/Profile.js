@@ -46,9 +46,10 @@ class Profile extends React.Component{
     }
 
     render(){
+      console.log('this.props', this.props)
         return(
             <>
-            {localStorage.length > 0 ?
+            {localStorage.length > 0 && this.props.user ?
 
               <div className="form-div">
                <Form className="inner-form">
