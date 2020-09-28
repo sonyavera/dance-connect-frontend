@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .App-logo {
@@ -81,6 +82,8 @@
   font-size: large;
 }
 
+
+
 .back-button{
   margin-left: 0.5rem;
 }
@@ -129,10 +132,7 @@ h1 {
   width: 10px;
 }
 
-#instructor-img{
-  height: 30%;
-  width: 30%;
-}
+
 
 .password-warning{
   color:red;
@@ -172,53 +172,53 @@ h1 {
 }
 
 #top-left-button{
-  background: blue;
+  background: lightskyblue;
   margin-top: 20px;
   margin-bottom: 20px;
   position: absolute;
   width: 200px;
   height: 200px;
-  left: 250px;
+  left: 350px;
   top: 10px;
   font-size: 40px;
   padding: 40px 0;
 }
 
 #top-right-button{
-  background: green;
+  background: cornflowerblue;
   margin-top: 20px;
   margin-bottom: 20px;
   position: absolute;
   width: 200px;
   height: 200px;
-  right: 250px;
+  right: 350px;
   top: 10px;
   font-size: 40px;
   padding: 40px 0;
 }
 
 #bottom-left-button{
-  background: red;
+  background: slateblue;
   margin-top: 20px;
   margin-bottom: 20px;
   position: absolute;
   width: 200px;
   height: 200px;
   bottom: 10px;
-  left: 250px;
+  left: 350px;
   font-size: 40px;
   padding: 40px 0;
 }
 
 #bottom-right-button{
-  background: orange;
+  background: mediumblue;
   margin-top: 20px;
   margin-bottom: 20px;
   position: absolute;
   width: 200px;
   height: 200px;
   bottom: 10px;
-  right: 250px;
+  right: 350px;
   font-size: 40px;
   padding: 40px 0;
 }
@@ -232,14 +232,34 @@ h1 {
 }
 
 #top-left-button:hover {
-  background-color: lightblue;
+  background-color: deepskyblue;
 }
 #top-right-button:hover {
-  background-color: lightgreen;
+  background-color: royalblue;
 }
 #bottom-left-button:hover {
-  background-color: pink;
+  background-color: darkslateblue;
 }
 #bottom-right-button:hover {
-  background-color: lightsalmon;
+  background-color: darkblue;
+}
+
+#show-page{
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border-width: thick;
+  border-style: groove;
+  border-color:#2d53cf;
+  padding: 10px;
+  position: relative;
+}
+
+.card-image{
+  object-fit: contain;
+}
+
+#instructor-img{
+  position: absolute;
+  left: 50px;
 }

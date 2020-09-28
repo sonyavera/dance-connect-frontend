@@ -81,18 +81,14 @@ renderClassStyle=()=>{
             </Button>
             </div>
             
-            <center><Container>
-            <h1>{this.renderClassStyle()} with {this.state.danceClass.instructor_name}</h1>
             
+            <div id="show-page">
+
+              <h1>{this.renderClassStyle()} with {this.state.danceClass.instructor_name}</h1>
+
+              {this.renderContent()} 
+            </div>
             
-            </Container></center>
-            &nbsp;
-
-
-            <center><Container width="100px">
-            {this.renderContent()} &nbsp;
-            </Container></center>
-            &nbsp;
             </>
             :
             <h1>Loading</h1>

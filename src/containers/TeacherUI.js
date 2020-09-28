@@ -11,7 +11,6 @@ class TeacherUI extends React.Component {
         return(
             <>
             <center><h1> What would you like to do?</h1></center>
-            &nbsp;
             <div className="container-sm">
                 <Button 
                     tag={Link} 
