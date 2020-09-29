@@ -1,27 +1,39 @@
 import React from 'react';
+import { ListGroupItemHeading } from 'reactstrap';
 import '../App.css';
+import TeacherScrollDiv from '../components/TeacherScrollDiv'
 
 
 
 
 class Home extends React.Component {
 
-
-
-    getInstructors=()=>{
-        // write a new route in order to get all the teachers
+    
+    state ={
+        danceClasses: null
+    }
+    
+    componentDidMount=()=>{
+        console.log('component did mount')
+        fetch("http://localhost:3000/unique_dance_classes")
+            .then(resp => resp.json())
+            .then(resp => this.setState({danceClasses: resp.unique_dance_class_array}, ()=> console.log(this.state.danceClasses)))
+            // .then(resp => console.log('resp in home', resp))
     }
 
+
+    
+
+
     render(){
-        console.log("props in home", this.props.classes)
-        if(this.props.classes){
-
-            console.log(this.props.classes.map(danceClass => danceClass.user_id))
-        }
-
         return(
             <>
-            <h1> Home</h1>
+            <center><h1>Meet the Instructors</h1></center>
+            {this.state.danceClasses ?
+            <TeacherScrollDiv id="scroll-div" danceClasses={this.state.danceClasses}/>
+            :
+            <h1>Loading...</h1>
+            }
             </>
         )
     }

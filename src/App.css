@@ -336,4 +336,15 @@ h2{
 
 h1{
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+  margin-bottom: 30px;
+}
+
+.scroll-div-img{
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+}
+
+.horizontal-menu{
+  margin-top: 20px;
 }
