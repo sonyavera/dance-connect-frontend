@@ -1,6 +1,6 @@
 import React from 'react'
 import '../App.css';
-import {Button, Container} from 'reactstrap'
+import {Button, Container, Row, Column} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import PurchaseClassModal from '../components/PurchaseClassModal'
@@ -62,9 +62,9 @@ renderClassStyle=()=>{
           <div id="class-info">
           <p id="price"><strong >Price:</strong> ${this.state.danceClass.price} </p>
           <p id="description-title"><strong>Class Description:</strong></p> <p id="description">{this.state.danceClass.description}</p>
+          <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/>
           </div>
           {/* <Button id="purchase-class" color="primary" onClick={this.handlePurchase}>Purchase Class</Button> */}
-          <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/>
           </>
           )
       }

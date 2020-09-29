@@ -154,8 +154,6 @@ h1 {
 
 #purchase-class-button{
   margin-bottom: 7px;
-  position: absolute;
-  bottom: 10px;
 }
 
 
@@ -268,23 +266,26 @@ h1 {
   border-width: 10px;
   border-style: groove;
   border-color:#2d53cf;
+  border-radius: 25px;
   padding: 20px;
 }
 
 #instructor-img{
   position: absolute;
-  left: 20px;
+  left: 35px;
   width: 400px;
-  height: auto;
+  height: 400px;
   max-height: 350px;
   top: 110px;
   object-fit: contain;
+  border-color: lightgray;
+  border-style: solid;
 }
 
 #class-info{
   position: absolute;
   width: 260px;
-  right: 50px;
+  right: 35px;
   top: 110px;
   margin: 10px;
 }
@@ -314,6 +315,7 @@ h1 {
   left: 50px;
   right: 50px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+  text-align: center;
 }
 
 #description{
