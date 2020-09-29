@@ -348,3 +348,27 @@ h1{
 .horizontal-menu{
   margin-top: 20px;
 }
+
+#about-div{
+  margin-bottom: 50px;
+  margin-top: 30px;
+  border-width: 10px;
+  border-style: groove;
+  border-color:#2d53cf;
+  border-radius: 25px;
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+  height: 250px;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+
+}
+
+#about-blurb{
+  text-align: center;
+  font-size: 20px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}

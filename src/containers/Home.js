@@ -28,6 +28,16 @@ class Home extends React.Component {
     render(){
         return(
             <>
+            
+            <div id="about-div">
+            <center><h1>About Conexión Danza</h1></center>
+             &nbsp;
+              <p id="about-blurb">
+                  You no longer have to travel across the world to train with your favorite dance instructors. Our instructors upload new classes weekly and offer feedback to their students.
+              </p>  
+            </div>
+
+
             <center><h1>Meet the Instructors</h1></center>
             {this.state.danceClasses ?
             <TeacherScrollDiv id="scroll-div" danceClasses={this.state.danceClasses}/>

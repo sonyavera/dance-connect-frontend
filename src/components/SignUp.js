@@ -85,7 +85,7 @@ class SignUp extends React.Component {
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 
               <FormGroup>
-                <Label for="exampleFile">Avatar</Label>
+                <Label for="exampleFile"></Label>
                     <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" />
                     <FormText color="muted">
                       Upload a picture to be used for your profile.
