@@ -15,7 +15,7 @@ class StudentUI extends React.Component {
     render(){
         return(
             <>
-            <center><h3>Featured Classes</h3></center>
+            <center><h2>Featured Classes</h2></center>
             {this.props.classes ?
             <ScrollDiv 
                 purchases={this.props.purchases}
@@ -25,8 +25,7 @@ class StudentUI extends React.Component {
             null
             }
             
-            <center><h3>Your Recommendations</h3></center>
-            &nbsp;
+            <center><h2>Your Recommendations</h2></center>
             {this.props.classes ?
             <ScrollDiv 
                 purchases={this.props.purchases}

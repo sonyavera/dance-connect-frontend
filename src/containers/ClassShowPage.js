@@ -3,6 +3,7 @@ import '../App.css';
 import {Button, Container} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import ReactPlayer from 'react-player'
+import PurchaseClassModal from '../components/PurchaseClassModal'
 
 class ClassShowPage extends React.Component{
 
@@ -58,9 +59,12 @@ renderClassStyle=()=>{
         return (
           <>
           <img id="instructor-img" src={this.renderAvatar()} alt=""/>
-          <h5> Price: </h5> {this.state.danceClass.price} &nbsp;
-          <h5>Class Description:</h5>{this.state.danceClass.description} &nbsp;
-          <span><Button color="primary" onClick={this.handlePurchase}>Purchase Class</Button></span>
+          <div id="class-info">
+          <p id="price"><strong >Price:</strong> ${this.state.danceClass.price} </p>
+          <p id="description-title"><strong>Class Description:</strong></p> <p id="description">{this.state.danceClass.description}</p>
+          </div>
+          {/* <Button id="purchase-class" color="primary" onClick={this.handlePurchase}>Purchase Class</Button> */}
+          <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/>
           </>
           )
       }
@@ -84,9 +88,10 @@ renderClassStyle=()=>{
             
             <div id="show-page">
 
-              <h1>{this.renderClassStyle()} with {this.state.danceClass.instructor_name}</h1>
+              <h1 id="class-style">{this.renderClassStyle()} with {this.state.danceClass.instructor_name}</h1>
 
               {this.renderContent()} 
+
             </div>
             
             </>
