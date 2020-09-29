@@ -40,7 +40,7 @@ class ClassCard extends React.Component{
         return (
           <>
         <Button tag={Link} 
-            to={this.props.danceClass.style + "/" + this.props.danceClass.id} color="info" block >Go to Class</Button>
+            to={"purchases/" + this.props.danceClass.id} color="info" block >Go to Class</Button>
         
         </>
         )
@@ -71,8 +71,6 @@ class ClassCard extends React.Component{
   }
 
     render(){
-      console.log("danceclass", this.props.danceClass)
-      console.log("instructor avatar: null", this.props.danceClass.instructor_avatar === null)
         return(
             <Card className="card-div">
               <CardImg class="card-img-bottom" className="card-image" top width="100%" height="250px" src={this.renderAvatar()} alt="Card image cap" />

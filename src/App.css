@@ -158,10 +158,11 @@ h1 {
 
 
 #react-player{
-  margin-right: auto;
-  margin-left: auto;
-  width: 50%;
   padding:10px;
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  top: 80px;
 }
 
 .show-page-content{
@@ -263,6 +264,7 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 100px;
+  margin-top: 20px;
   border-width: 10px;
   border-style: groove;
   border-color:#2d53cf;
@@ -324,7 +326,7 @@ h1 {
 }
 
 .btn{
-  font-family: "Arial Black", Gadget, sans-serif;
+  font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
 h2{

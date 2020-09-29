@@ -38,13 +38,16 @@ class NavigationBar extends React.Component {
 
     return(
       <>
+    
       {localStorage.length > 0 ? 
       
               this.props.isTeacher === true ?
-                    
+                
+                
                 <Navbar color="light" light expand="md">
                     <a className="navbar-brand" href="/home/teacher">
                     <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
+                    
 
                 <NavbarToggler onClick={this.toggle}/>
                 <Collapse isOpen={this.state.isOpen} navbar>

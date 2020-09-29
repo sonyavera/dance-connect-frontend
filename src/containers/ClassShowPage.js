@@ -52,6 +52,7 @@ renderClassStyle=()=>{
         console.log("this class has been purchased")
         return (
           <>
+          
           <ReactPlayer id="react-player" url={this.state.danceClass.url}/>
           </>
         )

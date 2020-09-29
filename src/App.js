@@ -29,7 +29,8 @@ class App extends React.Component {
     danceStyle: "Salsa",
     purchasedClasses: [],
     createdClasses: [],
-    isTeacher: null
+    isTeacher: null,
+    accountType: null
   }
 
 
@@ -91,13 +92,13 @@ class App extends React.Component {
   
   setAccountType=()=>{
     if(this.state.user){
-      console.log('user', this.state.user.avatar) 
+      console.log() 
     }
     if(this.state.user.account_type === "teacher"){
-      this.setState({isTeacher: true} )
+      this.setState({isTeacher: true, accountType: "teacher"} )
       // this.props.history.push("/home/teacher")
     }else{
-      this.setState({isTeacher: false} )
+      this.setState({isTeacher: false, accountType: "student"} )
       // this.props.history.push("/home/student")
     }
   }
@@ -216,9 +217,7 @@ class App extends React.Component {
   }
 
   manageIsTeacher=()=>{
-    this.setState({isTeacher: !this.state.isTeacher}, 
-      ()=> console.log("isTeacher in app", this.state.isTeacher)
-      )
+    this.setState({isTeacher: !this.state.isTeacher})
   }
 
   createClass=(classObj)=>{
@@ -284,6 +283,7 @@ class App extends React.Component {
 
 
   render(){
+    console.log('is teacher', this.state.isTeacher)
     return (
       <>
 
@@ -294,6 +294,7 @@ class App extends React.Component {
           <Route path="/login" render={() => 
                                             <div>
                                               <NavigationBar
+                                                accountType={this.state.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
@@ -309,6 +310,7 @@ class App extends React.Component {
           <Route path="/signup" render={() => 
                                             <div>
                                               <NavigationBar 
+                                               accountType={this.state.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
@@ -323,6 +325,7 @@ class App extends React.Component {
           <Route path="/classes/new" render={() => 
                                                 <div>
                                                 <NavigationBar 
+                                                  accountType={this.state.accountType}
                                                   manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
@@ -337,11 +340,33 @@ class App extends React.Component {
                                                   user={this.state.user} 
                                                 />
                                                 </div>}/>
+            
+    <Route path="/me/purchases/:id" render={(data) => 
+                                            <div>
+                                            <NavigationBar 
+                                              accountType={this.state.accountType}
+                                              manageIsTeacher={this.manageIsTeacher} 
+                                              isTeacher={this.state.isTeacher}
+                                              changeHandler={this.navBarHandler}
+                                              signUp={this.signUpHandler}
+                                              logIn={this.logInHandler} 
+                                              logOut={this.logOutHandler} 
+                                              user={this.state.user} />
+                                            <JumboImage/>
+                                            <ClassShowPage
+                                                      // danceStyle={data.match.params.dance_style}
+                                                      danceClassId={data.match.params.id} 
+                                                      purchaseHandler={this.purchaseDanceClass}
+                                                      purchases={this.state.purchasedClasses}
+                                                      classes={this.state.classes}
+                                            />
+                                            </div>}/>
 
 
             <Route path="/me/created_classes" render={() =>
                                                   <>
                                                   <NavigationBar 
+                                                  accountType={this.state.accountType}
                                                   manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
@@ -356,6 +381,7 @@ class App extends React.Component {
             <Route path="/me/purchases" render={(data) => 
                                                     <div>
                                                       <NavigationBar 
+                                                        accountType={this.state.accountType}
                                                         manageIsTeacher={this.manageIsTeacher} 
                                                         isTeacher={this.state.isTeacher}
                                                         changeHandler={this.navBarHandler}
@@ -375,6 +401,7 @@ class App extends React.Component {
             <Route path="/me" render={() => 
                                             <div>
                                             <NavigationBar 
+                                              accountType={this.state.accountType}
                                               manageIsTeacher={this.manageIsTeacher} 
                                               isTeacher={this.state.isTeacher}
                                               changeHandler={this.navBarHandler}
@@ -393,6 +420,7 @@ class App extends React.Component {
             <Route path="/home/:dance_style/:id" render={(data) => 
                                               <div>
                                                 <NavigationBar 
+                                                  accountType={this.state.accountType}
                                                   manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
@@ -412,6 +440,7 @@ class App extends React.Component {
             <Route path="/home/teacher" render={() => 
                                                   <div>
                                                     <NavigationBar 
+                                                      accountType={this.state.accountType}
                                                       manageIsTeacher={this.manageIsTeacher} 
                                                       isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
@@ -426,7 +455,8 @@ class App extends React.Component {
       
               <Route path="/home/student" render={() => 
                                                   <div>
-                                                    <NavigationBar 
+                                                    <NavigationBar
+                                                      accountType={this.state.accountType} 
                                                       manageIsTeacher={this.manageIsTeacher} 
                                                       isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
@@ -446,6 +476,7 @@ class App extends React.Component {
                 <Route path="/classes/:dance_style/:id" render={(data) => 
                                                       <div>
                                                         <NavigationBar 
+                                                          accountType={this.state.accountType}
                                                           manageIsTeacher={this.manageIsTeacher} 
                                                           isTeacher={this.state.isTeacher}
                                                           changeHandler={this.navBarHandler}
@@ -467,6 +498,7 @@ class App extends React.Component {
               <Route path="/classes/:dance_style" render={(data) => 
                                             <div>
                                               <NavigationBar 
+                                                accountType={this.state.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 isTeacher={this.state.isTeacher}
                                                 changeHandler={this.navBarHandler}
@@ -490,6 +522,7 @@ class App extends React.Component {
               <Route path="/" render={() => 
                                             <div>
                                               <NavigationBar 
+                                                accountType={this.state.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 isTeacher={this.state.isTeacher}
                                                 changeHandler={this.navBarHandler}
@@ -498,7 +531,9 @@ class App extends React.Component {
                                                 logOut={this.logOutHandler} 
                                                 user={this.state.user} />
                                             <JumboImage/>
-                                              <Home/>
+                                              <Home
+                                                classes={this.state.classes}
+                                              />
                                                 </div> } /> 
 
 
