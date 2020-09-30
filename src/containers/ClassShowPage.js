@@ -4,19 +4,26 @@ import {Button, Container, Row, Column} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import PurchaseClassModal from '../components/PurchaseClassModal'
+import Comments from './Comments'
 
 class ClassShowPage extends React.Component{
 
     state = {
         danceClass: null,
-        purchased: null
+        purchased: null,
+        comments: null
     }
 
 componentDidMount(){
     fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId)
     .then(resp=> resp.json())
     .then(resp => this.setState({danceClass: resp.dance_class[0]}))
-}
+
+    fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId + "/comments")
+    .then(resp=> resp.json())
+    // .then(resp => console.log(resp.dance_class_comments))
+    .then(resp => this.setState({comments: resp.dance_class_comments}, ()=> console.log("state comments", this.state.comments)))
+  }
 
 handlePurchase=()=>{
     this.props.purchaseHandler(this.state.danceClass)
@@ -94,6 +101,8 @@ renderClassStyle=()=>{
               {this.renderContent()} 
 
             </div>
+
+            <Comments comments={this.state.comments}/>
             
             </>
             :
