@@ -56,7 +56,7 @@ class SignUp extends React.Component {
         return (
             <div className="form-div">
                <Form className="inner-form">
-               <strong><center>Sign Up</center></strong> &nbsp;
+               <center><h2>Sign Up</h2></center> &nbsp;
               <Row form>
               <Col md={6}>
                 <FormGroup>
@@ -147,8 +147,8 @@ class SignUp extends React.Component {
             </Row>
 
             <Row form>
-                <FormGroup tag="fieldset">
-                  Account Type: 
+                <FormGroup className="radio-btns" tag="fieldset">
+                 {" "}
                   <FormGroup check>
                     <Label check>
                       <Input type="radio" 
@@ -178,11 +178,11 @@ class SignUp extends React.Component {
       
          
       
-            <Button disabled={!this.state.doPasswordsMatch} block color="primary" onClick={this.formHandler}>Sign Up</Button>
+            <Button id="signup-btn" disabled={!this.state.doPasswordsMatch} block color="primary" onClick={this.formHandler}>Sign Up</Button>
 
             <div align="center">
-            Already have an account? 
-            <a href="/login">Log In</a>
+            Already have an account?  
+            <a href="/login"> Log In</a>
             </div>
           </Form>
           </div>

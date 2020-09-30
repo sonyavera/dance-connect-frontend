@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 import ScrollDiv from '../components/ScrollDiv'
 
@@ -15,24 +16,32 @@ class StudentUI extends React.Component {
     render(){
         return(
             <>
-            <center><h2>Featured Classes</h2></center>
-            {this.props.classes && this.props.purchases ?
-            <ScrollDiv 
-                purchases={this.props.purchases}
-                danceClasses={this.props.classes.slice(1,10)} 
-                purchaseHandler={this.props.purchaseHandler}/>
-            :
-            null
-            }
+
+            {localStorage.token ?
             
-            <center><h2>Your Recommendations</h2></center>
-            {this.props.classes && this.props.purchases ?
-            <ScrollDiv 
-                purchases={this.props.purchases}
-                danceClasses={this.props.classes.slice(11,20)} 
-                purchaseHandler={this.props.purchaseHandler}/>
+                this.props.classes && this.props.purchases ?
+                <>
+                <center><h2>Featured Classes</h2></center>
+                <ScrollDiv 
+                    purchases={this.props.purchases}
+                    danceClasses={this.props.classes.slice(1,10)} 
+                    purchaseHandler={this.props.purchaseHandler}/>
+            
+                <center><h2>Your Recommendations</h2></center>
+                <ScrollDiv 
+                    purchases={this.props.purchases}
+                    danceClasses={this.props.classes.slice(11,20)} 
+
+                    purchaseHandler={this.props.purchaseHandler}/>
+                </>
+                :
+
+                null
+
             :
-            null
+
+            <Redirect to="/login"/>
+
             }
             </>
         )

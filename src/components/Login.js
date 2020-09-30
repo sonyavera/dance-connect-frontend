@@ -25,6 +25,7 @@ class Login extends React.Component {
         return(
             <div className="form-div">
             <Form className="inner-form">
+            <center><h2>Welcome back!</h2></center> &nbsp;
 
          <Row form>
            <Col md={8} sm="12" md={{ size: 6, offset: 3 }}>

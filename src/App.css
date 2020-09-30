@@ -51,6 +51,17 @@
   border-width: thick;
   border-style: groove;
   border-color:#2d53cf;
+  border-radius: 25px;
+}
+
+
+.radio-btns{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#signup-btn{
+  margin-bottom: 10px;
 }
 
 .inner-form{
