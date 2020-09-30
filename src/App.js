@@ -278,6 +278,7 @@ class App extends React.Component {
     } 
 
   render(){
+    console.log("purchased classes in app", this.state.purchasedClasses)
     // console.log('isTeacher from state', this.state.isTeacher, 
     //             'isteacher from localstorage', localStorage.isTeacher, 
     //             'account type from local storage', localStorage.accountType)

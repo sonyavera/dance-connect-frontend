@@ -22,7 +22,14 @@ class Comments extends React.Component{
             <div id="comments-div">
             
 
-            {this.renderComments()}
+            {this.props.comments ? 
+
+                
+                this.renderComments()
+                
+                :
+                
+                <h1>Loading...</h1>}
             
 
   

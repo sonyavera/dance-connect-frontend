@@ -20,6 +20,8 @@ class ClassesContainer extends React.Component {
             const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
             console.log("filtered classes", classesByStyle)
             console.log("all classes", this.props.classes)
+            console.log(this.props.danceStyle)
+            console.log(this.props.purchases)
         }
 
         return(
