@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 class CreateClass extends React.Component {
 
@@ -13,7 +14,7 @@ class CreateClass extends React.Component {
     }
 
     changeHandler=(e)=>{
-        this.setState({ [e.target.name]: e.target.value}, ()=> console.log("this.state", this.state))
+        this.setState({ [e.target.name]: e.target.value})
     }
 
     submitHandler=()=>{
@@ -102,7 +103,7 @@ class CreateClass extends React.Component {
                 placeholder="Paste the link to a private YouTube video of your class." />
             </FormGroup>
       
-            <Button block color="primary" 
+            <Button tag={Link} to="/me/created_classes" block color="primary" 
               onClick={this.submitHandler}>Create Class</Button>
           </Form>
           </div>

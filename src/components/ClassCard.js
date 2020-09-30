@@ -73,7 +73,7 @@ class ClassCard extends React.Component{
     render(){
         return(
             <Card className="card-div">
-              <CardImg class="card-img-bottom" className="card-image" top width="100%" height="250px" src={this.renderAvatar()} alt="Card image cap" />
+              <CardImg class="card-img-bottom" className="card-image" top width="100%" height="245px" src={this.renderAvatar()} alt="Card image cap" />
               <CardBody>
                 <CardTitle>{this.renderClassStyle()} with {this.props.danceClass.instructor_name}</CardTitle>
                 <CardText>{this.props.danceClass.description}</CardText>

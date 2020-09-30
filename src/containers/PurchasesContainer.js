@@ -19,10 +19,10 @@ class PurchasesContainer extends React.Component{
 
         return(
             <>
-            <h1>Your Purchased Classes</h1>
+            <center><h1>Your Purchased Classes</h1></center>
              <div className="container-fluid" className="m-5" cl-md-xx>
             <div className="card-columns" >
-            {this.props.classes && this.props.user ? 
+            {this.props.classes && this.props.user && this.props.purchasedClasses ? 
             this.renderClasses()
             :
             <Redirect to="/login"/>

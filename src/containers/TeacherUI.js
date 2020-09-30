@@ -27,9 +27,7 @@ class TeacherUI extends React.Component {
                     to="/stats" 
                     id="bottom-left-button">View Your Stats</Button>
                 <Button 
-                    onClick={this.props.toggleMode} 
-                    tag={Link} to="/home/student" 
-                    id="bottom-right-button">Student Mode</Button>
+                    onClick={this.props.toggleMode} tag={Link} to="/home/student" id="bottom-right-button">Student Mode</Button>
             </div>
             
             </>

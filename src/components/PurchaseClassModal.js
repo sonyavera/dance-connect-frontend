@@ -18,18 +18,24 @@ const PurchaseClassModal = (props) => {
       props.handlePurchase(props.danceClassObj)
   }
 
+
+  const uppercaseFirstLetter=(style)=>{
+    return style.charAt(0).toUpperCase() + style.slice(1)
+  }
+
   return (
     <div>
       <Button id="purchase-class-button" color="primary" block onClick={toggle}>Purchase Class</Button>
       <Modal isOpen={modal} fade={false} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Purchase Class</ModalHeader>
         <ModalBody>
-          Instructor: {props.danceClassObj.instructor_name} &nbsp;
-          Style: {props.danceClassObj.style} &nbsp;
-          Level: {props.danceClassObj.level} &nbsp;
-          Price: {props.danceClassObj.price} &nbsp;
+          <h4>Instructor: {props.danceClassObj.instructor_name}</h4>
+          {/* <h4>Style: {props.danceClassObj.style}</h4>  */}
+          <h4>Style: {uppercaseFirstLetter(props.danceClassObj.style)}</h4>
+          <h4>Level: {props.danceClassObj.level}</h4> 
+          <h4>Price: {props.danceClassObj.price}</h4>
 
-          Confirm below to get lifetime access to this dance class.
+          <p>Confirm below to get lifetime access to this dance class.</p>
         </ModalBody>
         <ModalFooter>
           <Button 

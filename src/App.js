@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   withRouter } from 'react-router-dom';
+import {Redirect} from 'react-router-dom'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import CreateClass from './components/CreateClass'
@@ -44,7 +45,10 @@ class App extends React.Component {
       })
       .then(resp => resp.json())
       // .then(console.log)
-      .then(data => this.setState({ user: data.user, avatar: data.avatar}, ()=> this.setAccountType() ))
+      .then(data => this.setState({ user: data.user, avatar: data.avatar}
+        , ()=> this.setAccountType() 
+        )
+        )
       .catch((error) => {console.log(error)})
     }  else {
       console.log("not logged in")
@@ -86,20 +90,19 @@ class App extends React.Component {
   }
 
   
-  toggleMode=()=>{
-    this.setState({isTeacher: !this.state.isTeacher})
+  toggleToTeacher=()=>{
+    // this.setState({isTeacher: !this.state.isTeacher})
+    this.setState({isTeacher: false} )
+    localStorage.setItem("isTeacher", "false")
   }
   
   setAccountType=()=>{
     if(this.state.user){
-      console.log() 
-    }
-    if(this.state.user.account_type === "teacher"){
-      this.setState({isTeacher: true, accountType: "teacher"} )
-      // this.props.history.push("/home/teacher")
-    }else{
-      this.setState({isTeacher: false, accountType: "student"} )
-      // this.props.history.push("/home/student")
+        if(this.state.user.account_type === "teacher"){
+          this.setState({accountType: "teacher"} )
+        }else{
+          this.setState({accountType: "student"} )
+        }
     }
   }
 
@@ -118,13 +121,11 @@ class App extends React.Component {
       body: JSON.stringify({ user: newUserObj })
     })
     .then(resp => resp.json())
-    // .then(resp => this.setState({user: user.data}))
     .catch((error) => {console.log(error)})
   }
 
 
-  signUpHandler=(userObj)=>{
-    
+  signUpHandler=(userObj)=>{   
     const formData = new FormData()
     formData.append('first_name', userObj.firstName)
     formData.append('last_name', userObj.lastName)
@@ -133,22 +134,9 @@ class App extends React.Component {
     formData.append('account_type', userObj.selectedOption)
     formData.append('avatar', userObj.avatar)
     console.log("form data", formData)
-    // const userObject = {
-    //                     first_name: userObj.firstName, 
-    //                     last_name: userObj.lastName, 
-    //                     username: userObj.username, 
-    //                     password:userObj.password, 
-    //                     account_type:userObj.selectedOption, 
-    //                     avatar: userObj.avatar
-    // }
     console.log("user obj.avatar", userObj.avatar)
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   Accept: "application/json"
-      // },
-      // body: JSON.stringify({ user: userObject })
       body: formData 
     })
     .then(res => res.json())
@@ -157,25 +145,20 @@ class App extends React.Component {
       this.setState({ user: data.user }, () => {
           console.log('user', this.state.user)
           if(this.state.user.account_type === "student"){
+            this.setState({isTeacher: false, accountType: "student"})
+            localStorage.setItem("accountType", "student")
+            localStorage.setItem("isTeacher", "false")
             this.props.history.push("/home/student")
-          } else{this.props.history.push("/home/teacher")
+          } else{
+            this.setState({isTeacher: true, accountType: "teacher"})
+            localStorage.setItem("accountType", "teacher")
+            localStorage.setItem("isTeacher", "true")
+            this.props.history.push("/home/teacher")
         }
       }
       )
     })
   }
-      
-
-
-    // redirectAfterSignup=()=>{
-    //   if(this.state.user.account_type === "teacher"){
-    //     console.log("is teacher")
-    //     this.props.history.push("/home/teacher")
-    //   }else{
-    //   console.log("is student")
-    //   this.props.history.push("/home/student")
-    // }
-    // }
   
   
   logOutHandler=()=>{
@@ -202,10 +185,13 @@ class App extends React.Component {
 
             if(localStorage.token === "undefined"){
               alert("Hello! I am an alert box!!")
-              // this.props.history.push("/login")
             }else if(this.state.user.account_type === "student"){
+              this.setState({isTeacher: false})
+              localStorage.setItem("isTeacher", "false")
               this.props.history.push("/home/student")
             }else if(this.state.user.acount_type==="teacher"){
+              this.setState({isTeacher: true})
+              localStorage.setItem("isTeacher", "true")
               this.props.history.push("/home/teacher")
         }  
       })
@@ -218,6 +204,11 @@ class App extends React.Component {
 
   manageIsTeacher=()=>{
     this.setState({isTeacher: !this.state.isTeacher})
+    if(localStorage.isTeacher === "true"){
+      localStorage.setItem("isTeacher", "false")
+    }else if(localStorage.isTeacher === "false"){
+      localStorage.setItem("isTeacher", "true")
+    }
   }
 
   createClass=(classObj)=>{
@@ -249,6 +240,7 @@ class App extends React.Component {
     })
     .then(res => res.json())
     .then(console.log)
+    .then(()=> this.componentDidMount())
   }
 
 
@@ -256,7 +248,6 @@ class App extends React.Component {
     console.log("dance class obj", danceClassObj)
     const userClassObj = {dance_class_id: danceClassObj.id}
     console.log("user class obj", userClassObj)
-    // console.log("purchasing", "user class obj", userClassObj, "dance class obj", danceClassObj)
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
         method: 'POST',
@@ -268,21 +259,14 @@ class App extends React.Component {
         body: JSON.stringify({user_class: userClassObj})
       })
         .then(res => res.json())
-        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]}, ()=> console.log('purchased classes', this.state.purchasedClasses) )} )
+        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]} )} )
         .then(()=> this.getPurchasesAndCreatedClasses())
-        // .then(()=> this.getDanceClasses())
     }
 
-  //   componentDidUpdate=(prevProps, prevState)=>{
-  //     if(this.state.purchasedClasses !== prevState.purchasedClasses){
-  //         this.getPurchasesAndCreatedClasses()       
-  //     }
-  // }
-
-
-
-
   render(){
+    console.log('isTeacher from state', this.state.isTeacher, 
+                'isteacher from localstorage', localStorage.isTeacher, 
+                'account type from local storage', localStorage.accountType)
     return (
       <>
 
@@ -293,7 +277,7 @@ class App extends React.Component {
           <Route path="/login" render={() => 
                                             <div>
                                               <NavigationBar
-                                                accountType={this.state.accountType}
+                                                accountType={localStorage.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
@@ -309,7 +293,7 @@ class App extends React.Component {
           <Route path="/signup" render={() => 
                                             <div>
                                               <NavigationBar 
-                                               accountType={this.state.accountType}
+                                                accountType={localStorage.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 changeHandler={this.navBarHandler}
                                                 signUp={this.signUpHandler}
@@ -324,7 +308,7 @@ class App extends React.Component {
           <Route path="/classes/new" render={() => 
                                                 <div>
                                                 <NavigationBar 
-                                                  accountType={this.state.accountType}
+                                                  accountType={localStorage.accountType}
                                                   manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
@@ -343,7 +327,7 @@ class App extends React.Component {
     <Route path="/me/purchases/:id" render={(data) => 
                                             <div>
                                             <NavigationBar 
-                                              accountType={this.state.accountType}
+                                              accountType={localStorage.accountType}
                                               manageIsTeacher={this.manageIsTeacher} 
                                               isTeacher={this.state.isTeacher}
                                               changeHandler={this.navBarHandler}
@@ -365,22 +349,22 @@ class App extends React.Component {
             <Route path="/me/created_classes" render={() =>
                                                   <>
                                                   <NavigationBar 
-                                                  accountType={this.state.accountType}
-                                                  manageIsTeacher={this.manageIsTeacher} 
-                                                  isTeacher={this.state.isTeacher}
-                                                  changeHandler={this.navBarHandler}
-                                                  signUp={this.signUpHandler}
-                                                  logIn={this.logInHandler} 
-                                                  logOut={this.logOutHandler} 
-                                                  user={this.state.user} />
+                                                    accountType={localStorage.accountType}
+                                                    manageIsTeacher={this.manageIsTeacher} 
+                                                    isTeacher={this.state.isTeacher}
+                                                    changeHandler={this.navBarHandler}
+                                                    signUp={this.signUpHandler}
+                                                    logIn={this.logInHandler} 
+                                                    logOut={this.logOutHandler} 
+                                                    user={this.state.user} />
                                                 <JumboImage/>
-                                                <ManageClasses/>
+                                                <ManageClasses createdClasses={this.state.createdClasses}/>
                                                  </>}/>
 
             <Route path="/me/purchases" render={(data) => 
                                                     <div>
                                                       <NavigationBar 
-                                                        accountType={this.state.accountType}
+                                                        accountType={localStorage.accountType}
                                                         manageIsTeacher={this.manageIsTeacher} 
                                                         isTeacher={this.state.isTeacher}
                                                         changeHandler={this.navBarHandler}
@@ -400,7 +384,7 @@ class App extends React.Component {
             <Route path="/me" render={() => 
                                             <div>
                                             <NavigationBar 
-                                              accountType={this.state.accountType}
+                                              accountType={localStorage.accountType}
                                               manageIsTeacher={this.manageIsTeacher} 
                                               isTeacher={this.state.isTeacher}
                                               changeHandler={this.navBarHandler}
@@ -419,7 +403,7 @@ class App extends React.Component {
             <Route path="/home/:dance_style/:id" render={(data) => 
                                               <div>
                                                 <NavigationBar 
-                                                  accountType={this.state.accountType}
+                                                  accountType={localStorage.accountType}
                                                   manageIsTeacher={this.manageIsTeacher} 
                                                   isTeacher={this.state.isTeacher}
                                                   changeHandler={this.navBarHandler}
@@ -439,25 +423,25 @@ class App extends React.Component {
             <Route path="/home/teacher" render={() => 
                                                   <div>
                                                     <NavigationBar 
-                                                      accountType={this.state.accountType}
+                                                      accountType="teacher"
+                                                      isTeacher="teacher"
                                                       manageIsTeacher={this.manageIsTeacher} 
-                                                      isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
                                                       signUp={this.signUpHandler}
                                                       logIn={this.logInHandler} 
                                                       logOut={this.logOutHandler} 
                                                       user={this.state.user} />
                                                   <JumboImage/>
-                                                    <TeacherUI toggleMode={this.toggleMode}/>
+                                                    <TeacherUI toggleMode={this.toggleToTeacher}/>
                                                     </div> }/> 
 
       
               <Route path="/home/student" render={() => 
                                                   <div>
                                                     <NavigationBar
-                                                      accountType={this.state.accountType} 
+                                                      accountType="student"
+                                                      isTeacher="false"
                                                       manageIsTeacher={this.manageIsTeacher} 
-                                                      isTeacher={this.state.isTeacher}
                                                       changeHandler={this.navBarHandler}
                                                       signUp={this.signUpHandler}
                                                       logIn={this.logInHandler} 
@@ -475,7 +459,7 @@ class App extends React.Component {
                 <Route path="/classes/:dance_style/:id" render={(data) => 
                                                       <div>
                                                         <NavigationBar 
-                                                          accountType={this.state.accountType}
+                                                          accountType={localStorage.accountType}
                                                           manageIsTeacher={this.manageIsTeacher} 
                                                           isTeacher={this.state.isTeacher}
                                                           changeHandler={this.navBarHandler}
@@ -497,7 +481,7 @@ class App extends React.Component {
               <Route path="/classes/:dance_style" render={(data) => 
                                             <div>
                                               <NavigationBar 
-                                                accountType={this.state.accountType}
+                                                accountType={localStorage.accountType}
                                                 manageIsTeacher={this.manageIsTeacher} 
                                                 isTeacher={this.state.isTeacher}
                                                 changeHandler={this.navBarHandler}
@@ -520,18 +504,18 @@ class App extends React.Component {
 
               <Route path="/" render={() => 
                                             <div>
+                                            {this.routeToCorrectHomePage()}
                                               <NavigationBar 
-                                                accountType={this.state.accountType}
-                                                manageIsTeacher={this.manageIsTeacher} 
-                                                isTeacher={this.state.isTeacher}
-                                                changeHandler={this.navBarHandler}
-                                                signUp={this.signUpHandler}
-                                                logIn={this.logInHandler} 
-                                                logOut={this.logOutHandler} 
-                                                user={this.state.user} />
+                                                  accountType={localStorage.accountType}
+                                                  manageIsTeacher={this.manageIsTeacher} 
+                                                  isTeacher={this.state.isTeacher}
+                                                  changeHandler={this.navBarHandler}
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
                                             <JumboImage/>
                                               <Home
-                                                // danceClasses={this.state.classes}
                                               />
                                                 </div> } /> 
 
@@ -541,7 +525,20 @@ class App extends React.Component {
         </>
     )
   }
-  
+
+  routeToCorrectHomePage=()=>{
+    if(!localStorage.token){
+      return <Redirect to="/"/>
+    }else if(localStorage.accountType === "teacher"){
+      this.setState({isTeacher: true})
+      localStorage.setItem("isTeacher", "true")
+      return <Redirect to="/home/teacher"/>
+    }else if(localStorage.accountType === "student"){
+      this.setState({isTeacher: false})
+      localStorage.setItem("isTeacher", "false")
+      return <Redirect to="/home/student"/>
+    }
+  } 
 }
 
 export default withRouter(App);

@@ -34,19 +34,22 @@ class NavigationBar extends React.Component {
     this.props.manageIsTeacher()
   }
 
+  resetState=()=>{
+    console.log("reset state")
+  }
+
   render(){
 
     return(
       <>
     
-      {localStorage.length > 0 ? 
+      {localStorage.token ? 
       
-              this.props.isTeacher === true ?
-                
+              localStorage.isTeacher === "true"?               
                 
                 <Navbar color="light" light expand="md">
-                    <a className="navbar-brand" href="/home/teacher">
-                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
+                    <NavLink onClick={this.resetState} className="navbar-brand" tag={Link} to="/">
+                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></NavLink>
                     
 
                 <NavbarToggler onClick={this.toggle}/>
@@ -89,8 +92,8 @@ class NavigationBar extends React.Component {
 
 
               <Navbar color="light" light expand="md">
-                    <a className="navbar-brand" href="/home/student">
-                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></a>
+                    <NavLink className="navbar-brand" tag={Link} to="/">
+                    <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></NavLink>
 
                 <NavbarToggler onClick={this.toggle}/>
                 <Collapse isOpen={this.state.isOpen} navbar>

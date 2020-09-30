@@ -48,7 +48,6 @@ class SignUp extends React.Component {
     }
 
     render(){
-      console.log("state in form", this.state)
         
       // for (const property in this.state){
       //   console.log(this.state[property] === null)
