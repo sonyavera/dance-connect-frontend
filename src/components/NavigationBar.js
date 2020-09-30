@@ -34,9 +34,6 @@ class NavigationBar extends React.Component {
     this.props.manageIsTeacher()
   }
 
-  resetState=()=>{
-    console.log("reset state")
-  }
 
   render(){
 
@@ -48,7 +45,7 @@ class NavigationBar extends React.Component {
               localStorage.isTeacher === "true"?               
                 
                 <Navbar color="light" light expand="md">
-                    <NavLink onClick={this.resetState} className="navbar-brand" tag={Link} to="/">
+                    <NavLink className="navbar-brand" tag={Link} to="/">
                     <img src={require("./Logo.png")} width="70" height="70" alt="hi"></img></NavLink>
                     
 
@@ -88,8 +85,6 @@ class NavigationBar extends React.Component {
                 </Navbar>
 
               :
-
-
 
               <Navbar color="light" light expand="md">
                     <NavLink className="navbar-brand" tag={Link} to="/">

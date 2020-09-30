@@ -20,7 +20,9 @@ const PurchaseClassModal = (props) => {
 
 
   const uppercaseFirstLetter=(style)=>{
-    return style.charAt(0).toUpperCase() + style.slice(1)
+    if(style === null){
+      return "null"
+    }return style.charAt(0).toUpperCase() + style.slice(1)
   }
 
   return (

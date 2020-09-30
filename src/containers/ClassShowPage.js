@@ -47,7 +47,7 @@ renderClassStyle=()=>{
 
   renderContent=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
-    if(localStorage.length > 0){  
+    if(localStorage.token){  
       if(idsOfPurchasedClasses.includes(this.state.danceClass.id)){
         console.log("this class has been purchased")
         return (

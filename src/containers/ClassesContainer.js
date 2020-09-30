@@ -24,7 +24,7 @@ class ClassesContainer extends React.Component {
 
         return(
             <>
-            {localStorage.length > 0 ? 
+            {localStorage.token ? 
             
                         <div className="container-fluid" className="m-5" cl-md-xx>
                         <div className="card-columns" >
@@ -37,7 +37,7 @@ class ClassesContainer extends React.Component {
                         </div>
             :
                         
-            <Redirect to="/login"/>
+            <Redirect/>
             
 
             }

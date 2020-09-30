@@ -263,6 +263,20 @@ class App extends React.Component {
         .then(()=> this.getPurchasesAndCreatedClasses())
     }
 
+    routeToCorrectHomePage=()=>{
+      if(!localStorage.token){
+        return <Redirect to="/"/>
+      }else if(localStorage.accountType === "teacher"){
+        this.setState({isTeacher: true})
+        localStorage.setItem("isTeacher", "true")
+        return <Redirect to="/home/teacher"/>
+      }else if(localStorage.accountType === "student"){
+        this.setState({isTeacher: false})
+        localStorage.setItem("isTeacher", "false")
+        return <Redirect to="/home/student"/>
+      }
+    } 
+
   render(){
     console.log('isTeacher from state', this.state.isTeacher, 
                 'isteacher from localstorage', localStorage.isTeacher, 
@@ -526,19 +540,7 @@ class App extends React.Component {
     )
   }
 
-  routeToCorrectHomePage=()=>{
-    if(!localStorage.token){
-      return <Redirect to="/"/>
-    }else if(localStorage.accountType === "teacher"){
-      this.setState({isTeacher: true})
-      localStorage.setItem("isTeacher", "true")
-      return <Redirect to="/home/teacher"/>
-    }else if(localStorage.accountType === "student"){
-      this.setState({isTeacher: false})
-      localStorage.setItem("isTeacher", "false")
-      return <Redirect to="/home/student"/>
-    }
-  } 
+
 }
 
 export default withRouter(App);

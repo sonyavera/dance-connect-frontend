@@ -34,7 +34,7 @@ class ClassCard extends React.Component{
   renderCtaButton=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
 
-    if(localStorage.length > 0){  
+    if(localStorage.token){  
       if(idsOfPurchasedClasses.includes(this.props.danceClass.id)){
         console.log("this class has been purchased")
         return (
@@ -84,7 +84,7 @@ class ClassCard extends React.Component{
                   null
                 }
                 
-                {localStorage.length > 0 ? 
+                {localStorage.token ? 
                     <>
                     
                     </>

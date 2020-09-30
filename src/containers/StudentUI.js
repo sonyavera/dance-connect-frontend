@@ -16,7 +16,7 @@ class StudentUI extends React.Component {
         return(
             <>
             <center><h2>Featured Classes</h2></center>
-            {this.props.classes ?
+            {this.props.classes && this.props.purchases ?
             <ScrollDiv 
                 purchases={this.props.purchases}
                 danceClasses={this.props.classes.slice(1,10)} 
@@ -26,7 +26,7 @@ class StudentUI extends React.Component {
             }
             
             <center><h2>Your Recommendations</h2></center>
-            {this.props.classes ?
+            {this.props.classes && this.props.purchases ?
             <ScrollDiv 
                 purchases={this.props.purchases}
                 danceClasses={this.props.classes.slice(11,20)} 
