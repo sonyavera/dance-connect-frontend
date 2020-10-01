@@ -54,8 +54,8 @@ class App extends React.Component {
       console.log("not logged in")
     }
 
-    this.getDanceClasses()
     this.getPurchasesAndCreatedClasses() 
+    this.getDanceClasses()
 
   }
 
@@ -78,15 +78,15 @@ class App extends React.Component {
       .then(resp => resp.json())
       .then(resp => this.setState({classes: resp.classes}))
 
-      const token = localStorage.getItem("token")
-      fetch('http://localhost:3000/me/dance_classes', {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}`},
-      })
-        .then(resp => resp.json())
-        .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, 
-                                  createdClasses: resp.created_dance_classes} ))
-        .catch((error) => {console.log(error)})
+      // const token = localStorage.getItem("token")
+      // fetch('http://localhost:3000/me/dance_classes', {
+      //   method: "GET",
+      //   headers: { Authorization: `Bearer ${token}`},
+      // })
+      //   .then(resp => resp.json())
+      //   .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, 
+      //                             createdClasses: resp.created_dance_classes} ))
+      //   .catch((error) => {console.log(error)})
   }
 
   
@@ -142,6 +142,7 @@ class App extends React.Component {
     .then(res => res.json())
     .then(data => {
       localStorage.setItem("token", data.jwt)
+      this.getPurchasesAndCreatedClasses()
       this.setState({ user: data.user }, () => {
           console.log('user', this.state.user)
           if(this.state.user.account_type === "student"){
@@ -180,6 +181,7 @@ class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         localStorage.setItem("token", data.jwt)
+        this.getPurchasesAndCreatedClasses()
         this.setState({ user: data.user }
           , () => {
 
