@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {Redirect, Link} from 'react-router-dom'
 import '../App.css'
+import CheckoutForm from './PurchaseClassModal'
+import {Elements, StripeProvider} from 'react-stripe-elements'
 
 const PurchaseClassModal = (props) => {
   const {
@@ -32,7 +34,6 @@ const PurchaseClassModal = (props) => {
         <ModalHeader toggle={toggle}>Purchase Class</ModalHeader>
         <ModalBody>
           <h4>Instructor: {props.danceClassObj.instructor_name}</h4>
-          {/* <h4>Style: {props.danceClassObj.style}</h4>  */}
           <h4>Style: {uppercaseFirstLetter(props.danceClassObj.style)}</h4>
           <h4>Level: {props.danceClassObj.level}</h4> 
           <h4>Price: {props.danceClassObj.price}</h4>
@@ -46,6 +47,15 @@ const PurchaseClassModal = (props) => {
             color="primary" 
             onClick={handlePurchase}>Purchase Class</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
+
+          {/* <StripeProvider apiKey="pk_test_51HaMMsAbaOzC9OK8iZXsP2DNQRh9puo3rkXIYxqdNgXNp3BsDeoWAanuoHECrFT2FgdPuusevNvwmvmVCNyhT14300Rl4YwcIC">
+            <div className="example">
+              <Elements>
+              <CheckoutForm orderId={props.danceClassObj.id}/>
+              </Elements>
+            </div>
+          </StripeProvider> */}
+
         </ModalFooter>
       </Modal>
     </div>
