@@ -45,6 +45,11 @@ export default function Checkout() {
     const stripe = await stripePromise;
     const response = await fetch("http://localhost:3000/create-session", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({class_name: "Afro Cuban Folklore with Bobbie Steuber", price: "22"})
     });
     const session = await response.json();
     // When the customer clicks on the button, redirect them to Checkout.

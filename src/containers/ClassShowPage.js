@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { UseState} from 'react'
+import { loadStripe } from "@stripe/stripe-js";
 import '../App.css';
 import {Button, Container, Row, Column} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import ReactPlayer from 'react-player'
 import PurchaseClassModal from '../components/PurchaseClassModal'
+const stripePromise = loadStripe("pk_test_51HaMMsAbaOzC9OK8iZXsP2DNQRh9puo3rkXIYxqdNgXNp3BsDeoWAanuoHECrFT2FgdPuusevNvwmvmVCNyhT14300Rl4YwcIC");
+
 
 class ClassShowPage extends React.Component{
 
@@ -45,6 +48,28 @@ renderClassStyle=()=>{
     }
   }
 
+  handleClick = async (event) => {
+    const stripe = await stripePromise;
+    const response = await fetch("http://localhost:3000/create-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({class_id: this.state.danceClass.id})
+    });
+    const session = await response.json();
+    // When the customer clicks on the button, redirect them to Checkout.
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+    if (result.error) {
+      // If `redirectToCheckout` fails due to a browser or network
+      // error, display the localized error message to your customer
+      // using `result.error.message`.
+    }
+  };
+
   renderContent=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
     if(localStorage.token){  
@@ -63,7 +88,8 @@ renderClassStyle=()=>{
           <div id="class-info">
           <p id="price"><strong >Price:</strong> ${this.state.danceClass.price} </p>
           <p id="description-title"><strong>Class Description:</strong></p> <p id="description">{this.state.danceClass.description}</p>
-          <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/>
+          {/* <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/> */}
+          <Button id="purchase-class-button" color="primary" block onClick={this.handleClick}>Purchase Class</Button>
           </div>
           {/* <Button id="purchase-class" color="primary" onClick={this.handlePurchase}>Purchase Class</Button> */}
           </>
