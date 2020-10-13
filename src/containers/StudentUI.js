@@ -10,6 +10,13 @@ class StudentUI extends React.Component {
     state={
         featuredClasses: null,
         recommendedClasses: null,
+        classes: null
+    }
+
+    componentDidMount(){
+        fetch("http://localhost:3000/dance_classes")
+        .then(resp => resp.json())
+        .then(resp => this.setState({classes: resp.classes}))
     }
 
 
@@ -20,18 +27,18 @@ class StudentUI extends React.Component {
 
             {localStorage.token ?
             
-                this.props.classes && this.props.purchases ?
+                this.state.classes && this.props.purchases ?
                 <>
                 <center><h2>Featured Classes</h2></center>
                 <ScrollDiv 
                     purchases={this.props.purchases}
-                    danceClasses={this.props.classes.slice(1,10)} 
+                    danceClasses={this.state.classes.slice(1,10)} 
                     purchaseHandler={this.props.purchaseHandler}/>
             
                 <center><h2>Your Recommendations</h2></center>
                 <ScrollDiv 
                     purchases={this.props.purchases}
-                    danceClasses={this.props.classes.slice(11,20)} 
+                    danceClasses={this.state.classes.slice(11,20)} 
 
                     purchaseHandler={this.props.purchaseHandler}/>
                 </>

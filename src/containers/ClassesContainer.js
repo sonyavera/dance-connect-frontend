@@ -6,18 +6,30 @@ import ClassCard from '../components/ClassCard'
 
 class ClassesContainer extends React.Component {
 
-   
+    state ={
+        classes: null
+    }
+
+    componentDidMount(){
+        fetch("http://localhost:3000/dance_classes")
+        .then(resp => resp.json())
+        .then(resp => this.setState({classes: resp.classes}))
+    }
     
-    renderClasses=()=>{    
-        const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
+
+    renderClasses=()=>{ 
+        const classesByStyle = this.state.classes.filter(danceClass => danceClass.style === this.props.danceStyle)   
+        // const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
         return classesByStyle.map(danceClass => {
             return <ClassCard key={danceClass.id} danceClass={danceClass} purchaseHandler={this.props.purchaseHandler} purchases={this.props.purchases}/>
         })
     }
 
     render(){
-        if(this.props.classes){
-            const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
+        if(this.state.classes){
+        // if(this.props.classes){
+            const classesByStyle = this.state.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
+            // const classesByStyle = this.props.classes.filter(danceClass => danceClass.style === this.props.danceStyle)
             console.log("filtered classes", classesByStyle)
             console.log("all classes", this.props.classes)
         }
@@ -28,7 +40,8 @@ class ClassesContainer extends React.Component {
             
                         <div className="container-fluid" className="m-5" cl-md-xx>
                         <div className="card-columns" >
-                        {this.props.classes && this.props.danceStyle && this.props.purchases ? 
+                        {/* {this.props.classes && this.props.danceStyle && this.props.purchases ?  */}
+                        {this.state.classes && this.props.danceStyle && this.props.purchases ? 
                             this.renderClasses()
                         :
                         <h1>Loading</h1>
