@@ -49,10 +49,12 @@ renderClassStyle=()=>{
   }
 
   handleClick = async (event) => {
+    const token = localStorage.getItem("token")
     const stripe = await stripePromise;
     const response = await fetch("http://localhost:3000/create-session", {
       method: "POST",
       headers: {
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
