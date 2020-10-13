@@ -38,7 +38,9 @@ class App extends React.Component {
 
 
   componentDidMount(){
+    console.log("state", this.state)
     const token = localStorage.getItem("token")
+    console.log("token at comnponent did mount", token)
     if (token) {
       fetch("http://localhost:3000/api/v1/profile", {
         method: "GET",
@@ -54,10 +56,12 @@ class App extends React.Component {
     }  else {
       console.log("not logged in")
     }
-
+    const url = window.location.href
+    if(!url.includes("success")){
+      this.getDanceClasses()
+    }
+    
     this.getPurchasesAndCreatedClasses() 
-    this.getDanceClasses()
-
   }
 
   

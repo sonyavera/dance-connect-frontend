@@ -12,13 +12,21 @@ class ClassShowPage extends React.Component{
 
     state = {
         danceClass: null,
-        purchased: null
+        purchased: null,
+        justPurchased: false
     }
 
 componentDidMount(){
     fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId)
-    .then(resp=> resp.json())
-    .then(resp => this.setState({danceClass: resp.dance_class[0]}))
+      .then(resp=> resp.json())
+      .then(resp => this.setState({danceClass: resp.dance_class[0]}))
+    const url = window.location.href
+    if(url.includes("success")){
+      alert("Purchase was successful!")
+      this.setState({justPurchased: true})
+    }
+    console.log("url", window.location.href)
+
 }
 
 handlePurchase=()=>{
