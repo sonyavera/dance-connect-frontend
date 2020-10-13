@@ -68,6 +68,10 @@
   padding: 30px;
 }
 
+.product-img{
+  object-fit: contain;
+}
+
 .jumbotron{
     background: no-repeat center center;
     background-size: cover;

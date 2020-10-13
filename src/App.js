@@ -18,6 +18,7 @@ import Profile from './components/Profile'
 import PurchasesContainer from './containers/PurchasesContainer'
 import ClassShowPage from './containers/ClassShowPage'
 import ManageClasses from './containers/ManageClasses'
+import Checkout from './containers/Checkout'
 
 
 
@@ -266,6 +267,7 @@ class App extends React.Component {
     }
 
     routeToCorrectHomePage=()=>{
+      console.log('route to correct home page from app')
       if(!localStorage.token){
         return <Redirect to="/"/>
       }else if(localStorage.accountType === "teacher"){
@@ -320,6 +322,35 @@ class App extends React.Component {
                                               <SignUp 
                                                 signUp={this.signUpHandler}/>
                                             </div>} />
+
+          <Route path="/checkout/:id" render={(data) => 
+                                              <div>
+                                                <NavigationBar 
+                                                  accountType={localStorage.accountType}
+                                                  manageIsTeacher={this.manageIsTeacher} 
+                                                  changeHandler={this.navBarHandler}
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
+                                                <JumboImage/>
+                                                <Checkout 
+                                                  classId={data.match.params.id}/>
+                                              </div>} />
+
+          <Route path="/checkout" render={() => 
+                                              <div>
+                                                <NavigationBar 
+                                                  accountType={localStorage.accountType}
+                                                  manageIsTeacher={this.manageIsTeacher} 
+                                                  changeHandler={this.navBarHandler}
+                                                  signUp={this.signUpHandler}
+                                                  logIn={this.logInHandler} 
+                                                  logOut={this.logOutHandler} 
+                                                  user={this.state.user} />
+                                                <JumboImage/>
+                                                <Checkout/>
+                                              </div>} />
 
           <Route path="/classes/new" render={() => 
                                                 <div>

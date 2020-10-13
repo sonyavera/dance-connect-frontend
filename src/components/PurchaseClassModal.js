@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {Redirect, Link} from 'react-router-dom'
 import '../App.css'
-import CheckoutForm from './PurchaseClassModal'
-import {Elements, StripeProvider} from 'react-stripe-elements'
 
 const PurchaseClassModal = (props) => {
   const {
@@ -27,6 +25,8 @@ const PurchaseClassModal = (props) => {
     }return style.charAt(0).toUpperCase() + style.slice(1)
   }
 
+  console.log(props.danceClassObj.id)
+
   return (
     <div>
       <Button id="purchase-class-button" color="primary" block onClick={toggle}>Purchase Class</Button>
@@ -41,20 +41,17 @@ const PurchaseClassModal = (props) => {
           <p>Confirm below to get lifetime access to this dance class.</p>
         </ModalBody>
         <ModalFooter>
-          <Button 
+        <Button tag={Link} 
+                to="/checkout"
+                onClick={console.log("should redirect to checkout")}>Purchase</Button>
+
+          {/* <Button 
             tag={Link} 
             to={props.danceClassObj.style + "/" + props.danceClassObj.id}
             color="primary" 
-            onClick={handlePurchase}>Purchase Class</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+            onClick={handlePurchase}>Purchase Class</Button> */}
 
-          {/* <StripeProvider apiKey="pk_test_51HaMMsAbaOzC9OK8iZXsP2DNQRh9puo3rkXIYxqdNgXNp3BsDeoWAanuoHECrFT2FgdPuusevNvwmvmVCNyhT14300Rl4YwcIC">
-            <div className="example">
-              <Elements>
-              <CheckoutForm orderId={props.danceClassObj.id}/>
-              </Elements>
-            </div>
-          </StripeProvider> */}
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
 
         </ModalFooter>
       </Modal>
