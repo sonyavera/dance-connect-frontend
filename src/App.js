@@ -38,16 +38,13 @@ class App extends React.Component {
 
 
   componentDidMount(){
-    console.log("state", this.state)
     const token = localStorage.getItem("token")
-    console.log("token at comnponent did mount", token)
     if (token) {
       fetch("http://localhost:3000/api/v1/profile", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      // .then(console.log)
       .then(data => this.setState({ user: data.user, avatar: data.avatar}
         , ()=> this.setAccountType() 
         )
@@ -57,9 +54,10 @@ class App extends React.Component {
       console.log("not logged in")
     }
     const url = window.location.href
-    if(!url.includes("success")){
-      this.getDanceClasses()
-    }
+    // if(!url.includes("success")){
+    //   this.getDanceClasses()
+    // }
+    this.getDanceClasses()
     
     this.getPurchasesAndCreatedClasses() 
   }
@@ -112,18 +110,19 @@ class App extends React.Component {
   }
 
   patchUser=(userObj)=>{
-    const newUserObj = {
-      first_name: userObj.firstName, 
-      last_name: userObj.lastName,
-      password: userObj.password,
-      account_type: userObj.accountType
-    }
-    console.log("user id from state", this.state.user.id)
+    console.log('userObj', userObj)
+    const formData = new FormData()
+    formData.append('first_name', userObj.firstName)
+    formData.append('last_name', userObj.lastName)
+    formData.append('username', userObj.username)
+    formData.append('password', userObj.password)
+    formData.append('account_type', userObj.selectedOption)
+    formData.append('avatar', userObj.avatar)
     const token = localStorage.getItem("token")
     fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}`},
-      body: JSON.stringify({ user: newUserObj })
+      body: formData
     })
     .then(resp => resp.json())
     .catch((error) => {console.log(error)})
@@ -138,8 +137,6 @@ class App extends React.Component {
     formData.append('password', userObj.password)
     formData.append('account_type', userObj.selectedOption)
     formData.append('avatar', userObj.avatar)
-    console.log("form data", formData)
-    console.log("user obj.avatar", userObj.avatar)
     fetch("http://localhost:3000/api/v1/users", {
       method: "POST",
       body: formData 
@@ -149,7 +146,6 @@ class App extends React.Component {
       localStorage.setItem("token", data.jwt)
       this.getPurchasesAndCreatedClasses()
       this.setState({ user: data.user }, () => {
-          console.log('user', this.state.user)
           if(this.state.user.account_type === "student"){
             this.setState({isTeacher: false, accountType: "student"})
             localStorage.setItem("accountType", "student")
@@ -170,7 +166,6 @@ class App extends React.Component {
   logOutHandler=()=>{
     localStorage.removeItem("token")
     this.setState({user:false})
-    console.log(localStorage)
     this.props.history.push("/") 
   }
 
@@ -233,8 +228,6 @@ class App extends React.Component {
       classObj.style = "kizomba"
     }
     classObj.instructor_avatar = this.state.avatar
-    console.log("class Obj", classObj)
-    console.log("create class in app", classObj)
     const token = localStorage.getItem("token")
     fetch("http://localhost:3000/dance_classes", {
       method: 'POST',
@@ -246,15 +239,12 @@ class App extends React.Component {
       body: JSON.stringify({dance_class: classObj})
     })
     .then(res => res.json())
-    .then(console.log)
     .then(()=> this.componentDidMount())
   }
 
 
   purchaseDanceClass=(danceClassObj)=>{
-    console.log("dance class obj", danceClassObj)
     const userClassObj = {dance_class_id: danceClassObj.id}
-    console.log("user class obj", userClassObj)
     const token = localStorage.getItem("token")
       fetch("http://localhost:3000/user_classes/", { 
         method: 'POST',
@@ -271,7 +261,6 @@ class App extends React.Component {
     }
 
     routeToCorrectHomePage=()=>{
-      console.log('route to correct home page from app')
       if(!localStorage.token){
         return <Redirect to="/"/>
       }else if(localStorage.accountType === "teacher"){
@@ -286,9 +275,6 @@ class App extends React.Component {
     } 
 
   render(){
-    console.log('isTeacher from state', this.state.isTeacher, 
-                'isteacher from localstorage', localStorage.isTeacher, 
-                'account type from local storage', localStorage.accountType)
     return (
       <>
 

@@ -46,7 +46,6 @@ class Profile extends React.Component{
     }
 
     render(){
-      console.log('this.props', this.props)
         return(
             <>
             {localStorage.token && this.props.user ?
@@ -187,7 +186,7 @@ class Profile extends React.Component{
 
             :
             
-            <Redirect to="/login"/>
+            <h1>Loading...</h1>
             }
             </>
         )

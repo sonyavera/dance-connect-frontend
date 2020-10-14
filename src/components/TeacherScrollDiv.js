@@ -6,7 +6,6 @@ import '../App.css';
 // One item component
 // selected prop will be passed
 const MenuItem = ({danceClassObj, selected}) => {
-    console.log('rendering instrucotr image')
   return (
       <img className="scroll-div-img" key={danceClassObj.id} src={danceClassObj.instructor_avatar} alt=''/>
   )

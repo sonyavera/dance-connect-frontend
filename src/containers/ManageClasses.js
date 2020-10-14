@@ -16,8 +16,6 @@ class ManageClasses extends React.Component{
     
     
     render(){
-
-        console.log('props in manage classes', this.props)
         return(
             <>
             {localStorage.token ? 

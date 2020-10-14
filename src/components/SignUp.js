@@ -35,8 +35,6 @@ class SignUp extends React.Component {
     }
 
     avatarChangeHandler=(e)=>{
-      console.log("e.target", e.target.files[0])
-      // if(e.target.files[0]){
         this.setState({avatar: e.target.files[0]})
     }
       
@@ -48,10 +46,6 @@ class SignUp extends React.Component {
     }
 
     render(){
-        
-      // for (const property in this.state){
-      //   console.log(this.state[property] === null)
-      // }
       
         return (
             <div className="form-div">

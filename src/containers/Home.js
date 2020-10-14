@@ -14,11 +14,9 @@ class Home extends React.Component {
     }
     
     componentDidMount=()=>{
-        console.log('component did mount')
         fetch("http://localhost:3000/unique_dance_classes")
             .then(resp => resp.json())
-            .then(resp => this.setState({danceClasses: resp.unique_dance_class_array}, ()=> console.log(this.state.danceClasses)))
-            // .then(resp => console.log('resp in home', resp))
+            .then(resp => this.setState({danceClasses: resp.unique_dance_class_array}))
     }
 
 

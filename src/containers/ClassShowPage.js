@@ -25,7 +25,6 @@ componentDidMount(){
       alert("Purchase was successful!")
       this.setState({justPurchased: true})
     }
-    console.log("url", window.location.href)
 
 }
 
@@ -84,7 +83,6 @@ renderClassStyle=()=>{
     const idsOfPurchasedClasses = this.props.purchases.map(purchase => purchase.id)
     if(localStorage.token){  
       if(idsOfPurchasedClasses.includes(this.state.danceClass.id)){
-        console.log("this class has been purchased")
         return (
           <>
           
@@ -111,7 +109,6 @@ renderClassStyle=()=>{
   }
 
     render(){
-      console.log("state", this.state)
         return(
             <>
             {this.state.danceClass ?

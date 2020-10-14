@@ -16,16 +16,20 @@ const PurchaseClassModal = (props) => {
 
   const toggle = () => setModal(!modal);
 
-  const handlePurchase =() => {
-      console.log("handle purchase")
-      props.handlePurchase(props.danceClassObj)
-  }
 
 
-  const uppercaseFirstLetter=(style)=>{
-    if(style === null){
-      return "null"
-    }return style.charAt(0).toUpperCase() + style.slice(1)
+  const printStyle=(style)=>{
+    if(style="bachata"){
+      return "Bachata"
+    }if(style="zouk"){
+      return "Zouk"
+    }if(style="afrocubanfolklore"){
+      return "Afro Cuban Folklore"
+    }if(style="cubansalsa"){
+      return "Cuban Salsa"
+    }if(style="newyorksalsa"){
+      return "New York Salsa"
+    }
   }
   
 
@@ -55,8 +59,6 @@ const PurchaseClassModal = (props) => {
   };
 
 
-  console.log(props.danceClassObj.id)
-
   return (
     <div>
       <Button id="purchase-class-button" color="primary" block onClick={toggle}>Purchase Class</Button>
@@ -64,21 +66,14 @@ const PurchaseClassModal = (props) => {
         <ModalHeader toggle={toggle}>Purchase Class</ModalHeader>
         <ModalBody>
           <h4>Instructor: {props.danceClassObj.instructor_name}</h4>
-          <h4>Style: {uppercaseFirstLetter(props.danceClassObj.style)}</h4>
+          <h4>Style: {printStyle(props.danceClassObj.style)}</h4>
           <h4>Level: {props.danceClassObj.level}</h4> 
-          <h4>Price: {props.danceClassObj.price}</h4>
-
-          <p>Confirm below to get lifetime access to this dance class.</p>
+          <h4>Price: ${props.danceClassObj.price}</h4>
         </ModalBody>
         <ModalFooter>
-        <Button tag={Link} 
-                onClick={handleClick}>Purchase</Button>
+        <Button color="primary" tag={Link} 
+                onClick={handleClick}>Check Out With Stripe</Button>
 
-          {/* <Button 
-            tag={Link} 
-            to={props.danceClassObj.style + "/" + props.danceClassObj.id}
-            color="primary" 
-            onClick={handlePurchase}>Purchase Class</Button> */}
 
           <Button color="secondary" onClick={toggle}>Cancel</Button>
 

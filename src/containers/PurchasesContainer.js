@@ -28,9 +28,6 @@ class PurchasesContainer extends React.Component{
     }
 
     render(){
-        if(this.props.purchaseClasses){
-            console.log('this.props from purchases container', this.props)
-        }
 
         return(
             <>
@@ -41,7 +38,7 @@ class PurchasesContainer extends React.Component{
             this.renderClasses()
             :
             <>
-            <Redirect to="/login"/>
+            <h1>Loading...</h1>
             </>
             }
             </div>

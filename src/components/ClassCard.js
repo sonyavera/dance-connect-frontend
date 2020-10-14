@@ -36,7 +36,6 @@ class ClassCard extends React.Component{
 
     if(localStorage.token){  
       if(idsOfPurchasedClasses.includes(this.props.danceClass.id)){
-        // console.log("this class has been purchased")
         return (
           <>
         <Button tag={Link} 

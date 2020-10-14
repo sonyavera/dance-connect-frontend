@@ -22,7 +22,6 @@ class CreateClass extends React.Component {
     }
 
     render(){
-      console.log('state in form', this.state)
 
         return (
             <div className="form-div">
