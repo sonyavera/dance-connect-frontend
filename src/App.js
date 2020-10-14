@@ -38,6 +38,13 @@ class App extends React.Component {
 
 
   componentDidMount(){
+    this.getProfile()
+    this.getDanceClasses()   
+    this.getPurchasesAndCreatedClasses() 
+  }
+
+  getProfile=()=>{
+    console.log('get profile')
     const token = localStorage.getItem("token")
     if (token) {
       fetch("http://localhost:3000/api/v1/profile", {
@@ -53,15 +60,26 @@ class App extends React.Component {
     }  else {
       console.log("not logged in")
     }
-    const url = window.location.href
-    // if(!url.includes("success")){
-    //   this.getDanceClasses()
-    // }
-    this.getDanceClasses()
-    
-    this.getPurchasesAndCreatedClasses() 
   }
 
+  patchUser=(userObj)=>{
+    const formData = new FormData()
+    formData.append('first_name', userObj.firstName)
+    formData.append('last_name', userObj.lastName)
+    formData.append('username', userObj.username)
+    formData.append('password', userObj.password)
+    formData.append('account_type', userObj.selectedOption)
+    formData.append('avatar', userObj.avatar)
+    const token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`, {
+      method: "PATCH",
+      headers: { Authorization: `Bearer ${token}`},
+      body: formData
+    })
+    .then(resp => resp.json())
+    .then(console.log)
+    .then(() => this.getProfile() )
+  }
   
 
   getPurchasesAndCreatedClasses=()=>{
@@ -80,16 +98,6 @@ class App extends React.Component {
       fetch("http://localhost:3000/dance_classes")
       .then(resp => resp.json())
       .then(resp => this.setState({classes: resp.classes}))
-
-      // const token = localStorage.getItem("token")
-      // fetch('http://localhost:3000/me/dance_classes', {
-      //   method: "GET",
-      //   headers: { Authorization: `Bearer ${token}`},
-      // })
-      //   .then(resp => resp.json())
-      //   .then(resp => this.setState({purchasedClasses: resp.purchased_dance_classes, 
-      //                             createdClasses: resp.created_dance_classes} ))
-      //   .catch((error) => {console.log(error)})
   }
 
   
@@ -101,31 +109,13 @@ class App extends React.Component {
   
   setAccountType=()=>{
     if(this.state.user){
+      console.log('this.state.user', this.state.user)
         if(this.state.user.account_type === "teacher"){
           this.setState({accountType: "teacher"} )
         }else{
           this.setState({accountType: "student"} )
         }
     }
-  }
-
-  patchUser=(userObj)=>{
-    console.log('userObj', userObj)
-    const formData = new FormData()
-    formData.append('first_name', userObj.firstName)
-    formData.append('last_name', userObj.lastName)
-    formData.append('username', userObj.username)
-    formData.append('password', userObj.password)
-    formData.append('account_type', userObj.selectedOption)
-    formData.append('avatar', userObj.avatar)
-    const token = localStorage.getItem("token")
-    fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`, {
-      method: "PATCH",
-      headers: { Authorization: `Bearer ${token}`},
-      body: formData
-    })
-    .then(resp => resp.json())
-    .catch((error) => {console.log(error)})
   }
 
 
@@ -156,9 +146,8 @@ class App extends React.Component {
             localStorage.setItem("accountType", "teacher")
             localStorage.setItem("isTeacher", "true")
             this.props.history.push("/home/teacher")
-        }
-      }
-      )
+          }
+      })
     })
   }
   
@@ -243,22 +232,22 @@ class App extends React.Component {
   }
 
 
-  purchaseDanceClass=(danceClassObj)=>{
-    const userClassObj = {dance_class_id: danceClassObj.id}
-    const token = localStorage.getItem("token")
-      fetch("http://localhost:3000/user_classes/", { 
-        method: 'POST',
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({user_class: userClassObj})
-      })
-        .then(res => res.json())
-        .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]} )} )
-        .then(()=> this.getPurchasesAndCreatedClasses())
-    }
+  // purchaseDanceClass=(danceClassObj)=>{
+  //   const userClassObj = {dance_class_id: danceClassObj.id}
+  //   const token = localStorage.getItem("token")
+  //     fetch("http://localhost:3000/user_classes/", { 
+  //       method: 'POST',
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //         Accept: "application/json"
+  //       },
+  //       body: JSON.stringify({user_class: userClassObj})
+  //     })
+  //       .then(res => res.json())
+  //       .then(data => {this.setState({purchasedClasses: [...this.state.purchasedClasses, data]} )} )
+  //       .then(()=> this.getPurchasesAndCreatedClasses())
+  //   }
 
     routeToCorrectHomePage=()=>{
       if(!localStorage.token){

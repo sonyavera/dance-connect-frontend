@@ -117,7 +117,7 @@ class Profile extends React.Component{
                     value={this.state.password} 
                     type="password" 
                     name="password" 
-                    placeholder="new password" />
+                    placeholder="confirm or change pw" />
                 </FormGroup>
               </Col>
             </Row>
@@ -130,7 +130,7 @@ class Profile extends React.Component{
                     value={this.state.confirmedPw} 
                     type="password" 
                     name="confirmedPw" 
-                    placeholder="confirm new password" />
+                    placeholder="confirm password" />
                     {this.state.confirmedPw ?
                       this.state.confirmedPw.length > 0 && this.state.disableSubmitButton === true ? 
 
