@@ -69,7 +69,7 @@ class CreateClass extends React.Component {
                 id="exampleText" />
             </FormGroup>
       
-            <FormGroup>
+            {/* <FormGroup>
               <Label value={this.state.date} for="exampleDate">Class Date</Label>
               <Input
                 onChange={this.changeHandler} 
@@ -78,7 +78,7 @@ class CreateClass extends React.Component {
                 id="exampleDate"
                 value={this.props.date}
               />
-            </FormGroup>
+            </FormGroup> */}
 
             <FormGroup >
               <Label for="example">Price in USD</Label>

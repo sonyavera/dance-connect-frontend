@@ -2,6 +2,7 @@ import React from 'react'
 import { Col, Row, Button, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
 import {Redirect} from 'react-router-dom'
 import '../App.css';
+import { Link } from 'react-router-dom'
 
 
 class Profile extends React.Component{
@@ -16,6 +17,14 @@ class Profile extends React.Component{
         confirmedPw: null,
         selectedOption: null,
         disableSubmitButton: true
+    }
+
+    componentDidMount(){
+      if(localStorage.accountType === "student"){
+        this.setState({selectedOption: "student"})
+      }else{
+        this.setState({selectedOption: "teacher"})
+      }
     }
 
 
@@ -97,7 +106,7 @@ class Profile extends React.Component{
           
       
 
-            <Row form>
+            {/* <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
                 <FormGroup>
                   <Input 
@@ -107,7 +116,7 @@ class Profile extends React.Component{
                     placeholder={this.props.user.username} />
                 </FormGroup>
               </Col>
-            </Row>
+            </Row> */}
 
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
@@ -162,7 +171,7 @@ class Profile extends React.Component{
                   <FormGroup check>
                     <Label check>
                       <Input type="radio" 
-                             value="teacher" 
+                             value="teacher"
                              checked={this.state.selectedOption === 'teacher'} 
                              onChange={this.handleOptionChange}
                             />{' '}
@@ -176,7 +185,9 @@ class Profile extends React.Component{
             </Row>  
          
       
-            <Button block color="primary" 
+            <Button 
+              tag={Link} to="/"
+              block color="primary" 
               disabled={this.state.disableSubmitButton} 
               onClick={this.formHandler}>
               Make Changes

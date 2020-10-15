@@ -19,6 +19,8 @@ class ManageClasses extends React.Component{
         return(
             <>
             {localStorage.token ? 
+                        <>
+                        <center><h1>Your Classes</h1></center>
             
                         <div className="container-fluid" className="m-5" cl-md-xx>
                         <div className="card-columns" >
@@ -29,6 +31,7 @@ class ManageClasses extends React.Component{
                         }
                         </div>
                         </div>
+                        </>
             :
                         
             <Redirect to="/login"/>
