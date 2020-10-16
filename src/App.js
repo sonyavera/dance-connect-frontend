@@ -175,7 +175,7 @@ class App extends React.Component {
           , () => {
 
             if(localStorage.token === "undefined"){
-              alert("Hello! I am an alert box!!")
+              alert("Incorrect username or password.")
             }else if(this.state.user.account_type === "student"){
               this.setState({isTeacher: false})
               localStorage.setItem("isTeacher", "false")

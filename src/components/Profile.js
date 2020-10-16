@@ -14,6 +14,7 @@ class Profile extends React.Component{
         username: null,
         password: null,
         avatar: null,
+        avatarBinary: null,
         confirmedPw: null,
         selectedOption: null,
         disableSubmitButton: true
@@ -30,6 +31,23 @@ class Profile extends React.Component{
 
     formHandler=()=>{
         this.props.editProfile(this.state)
+    }
+
+    avatarChangeHandler=(e)=>{
+      this.setState({avatar: e.target.files[0]}, ()=> {
+        console.log("this.state.avatar", this.state.avatar)
+        const read = new FileReader();
+        read.readAsBinaryString(this.state.avatar)
+        const self = this
+        read.onloadend = function(){
+          self.setState({avatarBinary: read.result})
+          // console.log(read.result);
+      }
+      })
+    }
+
+    hexToBase64 =(str) => {
+        return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
     }
 
     changeHandler=(e)=>{
@@ -62,6 +80,11 @@ class Profile extends React.Component{
               <div className="form-div">
                <Form className="inner-form">
                <center><strong>Edit Your Profile</strong></center>
+               {/* {this.state.avatarBinary ?
+               <img id="prof-page-avatar" src={'data:image/jpeg;base64,' + this.hexToBase64(this.state.avatarBinary)} alt=''/>
+               :
+               <img id="prof-page-avatar" src={this.props.avatar} alt=''/>
+               } */}
                <img id="prof-page-avatar" src={this.props.avatar} alt=''/>
               <Row form>
               <Col md={6}>
@@ -93,7 +116,9 @@ class Profile extends React.Component{
                 
               <FormGroup>
                 <Label for="exampleFile"></Label>
-                    <Input onChange={this.changeHandler} type="file" name="avatar" id="exampleFile" value={this.state.avatar} />
+                    <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" />
+                    {/* <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" value={this.props.avatar} /> */}
+
                     <FormText color="muted">
                       Upload a picture to be used for your profile.
               </FormText>
@@ -102,21 +127,6 @@ class Profile extends React.Component{
               </Col>
             </Row>
 
-
-          
-      
-
-            {/* <Row form>
-              <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
-                <FormGroup>
-                  <Input 
-                    onChange={this.changeHandler} 
-                    value={this.state.username} 
-                    type="text" name="username" 
-                    placeholder={this.props.user.username} />
-                </FormGroup>
-              </Col>
-            </Row> */}
 
             <Row form>
               <Col md={6} sm="12" md={{ size: 6, offset: 3 }}>
