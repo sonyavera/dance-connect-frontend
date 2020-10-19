@@ -13,7 +13,7 @@ class Home extends React.Component {
         danceClasses: null
     }
     
-    componentDidMount=()=>{
+    componentDidMount(){
         fetch("https://dance-connect.herokuapp.com/unique_dance_classes")
             .then(resp => resp.json())
             .then(resp => this.setState({danceClasses: resp.unique_dance_class_array}))
