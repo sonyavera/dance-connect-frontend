@@ -63,7 +63,7 @@ class ClassCard extends React.Component{
 
   renderAvatar=()=>{
     if(this.props.danceClass.instructor_avatar === null){
-      return "http://localhost:3000/" + this.props.danceClass.uploaded_avatar.split("?")[0]
+      return "https://dance-connect.herokuapp.com/" + this.props.danceClass.uploaded_avatar.split("?")[0]
     }else{
       return this.props.danceClass.instructor_avatar
     }

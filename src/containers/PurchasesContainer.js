@@ -10,7 +10,7 @@ class PurchasesContainer extends React.Component{
 // remove this after refactor
     componentDidMount(){
             const token = localStorage.getItem("token")
-            fetch('http://localhost:3000/me/dance_classes', {
+            fetch('https://dance-connect.herokuapp.com/me/dance_classes', {
               method: "GET",
               headers: { Authorization: `Bearer ${token}`},
             })

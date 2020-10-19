@@ -14,7 +14,7 @@ class Home extends React.Component {
     }
     
     componentDidMount=()=>{
-        fetch("http://localhost:3000/unique_dance_classes")
+        fetch("https://dance-connect.herokuapp.com/unique_dance_classes")
             .then(resp => resp.json())
             .then(resp => this.setState({danceClasses: resp.unique_dance_class_array}))
     }

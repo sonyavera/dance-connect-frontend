@@ -37,7 +37,7 @@ const PurchaseClassModal = (props) => {
     const token = localStorage.getItem("token")
     const stripe = await stripePromise;
 
-    const response = await fetch("http://localhost:3000/create-session", {
+    const response = await fetch("https://dance-connect.herokuapp.com/create-session", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,

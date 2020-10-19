@@ -17,7 +17,7 @@ class ClassShowPage extends React.Component{
     }
 
 componentDidMount(){
-    fetch("http://localhost:3000/dance_classes/" + this.props.danceClassId)
+    fetch("https://dance-connect.herokuapp.com/dance_classes/" + this.props.danceClassId)
       .then(resp=> resp.json())
       .then(resp => this.setState({danceClass: resp.dance_class[0]}))
     const url = window.location.href
@@ -49,7 +49,7 @@ renderClassStyle=()=>{
 
   renderAvatar=()=>{
     if(this.state.danceClass.instructor_avatar === null){
-      return "http://localhost:3000/" + this.state.danceClass.uploaded_avatar.split("?")[0]
+      return "https://dance-connect.herokuapp.com" + this.state.danceClass.uploaded_avatar.split("?")[0]
     }else{
       return this.state.danceClass.instructor_avatar
     }
@@ -58,7 +58,7 @@ renderClassStyle=()=>{
   handleClick = async (event) => {
     const token = localStorage.getItem("token")
     const stripe = await stripePromise;
-    const response = await fetch("http://localhost:3000/create-session", {
+    const response = await fetch("https://dance-connect.herokuapp.com/create-session", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${token}`,

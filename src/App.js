@@ -47,7 +47,7 @@ class App extends React.Component {
     console.log('get profile')
     const token = localStorage.getItem("token")
     if (token) {
-      fetch("http://localhost:3000/api/v1/profile", {
+      fetch("https://dance-connect.herokuapp.com/api/v1/profile", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`},
       })
@@ -71,7 +71,7 @@ class App extends React.Component {
     formData.append('account_type', userObj.selectedOption)
     formData.append('avatar', userObj.avatar)
     const token = localStorage.getItem("token")
-    fetch(`http://localhost:3000/api/v1/users/${this.state.user.id}`, {
+    fetch(`https://dance-connect.herokuapp.com/api/v1/users/${this.state.user.id}`, {
       method: "PATCH",
       headers: { Authorization: `Bearer ${token}`},
       body: formData
@@ -84,7 +84,7 @@ class App extends React.Component {
 
   getPurchasesAndCreatedClasses=()=>{
       const token = localStorage.getItem("token")
-      fetch('http://localhost:3000/me/dance_classes', {
+      fetch('https://dance-connect.herokuapp.com/me/dance_classes', {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`},
       })
@@ -95,7 +95,7 @@ class App extends React.Component {
     }
 
     getDanceClasses=()=>{
-      fetch("http://localhost:3000/dance_classes")
+      fetch("https://dance-connect.herokuapp.com/dance_classes")
       .then(resp => resp.json())
       .then(resp => this.setState({classes: resp.classes}))
   }
@@ -127,7 +127,7 @@ class App extends React.Component {
     formData.append('password', userObj.password)
     formData.append('account_type', userObj.selectedOption)
     formData.append('avatar', userObj.avatar)
-    fetch("http://localhost:3000/api/v1/users", {
+    fetch("https://dance-connect.herokuapp.com/api/v1/users", {
       method: "POST",
       body: formData 
     })
@@ -159,7 +159,7 @@ class App extends React.Component {
   }
 
   logInHandler = (user) => {
-    fetch("http://localhost:3000/api/v1/login", {
+    fetch("https://dance-connect.herokuapp.com/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -218,7 +218,7 @@ class App extends React.Component {
     }
     classObj.instructor_avatar = this.state.avatar
     const token = localStorage.getItem("token")
-    fetch("http://localhost:3000/dance_classes", {
+    fetch("https://dance-connect.herokuapp.com/dance_classes", {
       method: 'POST',
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -235,7 +235,7 @@ class App extends React.Component {
   // purchaseDanceClass=(danceClassObj)=>{
   //   const userClassObj = {dance_class_id: danceClassObj.id}
   //   const token = localStorage.getItem("token")
-  //     fetch("http://localhost:3000/user_classes/", { 
+  //     fetch("https://dance-connect.herokuapp.com/user_classes/", { 
   //       method: 'POST',
   //       headers: {
   //         "Authorization": `Bearer ${token}`,

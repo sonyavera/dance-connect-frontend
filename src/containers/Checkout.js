@@ -43,7 +43,7 @@ export default function Checkout() {
   }, []);
   const handleClick = async (event) => {
     const stripe = await stripePromise;
-    const response = await fetch("http://localhost:3000/create-session", {
+    const response = await fetch("https://dance-connect.herokuapp.com/create-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
