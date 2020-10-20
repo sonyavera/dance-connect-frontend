@@ -14,6 +14,7 @@ class SignUp extends React.Component {
         confirmedPw: null,
         selectedOption: null,
         doPasswordsMatch: null,
+        isFormFilled: null,
         isButtonDisabled: true
     }
 
@@ -23,30 +24,60 @@ class SignUp extends React.Component {
     }
 
     changeHandler=(e)=>{
-        this.setState({ [e.target.name]: e.target.value}, ()=> this.managePasswordChanges())  
+        this.setState({ [e.target.name]: e.target.value}, ()=> this.manageForm())  
     }
 
-    managePasswordChanges=()=>{
-      if(this.state.confirmedPw && this.state.password && this.state.password === this.state.confirmedPw){
-        this.setState({ doPasswordsMatch: true})
-      }else {
-        this.setState({ doPasswordsMatch: false})   
-        }
+    manageForm=()=>{
+      const formFields = [this.state.firstName, 
+                          this.state.lastName, 
+                          this.state.selectedOption, 
+                          this.state.avatar, 
+                          this.state.username,
+                          this.state.password,
+                          this.state.confirmedPw
+                        ]
+      if(!formFields.includes(null) && !formFields.includes("")){
+        this.setState({isFormFilled: true})
+        console.log("all forms filled out")
+      }else{
+        this.setState({isFormFilled: false})
+      }
+
+      this.managePasswordMatch()
     }
+
+    managePasswordMatch=()=>{
+      if(this.state.confirmedPw && this.state.password && this.state.password === this.state.confirmedPw){
+        this.setState({ doPasswordsMatch: true}, ()=> this.manageButtonLogic())
+      }else {
+        this.setState({ doPasswordsMatch: false}, ()=> this.manageButtonLogic())   
+        }
+
+      
+    }
+
+    manageButtonLogic=()=>{
+      if(this.state.isFormFilled && this.state.doPasswordsMatch){
+        this.setState({isButtonDisabled: false})
+      }else{
+        this.setState({isButtonDisabled: true})
+      }
+    }
+
 
     avatarChangeHandler=(e)=>{
-        this.setState({avatar: e.target.files[0]})
+        this.setState({avatar: e.target.files[0]}, ()=> this.manageForm())
     }
       
 
     handleOptionChange=(changeEvent)=>{
       this.setState({
         selectedOption: changeEvent.target.value
-      });
+      }, ()=> this.manageForm());
     }
 
     render(){
-      
+      console.log("dopwmatch", this.state.doPasswordsMatch, "isformfilled", this.state.isFormFilled, "isbtndisabled", this.state.isButtonDisabled)
         return (
             <div className="form-div">
                <Form className="inner-form">
@@ -172,7 +203,7 @@ class SignUp extends React.Component {
       
          
       
-            <Button id="signup-btn" disabled={!this.state.doPasswordsMatch} block color="primary" onClick={this.formHandler}>Sign Up</Button>
+            <Button id="signup-btn" disabled={this.state.isButtonDisabled} block color="primary" onClick={this.formHandler}>Sign Up</Button>
 
             <div align="center">
             Already have an account?  
