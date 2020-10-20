@@ -44,7 +44,6 @@ class App extends React.Component {
   }
 
   getProfile=()=>{
-    console.log('get profile')
     const token = localStorage.getItem("token")
     if (token) {
       fetch("https://dance-connect.herokuapp.com/api/v1/profile", {
@@ -52,10 +51,9 @@ class App extends React.Component {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then(resp => resp.json())
-      .then(data => this.setState({ user: data.user, avatar: data.avatar}
-        , ()=> this.setAccountType() 
-        )
-        )
+      .then(data => this.setState(
+                                  { user: data.user, avatar: data.avatar}, ()=> this.setAccountType() 
+            ))
       .catch((error) => {console.log(error)})
     }  else {
       console.log("not logged in")
@@ -70,6 +68,15 @@ class App extends React.Component {
     formData.append('password', userObj.password)
     formData.append('account_type', userObj.selectedOption)
     formData.append('avatar', userObj.avatar)
+    if(userObj.selectedOption){
+      this.setState({accountType: `${userObj.selectedOption}`})
+      localStorage.setItem("accountType", `${userObj.selectedOption}`)
+      if(userObj.selectedOption === "teacher"){
+        localStorage.setItem("isTeacher", "true")
+      }else{
+        localStorage.setItem("isTeacher", "false")
+      }
+    }
     const token = localStorage.getItem("token")
     fetch(`https://dance-connect.herokuapp.com/api/v1/users/${this.state.user.id}`, {
       method: "PATCH",
@@ -77,7 +84,6 @@ class App extends React.Component {
       body: formData
     })
     .then(resp => resp.json())
-    .then(console.log)
     .then(() => this.getProfile() )
   }
   
@@ -102,14 +108,12 @@ class App extends React.Component {
 
   
   toggleToTeacher=()=>{
-    // this.setState({isTeacher: !this.state.isTeacher})
     this.setState({isTeacher: false} )
     localStorage.setItem("isTeacher", "false")
   }
   
   setAccountType=()=>{
     if(this.state.user){
-      console.log('this.state.user', this.state.user)
         if(this.state.user.account_type === "teacher"){
           this.setState({accountType: "teacher"} )
         }else{

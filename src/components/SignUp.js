@@ -38,7 +38,6 @@ class SignUp extends React.Component {
                         ]
       if(!formFields.includes(null) && !formFields.includes("")){
         this.setState({isFormFilled: true})
-        console.log("all forms filled out")
       }else{
         this.setState({isFormFilled: false})
       }
@@ -77,7 +76,6 @@ class SignUp extends React.Component {
     }
 
     render(){
-      console.log("dopwmatch", this.state.doPasswordsMatch, "isformfilled", this.state.isFormFilled, "isbtndisabled", this.state.isButtonDisabled)
         return (
             <div className="form-div">
                <Form className="inner-form">

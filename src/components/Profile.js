@@ -41,7 +41,6 @@ class Profile extends React.Component{
         const self = this
         read.onloadend = function(){
           self.setState({avatarBinary: read.result})
-          // console.log(read.result);
       }
       })
     }
@@ -53,8 +52,6 @@ class Profile extends React.Component{
     changeHandler=(e)=>{
         this.setState({ [e.target.name]: e.target.value}, ()=> this.buttonLogic() )
     }
-  
-
 
     buttonLogic=()=>{
       if(this.state.confirmedPw && this.state.password && this.state.password === this.state.confirmedPw){
@@ -64,8 +61,6 @@ class Profile extends React.Component{
         }
     }
       
-
-
     handleOptionChange=(changeEvent)=>{
       this.setState({
         selectedOption: changeEvent.target.value
@@ -80,11 +75,6 @@ class Profile extends React.Component{
               <div className="form-div">
                <Form className="inner-form">
                <center><strong>Edit Your Profile</strong></center>
-               {/* {this.state.avatarBinary ?
-               <img id="prof-page-avatar" src={'data:image/jpeg;base64,' + this.hexToBase64(this.state.avatarBinary)} alt=''/>
-               :
-               <img id="prof-page-avatar" src={this.props.avatar} alt=''/>
-               } */}
                <img id="prof-page-avatar" src={this.props.avatar} alt=''/>
               <Row form>
               <Col md={6}>
@@ -117,8 +107,6 @@ class Profile extends React.Component{
               <FormGroup>
                 <Label for="exampleFile"></Label>
                     <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" />
-                    {/* <Input onChange={this.avatarChangeHandler} type="file" name="avatar" id="exampleFile" value={this.props.avatar} /> */}
-
                     <FormText color="muted">
                       Upload a picture to be used for your profile.
               </FormText>
@@ -150,14 +138,16 @@ class Profile extends React.Component{
                     type="password" 
                     name="confirmedPw" 
                     placeholder="confirm password" />
-                    {this.state.confirmedPw ?
-                      this.state.confirmedPw.length > 0 && this.state.disableSubmitButton === true ? 
-
-                      <h4 className="password-warning">Passwords must match</h4>
-                      :
-                      null
+                    {
+                    this.state.confirmedPw ?
+                        this.state.confirmedPw.length > 0 && this.state.disableSubmitButton === true ? 
+                        <h4 className="password-warning">Passwords must match</h4>
+                        :
+                        null
                     :
+                    
                     null
+
                     }
                 </FormGroup>
               </Col>

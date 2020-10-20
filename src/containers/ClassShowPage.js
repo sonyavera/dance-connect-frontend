@@ -68,7 +68,6 @@ renderClassStyle=()=>{
       body: JSON.stringify({class_id: this.state.danceClass.id})
     });
     const session = await response.json();
-    // When the customer clicks on the button, redirect them to Checkout.
     const result = await stripe.redirectToCheckout({
       sessionId: session.id,
     });
@@ -96,10 +95,8 @@ renderClassStyle=()=>{
           <div id="class-info">
           <p id="price"><strong >Price:</strong> ${this.state.danceClass.price} </p>
           <p id="description-title"><strong>Class Description:</strong></p> <p id="description">{this.state.danceClass.description}</p>
-          {/* <PurchaseClassModal id="purchase-class" danceClassObj={this.state.danceClass} handlePurchase={this.handlePurchase}/> */}
           <Button id="purchase-class-button" color="primary" block onClick={this.handleClick}>Purchase Class</Button>
           </div>
-          {/* <Button id="purchase-class" color="primary" onClick={this.handlePurchase}>Purchase Class</Button> */}
           </>
           )
       }
