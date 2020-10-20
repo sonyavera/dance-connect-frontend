@@ -104,7 +104,7 @@ renderClassStyle=()=>{
           )
       }
     }else {
-      return <Button color="primary" block tag={Link} to="/login">Purchase Class</Button> 
+      return <Button color="primary" block tag={Link} to="/login">Purchase Class with Stripe</Button> 
     }
   }
 
